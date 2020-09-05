@@ -1,14 +1,13 @@
 Package: triangulr
-Title: High Performance Triangular Distribution Functions in R
+Title: High-Performance Triangular Distribution Functions in R
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Alvin",
            family = "Nursalim",
            role = c("aut", "cre"),
            email = "alvin.nursalim@outlook.com")
-Description: triangulr provides high performance distribution functions for the
-    triangular distribution with a similar interface as the distribution
-    functions from the stats library.
+Description: triangulr provides high-performance distribution functions for the
+    triangular distribution with similar interfaces as those from the stats library.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
