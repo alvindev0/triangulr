@@ -3,37 +3,45 @@
 #' @importFrom stats runif
 #' @export
 rtriang <- function(n, min = 0, max = 1, mode = (min + max)/2) {
-  mode <- try(mode, silent = TRUE)
-  if (class(mode) == "try-error") {
+  mode <- tryCatch(mode, error = function(e) {
+    invisible(structure(list(), class = "try-error"))
+  })
+  if (class(mode) == "try-error" ||
+      is.null(mode) || !is.numeric(mode) ||
+      is.null(min) || is.null(max) ||
+      !is.numeric(min) || !is.numeric(max)) {
     stop("invalid arguments")
   }
 
-  p <- try(stats::runif(n, min = 0, max = 1), silent = TRUE)
+  p <- tryCatch(stats::runif(n, min = 0L, max = 1L), error = function(e) {
+    invisible(structure(list(), class = "try-error"))
+  })
   if (class(p) == "try-error") {
     stop("invalid arguments")
   }
 
-  if (anyNA(c(min, max, mode)) ||
-      any(is.null(min), is.null(max), is.null(mode)) ||
-      !is.numeric(c(min, max, mode))) {
-    stop("invalid arguments")
-  }
-
-  if (length(c(min, max, mode)) == 3) {
-    if (any(is.infinite(c(min, max, mode)), mode < min, mode > max)) {
+  if (length(min) + length(max) + length(mode) == 3L) {
+    if (is.infinite(min) || is.infinite(max) || is.infinite(mode) ||
+        mode < min || mode > max) {
       warning("NaNs produced")
-      return(rep(NaN, length(p)))
+      return(.Internal(rep.int(NaN, length(p))))
     }
 
     if (min == max) {
-      return(rep(min, length(p)))
+      return(.Internal(rep.int(min, length(p))))
     }
 
-    l <- p < (mode - min) / (max - min)
-    p[l] <- min + sqrt(p[l] * (max - min) * (mode - min))
-    p[!l] <- max - sqrt((1 - p[!l]) * (max - min) * (max - mode))
-    p
+    w <- max - min
+    lw <- mode - min
+    r <- max - sqrt((1L - p) * w * (max - mode))
+    l <- p < lw / w
+    r[l] <- min + sqrt(p[l] * w * lw)
+    r
   } else {
-    qtriang(p, min, max, mode, lower.tail = TRUE, log.p = FALSE)
+    r <- suppressWarnings(qtriang_raw(p, min, max, mode)[seq_along(p)])
+    if (anyNA(r)) {
+      warning("NaNs produced")
+    }
+    r
   }
 }
