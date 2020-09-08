@@ -24,44 +24,53 @@ qtriang <- function(p, min = 0, max = 1, mode = (min + max)/2,
     }
   })
 
-  q <- suppressWarnings(qtriang_raw(p, min, max, mode))
+  q <- if (length(min) + length(max) + length(mode) == 3L) {
+    qtriang_sca(p, min, max, mode)
+  } else {
+    suppressWarnings(qtriang_vec(p, min, max, mode))
+  }
+
   if (anyNA(q)) {
     warning("NaNs produced")
   }
   q
 }
 
-qtriang_raw <- function(p, min, max, mode) {
-  len_q <- max(length(p), length(min), length(max), length(mode))
-  # This is sufficient to ensure correct recycling of vector elements
-  min <- .Internal(rep_len(min, len_q))
+qtriang_sca <- function(p, min, max, mode) {
+  if (is.infinite(min) || is.infinite(max) || is.infinite(mode) ||
+      mode < min || mode > max) {
+    return(.Internal(rep.int(NaN, length(p))))
+  }
+  if (min == max) {
+    return(.Internal(rep.int(min, length(p))))
+  }
 
   w <- max - min
   lw <- mode - min
 
-  q <- min + sqrt(p * (max * lw - min * lw))
+  q <- max - sqrt((1L - p) * w * (max - mode))
+  l <- p < lw / w
+  q[l] <- min + sqrt(p[l] * w * lw)
+  q
+}
+
+qtriang_vec <- function(p, min, max, mode) {
+  len_q <- max(length(p), length(min), length(max), length(mode))
+  min <- .Internal(rep_len(min, len_q))
+  mode <- .Internal(rep_len(mode, len_q))
+
+  w <- max - min
+  lw <- mode - min
+
+  q <- min + sqrt(p * w * lw)
   c <- .Internal(which(p >= lw / w))
-  q[c] <- (max - sqrt((1L - p) * (max * w - mode * w)))[c]
+  q[c] <- (max - sqrt((1L - p) * w * (max - mode)))[c]
 
   c <- .Internal(which(min == max))
   q[c] <- min[c]
 
-  q[p < 0L | p > 1L | mode < min | mode > max | is.infinite(q)] <- NaN
+  q[p < 0L | p > 1L |
+      mode < min | mode > max |
+      is.infinite(q) | is.na(q)] <- NaN
   q
 }
-
-# qtriang_raw_old <- function(p, min, max, mode) {
-#   q <- min + sqrt(p * (max - min) * (mode - min))
-#   c <- suppressWarnings(.Internal(which(p >= (mode - min) / (max - min))))
-#   q[c] <- (max - sqrt((1L - p) * (max - min) * (max - mode)))[c]
-#
-#   len_q <- length(q)
-#   c <- .Internal(which(min == .Internal(rep_len(max, len_q))))
-#   q[c] <- min[c]
-#
-#   q[p < 0L | p > 1L |
-#       mode < min |
-#       mode > max |
-#       is.infinite(q)] <- NaN
-#   q
-# }

@@ -7,47 +7,73 @@ ptriang <- function(q, min = 0, max = 1, mode = (min + max)/2,
     invisible(structure(list(), class = "try-error"))
   })
   if (class(mode) == "try-error" ||
-      anyNA(mode) || is.null(mode) || !is.numeric(mode) ||
-      anyNA(q) || anyNA(min) || anyNA(max) ||
+      is.null(mode) || !is.numeric(mode) ||
       is.null(q) || is.null(min) || is.null(max) ||
       !is.numeric(q) || !is.numeric(min) || !is.numeric(max) ||
       !is.logical(lower.tail) || !is.logical(log.p)) {
     stop("invalid arguments")
   }
 
-  len <- max(length(q), length(min), length(max), length(mode))
-  q <- rep(q, length.out = len)
-  min <- rep(min, length.out = len)
-  max <- rep(max, length.out = len)
-  mode <- rep(mode, length.out = len)
-
-  q[is.infinite(min) | is.infinite(max) | is.infinite(mode)] <- NaN
-  q[mode < min | mode > max] <- NaN
-  q[min == max] <- NaN
-
-  z <- which(q <= min)
-  l <- which(min < q & q <= mode)
-  u <- which(mode < q & q < max)
-  o <- which(max <= q)
-
-  q[z] <- 0
-  q[l] <- (q[l] - min[l])^2 / (max[l] - min[l]) / (mode[l] - min[l])
-  q[u] <- 1 - (max[u] - q[u])^2 / (max[u] - min[u]) / (max[u] - mode[u])
-  q[o] <- 1
+  p <- if (length(min) + length(max) + length(mode) == 3L) {
+    ptriang_sca(q, min, max, mode)
+  } else {
+    suppressWarnings(ptriang_vec(q, min, max, mode))
+  }
 
   # If lower.tail or log.p has length > 1, only the first element will be used
   suppressWarnings({
     if (!lower.tail) {
-      q <- 1 - q
+      p <- 1L - p
     }
     if (log.p) {
-      q <- log(q)
+      p <- log(p, base = exp(1))
     }
   })
 
-
-  if (anyNA(q)) {
+  if (anyNA(p)) {
     warning("NaNs produced")
   }
-  q
+  p
 }
+
+ptriang_sca <- function(q, min, max, mode) {
+  if (is.infinite(min) || is.infinite(max) || is.infinite(mode) ||
+      mode < min || mode > max) {
+    return(.Internal(rep.int(NaN, length(q))))
+  }
+  if (min == max) {
+    if (x == min) {
+      return(.Internal(rep.int(1L, length(q))))
+    } else {
+      return(.Internal(rep.int(0L, length(q))))
+    }
+  }
+
+  p <- (q - min)^2 / ((max - min) * (mode - min))
+  u <- mode < q & q < max
+  p[u] <- (1 - (max - q)^2 / ((max - min) * (max - mode)))[u]
+  p[q <= min] <- 0L
+  p[max <= q] <- 1L
+  p
+}
+
+ptriang_vec <- function(q, min, max, mode) {
+  lo <- max(length(q), length(min), length(max), length(mode))
+  min <- .Internal(rep_len(min, lo))
+  max <- .Internal(rep_len(max, lo))
+  mode <- .Internal(rep_len(mode, lo))
+
+  p <- (q - min)^2 / ((max - min) * (mode - min))
+  u <- .Internal(which(q > mode))
+  p[u] <- (1L - (max - q)^2 / ((max - min) * (max - mode)))[u]
+
+  # TODO: Test this
+  p[q >= max | (min == max & x == min)] <- 1L
+  p[q <= min | (min == max & x != min)] <- 0L
+
+  p[mode < min | mode > max |
+      is.infinite(min) | is.infinite(max) | is.infinite(mode) |
+      is.na(p)] <- NaN
+  p
+}
+

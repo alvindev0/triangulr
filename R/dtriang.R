@@ -71,41 +71,62 @@
 #' @examples
 #'  # TODO: Add examples
 #'
-dtriang <- function(x, min = 0, max = 1, mode = (min+max)/2, log = FALSE) {
-
-  # TODO: The numerical arguments other than n are recycled to the length of the
-  # result. Only the first elements of the logical arguments are used.
-
-  if (anyNA(c(x, min, max, mode)) || !is.numeric(c(x, min, max, mode)) ||
+dtriang <- function(x, min = 0, max = 1, mode = (min + max)/2, log = FALSE) {
+  mode <- tryCatch(mode, error = function(e) {
+    invisible(structure(list(), class = "try-error"))
+  })
+  if (class(mode) == "try-error" ||
+      is.null(mode) || !is.numeric(mode) ||
+      is.null(x) || is.null(min) || is.null(max) ||
+      !is.numeric(x) || !is.numeric(min) || !is.numeric(max) ||
       !is.logical(log)) {
     stop("invalid arguments")
   }
-  if (length(min) > 1) {
-    min <- min[1]
+
+  d <- if (length(min) + length(max) + length(mode) == 3L) {
+    dtriang_sca(x, min, max, mode)
+  } else {
+    suppressWarnings(dtriang_vec(x, min, max, mode))
   }
-  if (length(max) > 1) {
-    max <- max[1]
-  }
-  if (length(mode) > 1) {
-    mode <- mode[1]
-  }
-  if (length(log) > 1) {
-    log <- log[1]
-  }
-  if (any(is.infinite(c(min, max, mode))) ||
-      mode < min || mode > max || min == max) {
+
+  # If log has length > 1, only the first element will be used
+  suppressWarnings(
+    if (log) {
+      d <- log(d)
+    }
+  )
+
+  if (anyNA(d)) {
     warning("NaNs produced")
-    return(rep(NaN, length(x)))
+  }
+  d
+}
+
+dtriang_sca <- function(x, min, max, mode) {
+  if (is.infinite(min) || is.infinite(max) || is.infinite(mode) ||
+      mode < min || mode > max || min == max) {
+    return(.Internal(rep.int(NaN, length(q))))
   }
 
-  zero <- x < min | x > max
-  lower <- min <= x & x < mode
-  mid <- x == mode
-  upper <- mode < x & x <= max
-  x[zero] <- 0
-  x[lower] <- 2 * (x[lower] - min) / (max - min) / (mode - min)
-  x[mid] <- 2 / (max - min)
-  x[upper] <- 2 * (max - x[upper]) / (max - min) / (max - mode)
+  d <- 2L * (x - min) / ((max - min) * (mode - min))
+  u <- mode < x & x <= max
+  d[u] <- 2L * (max - x[u]) / ((max - min) * (max - mode))
+  d[x < min | x > max] <- 0L
+  d
+}
 
-  if (log) log(x) else x
+dtriang_vec <- function(x, min, max, mode) {
+  lo <- max(length(x), length(min), length(max), length(mode))
+  min <- .Internal(rep_len(min, lo))
+  max <- .Internal(rep_len(max, lo))
+  mode <- .Internal(rep_len(mode, lo))
+
+  d <- 2L * (x - min) / ((max - min) * (mode - min))
+  u <- .Internal(which(mode < x))
+  d[u] <- (2L * (max - x) / ((max - min) * (max - mode)))[u]
+  d[x < min | x > max] <- 0L
+  d[mode < min | mode > max | min == max |
+      is.infinite(min) | is.infinite(max) | is.infinite(mode) |
+      is.na(p)] <- NaN
+  d
 }
