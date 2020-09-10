@@ -1,5 +1,6 @@
 #' @include dtriang.R
 #' @rdname Triangular
+#' @importFrom vctrs vec_recycle_common
 #' @export
 ptriang <- function(q, min = 0, max = 1, mode = 0.5, lower_tail = TRUE,
                     log_p = FALSE) {

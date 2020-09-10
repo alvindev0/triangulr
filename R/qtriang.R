@@ -1,6 +1,6 @@
 #' @include dtriang.R
 #' @rdname Triangular
-#' @importFrom vctrs vec_recycle
+#' @importFrom vctrs vec_recycle_common
 #' @export
 qtriang <- function(p, min = 0, max = 1, mode = 0.5, lower_tail = TRUE,
                     log_p = FALSE) {

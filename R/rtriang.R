@@ -1,5 +1,6 @@
 #' @include dtriang.R
 #' @rdname Triangular
+#' @importFrom vctrs vec_recycle_common
 #' @export
 rtriang <- function(n, min = 0, max = 1, mode = 0.5) {
   if (is.null(n) || is.null(min) || is.null(max) || is.null(mode)) {
@@ -9,6 +10,10 @@ rtriang <- function(n, min = 0, max = 1, mode = 0.5) {
   if (!is.numeric(n) || !is.numeric(min) || !is.numeric(max) ||
       !is.numeric(mode)) {
     stop("\nArguments n, min, max, and mode must have numeric values.")
+  }
+
+  if (length(n) != 1L) {
+    stop("\nArgument n must have a single numeric value.")
   }
 
   tryCatch({
