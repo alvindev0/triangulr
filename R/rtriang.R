@@ -1,5 +1,6 @@
 #' @include dtriang.R
 #' @rdname Triangular
+#' @importFrom stats runif
 #' @importFrom vctrs vec_recycle_common
 #' @export
 rtriang <- function(n, min = 0, max = 1, mode = 0.5) {

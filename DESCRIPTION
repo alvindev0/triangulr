@@ -24,4 +24,7 @@ LinkingTo:
     Rcpp
 Imports: 
     Rcpp,
+    stats,
     vctrs
+Suggests: 
+    testthat
