@@ -4,6 +4,8 @@
 #' @export
 qtriang <- function(p, min = 0, max = 1, mode = 0.5, lower_tail = TRUE,
                     log_p = FALSE) {
+  p_size <- length(p)
+
   if (is.null(p) || is.null(min) || is.null(max) || is.null(mode)) {
     stop("\nArguments p, min, max, and mode must have non-NULL values.")
   }
@@ -13,18 +15,14 @@ qtriang <- function(p, min = 0, max = 1, mode = 0.5, lower_tail = TRUE,
     stop("\nArguments p, min, max, and mode must have numeric values.")
   }
 
-  if (!is.logical(lower.tail) || length(lower.tail) > 1L || !is.logical(log.p)
-      || length(log.p) > 1L) {
-    stop(paste0("\nArguments lower_tail and log_p must have logical values of ",
-                "length one each."))
+  if (!is.logical(lower_tail) || length(lower_tail) > 1L || !is.logical(log_p)
+      || length(log_p) > 1L) {
+    stop(paste0("\nArguments lower_tail and log_p must have a single logical ",
+                "value each."))
   }
 
-  p_size <- length(p)
-
   tryCatch({
-    min <- vctrs::vec_recycle(min, p_size)
-    max <- vctrs::vec_recycle(max, p_size)
-    mode <- vctrs::vec_recycle(mode, p_size)
+    params <- vctrs::vec_recycle_common(min, max, mode, .size = p_size)
   }, error = function(c) {
     stop(paste0("\nArguments min, max, and mode must be values of length ",
                 "equal to length of p or one. \nOnly values of length one are ",
@@ -32,8 +30,8 @@ qtriang <- function(p, min = 0, max = 1, mode = 0.5, lower_tail = TRUE,
   })
 
   if (p_size == 1L) {
-    QTriangC(p, min, max, mode)
+    QTriangC(p, min, max, mode, lower_tail, log_p)
   } else {
-    QTriangC2(p, min, max, mode)
+    QTriangC2(p, params[[1]], params[[2]], params[[3]], lower_tail, log_p)
   }
 }

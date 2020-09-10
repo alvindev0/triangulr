@@ -5,21 +5,21 @@
 
 using namespace Rcpp;
 
-Rcpp::NumericVector RTriang(int n, double min, double max, double mode) {
-  Rcpp::NumericVector p = Rcpp::NumericVector(Rcpp::runif(n));
-  return QTriang(p, min, max, mode, true, false);
+Rcpp::NumericVector RTriang(int n, double min, double max, double mode)
+{
+  return QTriang(Rcpp::runif(n), min, max, mode, true, false);
 }
 
 Rcpp::NumericVector RTriang(
     int n, Rcpp::NumericVector min, Rcpp::NumericVector max,
     Rcpp::NumericVector mode
 ) {
-  Rcpp::NumericVector p = Rcpp::NumericVector(Rcpp::runif(n));
-  return QTriang(p, min, max, mode, true, false);
+  return QTriang(Rcpp::runif(n), min, max, mode, true, false);
 }
 
 // [[Rcpp::export]]
-Rcpp::NumericVector RTriangC(int n, double min, double max, double mode) {
+Rcpp::NumericVector RTriangC(int n, double min, double max, double mode)
+{
   return RTriang(n, min, max, mode);
 }
 
@@ -32,5 +32,5 @@ Rcpp::NumericVector RTriangC2(
 }
 
 /*** R
-# C_rtriang(10, 0, 1, 0.5)
+
 */

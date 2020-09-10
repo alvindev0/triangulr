@@ -12,27 +12,31 @@ Rcpp::NumericVector QTriang(
   {
     p = Rcpp::exp(p);
   }
+
   if (!lower_tail)
   {
     p = 1 - p;
   }
+
   int n = p.size();
+
   if (min >= max || mode > max || min > mode)
   {
-    // Rcpp::warning("NaNs produced."
-    //                 "min must be less than max,"
-    //                 "min must be less than or equal to mode,"
-    //                 "and mode must be less than or equal to max.");
+    Rcpp::warning("\nNaN(s) produced."
+                    "\n* min must be less than max"
+                    "\n* min must be less than or equal to mode"
+                    "\n* mode must be less than or equal to max.");
     return Rcpp::NumericVector(n, R_NaN);
   }
+
   Rcpp::NumericVector q(n);
   double int_len = max - min;
   for (int i = 0; i < n; i++)
   {
     if (p[i] < 0 || p[i] > 1)
     {
-      // Rcpp::warning("NaN produced."
-      //                 "p must be between 0 and 1 inclusive.");
+      Rcpp::warning("\nNaN produced."
+                      "\n* p must be between 0 and 1 inclusive");
       q[i] = R_NaN;
     }
     else if (p[i] < (mode - min) / int_len)
@@ -44,6 +48,7 @@ Rcpp::NumericVector QTriang(
       q[i] = max - sqrt((1.0 - p[i]) * int_len * (max - mode));
     }
   }
+
   return q;
 }
 
@@ -55,26 +60,29 @@ Rcpp::NumericVector QTriang(
   {
     p = Rcpp::exp(p);
   }
+
   if (!lower_tail)
   {
     p = 1 - p;
   }
+
   int n = p.size();
+
   Rcpp::NumericVector q(n);
   for (int i = 0; i < n; i++)
   {
     if (min[i] >= max[i] || mode[i] > max[i] || min[i] > mode[i])
     {
-      // Rcpp::warning("NaN produced."
-      //                 "min must be less than max,"
-      //                 "min must be less than or equal to mode,"
-      //                 "and mode must be less than or equal to max.");
+      Rcpp::warning("\nNaN produced."
+                      "\n* min must be less than max"
+                      "\n* min must be less than or equal to mode"
+                      "\n* mode must be less than or equal to max");
       q[i] = R_NaN;
     }
     else if (p[i] < 0 || p[i] > 1)
     {
-      // Rcpp::warning("NaN produced."
-      //                 "p must be between 0 and 1 inclusive.");
+      Rcpp::warning("\nNaN produced."
+                      "\n* p must be between 0 and 1 inclusive.");
       q[i] = R_NaN;
     }
     else if (p[i] < (mode[i] - min[i]) / (max[i] - min[i]))
@@ -86,6 +94,7 @@ Rcpp::NumericVector QTriang(
       q[i] = max[i] - sqrt((1 - p[i]) * (max[i] - min[i]) * (max[i] - mode[i]));
     }
   }
+
   return q;
 }
 
