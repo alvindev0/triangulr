@@ -23,5 +23,5 @@ Collate:
 LinkingTo: 
     Rcpp
 Imports: 
-    Rcpp
+    Rcpp,
     vctrs
