@@ -20,23 +20,18 @@ ptriang(
   log.p = FALSE
 )
 
-qtriang(
-  p,
-  min = 0,
-  max = 1,
-  mode = (min + max)/2,
-  lower.tail = TRUE,
-  log.p = FALSE
-)
+qtriang(p, min = 0, max = 1, mode = 0.5, lower_tail = TRUE, log_p = FALSE)
 
-rtriang(n, min = 0, max = 1, mode = (min + max)/2)
+rtriang(n, min = 0, max = 1, mode = 0.5)
 }
 \arguments{
 \item{x, q}{vector of quantiles.}
 
-\item{min, max}{lower and upper limits of the distribution. Must be finite.}
+\item{min}{lower limit of the distribution. Must be less than max.}
 
-\item{mode}{mode of the distribution. Must be finite.}
+\item{max}{upper limit of the distribution. Must be greater than min.}
+
+\item{mode}{mode of the distribution. Must be greater or equal to min and less than or equal to max.}
 
 \item{log, log.p}{logical; if \code{TRUE}, probabilities p are given as
 \code{log(p)}.}
@@ -59,9 +54,8 @@ The length of the result is determined by \code{n} for \code{rtriang}, and
 is the maximum of the lengths of the numerical arguments for the other
 functions.
 
-TODO:
 The numerical arguments other than \code{n} are recycled to the length of
-the result.  Only the first elements of the logical arguments are used.
+the result. Only the first elements of the logical arguments are used.
 }
 \description{
 These functions provide information about the triangular
@@ -85,9 +79,10 @@ for \eqn{min \le x < mode}, and
   (max-mode)}
 for \eqn{mode < x \le max}.
 
-TODO: \code{rtriang} will not generate either of the extreme values unless
-\code{max == min} or \code{max-min} is small compared to \code{min}, and in
-particular not for the default arguments.
+\code{rtriang} depends on \code{\link{runif}} and therefore, will not generate
+either of the extreme values unless \code{max == min} or \code{max-min} is
+small compared to \code{min}, and in particular not for the default
+arguments.
 }
 \note{
 The characteristics of output from pseudo-random number generators

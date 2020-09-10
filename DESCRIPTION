@@ -11,10 +11,16 @@ Description: triangulr provides high-performance distribution functions for the
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+ByteCompile: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Collate: 
+    'RcppExports.R'
     'dtriang.R'
     'ptriang.R'
     'qtriang.R'
     'rtriang.R'
+LinkingTo: 
+    Rcpp
+Imports: 
+    Rcpp
