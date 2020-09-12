@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-Rcpp::NumericVector DTriang(
+Rcpp::NumericVector DTri(
     Rcpp::NumericVector x, double min, double max, double mode, bool log
 ) {
   int n = x.size();
@@ -41,7 +41,7 @@ Rcpp::NumericVector DTriang(
   return d;
 }
 
-Rcpp::NumericVector DTriang(
+Rcpp::NumericVector DTri(
     Rcpp::NumericVector x, Rcpp::NumericVector min, Rcpp::NumericVector max,
     Rcpp::NumericVector mode, bool log
 ) {
@@ -81,18 +81,18 @@ Rcpp::NumericVector DTriang(
 }
 
 // [[Rcpp::export]]
-Rcpp::NumericVector DTriangC(
+Rcpp::NumericVector DTriC(
     Rcpp::NumericVector x, double min, double max, double mode, bool log
 ) {
-  return DTriang(x, min, max, mode, log);
+  return DTri(x, min, max, mode, log);
 }
 
 // [[Rcpp::export]]
-Rcpp::NumericVector DTriangC2(
+Rcpp::NumericVector DTriC2(
     Rcpp::NumericVector x, Rcpp::NumericVector min, Rcpp::NumericVector max,
     Rcpp::NumericVector mode, bool log
 ) {
-  return DTriang(x, min, max, mode, log);
+  return DTri(x, min, max, mode, log);
 }
 
 /*** R

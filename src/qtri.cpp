@@ -1,10 +1,10 @@
 #include <Rcpp.h>
 
-#include "qtriang.h"
+#include "qtri.h"
 
 using namespace Rcpp;
 
-Rcpp::NumericVector QTriang(
+Rcpp::NumericVector QTri(
     Rcpp::NumericVector p, double min, double max, double mode, bool lower_tail,
     bool log_p
 ) {
@@ -52,7 +52,7 @@ Rcpp::NumericVector QTriang(
   return q;
 }
 
-Rcpp::NumericVector QTriang(
+Rcpp::NumericVector QTri(
     Rcpp::NumericVector p, Rcpp::NumericVector min, Rcpp::NumericVector max,
     Rcpp::NumericVector mode, bool lower_tail, bool log_p
 ) {
@@ -99,19 +99,19 @@ Rcpp::NumericVector QTriang(
 }
 
 // [[Rcpp::export]]
-Rcpp::NumericVector QTriangC(
+Rcpp::NumericVector QTriC(
     Rcpp::NumericVector p, double min, double max, double mode, bool lower_tail,
     bool log_p
 ) {
-  return QTriang(p, min, max, mode, lower_tail, log_p);
+  return QTri(p, min, max, mode, lower_tail, log_p);
 }
 
 // [[Rcpp::export]]
-Rcpp::NumericVector QTriangC2(
+Rcpp::NumericVector QTriC2(
     Rcpp::NumericVector p, Rcpp::NumericVector min, Rcpp::NumericVector max,
     Rcpp::NumericVector mode, bool lower_tail, bool log_p
 ) {
-  return QTriang(p, min, max, mode, lower_tail, log_p);
+  return QTri(p, min, max, mode, lower_tail, log_p);
 }
 
 /*** R

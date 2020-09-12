@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-Rcpp::NumericVector PTriang(
+Rcpp::NumericVector PTri(
     Rcpp::NumericVector q, double min, double max, double mode, bool lower_tail,
     bool log_p
 ) {
@@ -51,7 +51,7 @@ Rcpp::NumericVector PTriang(
   return p;
 }
 
-Rcpp::NumericVector PTriang(
+Rcpp::NumericVector PTri(
     Rcpp::NumericVector q, Rcpp::NumericVector min, Rcpp::NumericVector max,
     Rcpp::NumericVector mode, bool lower_tail, bool log_p
 ) {
@@ -101,19 +101,19 @@ Rcpp::NumericVector PTriang(
 }
 
 // [[Rcpp::export]]
-Rcpp::NumericVector PTriangC(
+Rcpp::NumericVector PTriC(
     Rcpp::NumericVector x, double min, double max, double mode, bool lower_tail,
     bool log_p
 ) {
-  return PTriang(x, min, max, mode, lower_tail, log_p);
+  return PTri(x, min, max, mode, lower_tail, log_p);
 }
 
 // [[Rcpp::export]]
-Rcpp::NumericVector PTriangC2(
+Rcpp::NumericVector PTriC2(
     Rcpp::NumericVector x, Rcpp::NumericVector min, Rcpp::NumericVector max,
     Rcpp::NumericVector mode, bool lower_tail, bool log_p
 ) {
-  return PTriang(x, min, max, mode, lower_tail, log_p);
+  return PTri(x, min, max, mode, lower_tail, log_p);
 }
 
 /*** R

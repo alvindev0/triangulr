@@ -1,11 +1,10 @@
-#' @include dtriang.R
-#' @rdname Triangular
-#' @importFrom vctrs vec_recycle_common
-#' @export
-qtriang <- function(p, min = 0, max = 1, mode = 0.5, lower_tail = TRUE,
-                    log_p = FALSE) {
-  p_size <- length(p)
+# Quantile Function
 
+#' @include Triangular.R
+#' @rdname Triangular
+#' @export
+qtri <- function(p, min = 0, max = 1, mode = 0.5, lower_tail = TRUE,
+                    log_p = FALSE) {
   if (is.null(p) || is.null(min) || is.null(max) || is.null(mode)) {
     stop("\nArguments p, min, max, and mode must have non-NULL values.")
   }
@@ -21,6 +20,8 @@ qtriang <- function(p, min = 0, max = 1, mode = 0.5, lower_tail = TRUE,
                 "value each."))
   }
 
+  p_size <- length(p)
+
   tryCatch({
     params <- vctrs::vec_recycle_common(min, max, mode, .size = p_size)
   }, error = function(c) {
@@ -30,8 +31,8 @@ qtriang <- function(p, min = 0, max = 1, mode = 0.5, lower_tail = TRUE,
   })
 
   if (p_size == 1L) {
-    QTriangC(p, min, max, mode, lower_tail, log_p)
+    QTriC(p, min, max, mode, lower_tail, log_p)
   } else {
-    QTriangC2(p, params[[1]], params[[2]], params[[3]], lower_tail, log_p)
+    QTriC2(p, params[[1]], params[[2]], params[[3]], lower_tail, log_p)
   }
 }

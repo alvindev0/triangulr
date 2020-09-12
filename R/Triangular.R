@@ -4,13 +4,16 @@
 #'
 #' @description These functions provide information about the triangular
 #'  distribution on the interval from \code{min} to \code{max} with mode equal
-#'  to \code{mode}. \code{dtriang} gives the density function, \code{ptriang}
-#'  gives the distribution function, \code{qtriang} gives the quantile function,
-#'  and \code{rtriang} generates random deviates.
+#'  to \code{mode}. \code{ctri} gives the characteristic function, \code{dtri}
+#'  gives the density function, \code{etri} gives the expected shortfall,
+#'  \code{mtri} gives the moment generating function, \code{ptri} gives the
+#'  distribution function, \code{qtri} gives the quantile function, \code{rtri}
+#'  generates random deviates, and \code{vtri} gives the value at risk.
 #'
 #' @param x,q Vector of quantiles.
 #' @param p Vector of probabilities.
 #' @param n Number of observations. Must have length of one.
+#' @param t TODO: Add description.
 #' @param min Lower limit of the distribution. Must have \code{min} \eqn{<}
 #'  \code{max}. Default value is \code{0}.
 #' @param max Upper limit of the distribution. Must have \code{max} \eqn{>}
@@ -38,20 +41,20 @@
 #'   (max - min)(max - mode)}
 #'  for \eqn{mode < x \le max}.
 #'
-#'  \code{rtriang} will not generate either of the extreme values unless
+#'  \code{rtri} will not generate either of the extreme values unless
 #'  \code{max - min} is small compared to \code{min}, and in particular not for
 #'  the default arguments.
 #'
 #' @return
-#'  \code{dtriang} gives the density function,
-#'  \code{ptriang} gives the distribution function,
-#'  \code{qtriang} gives the quantile function, and
-#'  \code{rtriang} generates random deviates.
+#'  \code{dtri} gives the density function,
+#'  \code{ptri} gives the distribution function,
+#'  \code{qtri} gives the quantile function, and
+#'  \code{rtri} generates random deviates.
 #'
 #'  The numerical arguments other than \code{n} with values of size one are
-#'  recycled to the length of \code{x} for \code{dtriang}, the length of
-#'  \code{q} for \code{ptriang}, the length of \code{p} for \code{qtriang}, and
-#'  \code{n} for \code{rtriang}. This determines the length of the result.
+#'  recycled to the length of \code{x} for \code{dtri}, the length of
+#'  \code{q} for \code{ptri}, the length of \code{p} for \code{qtri}, and
+#'  \code{n} for \code{rtri}. This determines the length of the result.
 #'
 #'  The logical arguments \code{log}, \code{lower_tail}, and \code{log_p} must
 #'  be of length one each.
@@ -71,89 +74,58 @@
 #' @importFrom Rcpp sourceCpp
 #' @importFrom vctrs vec_recycle_common
 #'
-#' @export
-#'
 #' @examples
 #'  x <- seq(0.1, 1, 0.1)
 #'
 #'  # min, max, and mode will be recycled to the length of x
-#'  recycle_d <- dtriang(x, min = 0, max = 1, mode = 0.5)
+#'  recycle_d <- dtri(x, min = 0, max = 1, mode = 0.5)
 #'
 #'  # min, max, and mode with lengths equal to the length of x
-#'  d <- dtriang(x,
-#'               min  = rep.int(0, 10),
-#'               max  = rep.int(1, 10),
-#'               mode = rep.int(0.5, 10))
+#'  d <- dtri(x,
+#'            min  = rep.int(0, 10),
+#'            max  = rep.int(1, 10),
+#'            mode = rep.int(0.5, 10))
 #'  all.equal(recycle_d, d)
 #'
 #'  n <- 10
 #'
 #'  # min, max, and mode will be recycled to the length of n
 #'  set.seed(1)
-#'  recycle_r <- rtriang(n, min = 0, max = 1, mode = 0.5)
+#'  recycle_r <- rtri(n, min = 0, max = 1, mode = 0.5)
 #'
 #'  # min, max, and mode with lengths equal to the length of x
 #'  set.seed(1)
-#'  r <- rtriang(n,
-#'               min  = rep.int(0, 10),
-#'               max  = rep.int(1, 10),
-#'               mode = rep.int(0.5, 10))
+#'  r <- rtri(n,
+#'            min  = rep.int(0, 10),
+#'            max  = rep.int(1, 10),
+#'            mode = rep.int(0.5, 10))
 #'  all.equal(recycle_r, r)
 #'
 #'  # Log quantiles is also supported through the log argument
-#'  log_d <- dtriang(x, log = TRUE)
-#'  d <- dtriang(x, log = FALSE)
+#'  log_d <- dtri(x, log = TRUE)
+#'  d <- dtri(x, log = FALSE)
 #'  all.equal(log(d), log_d)
 #'
 #'  q <- x
 #'
 #'  # Upper tail probabilities is supported through the lower_tail argument
-#'  upper_p <- ptriang(q, lower_tail = FALSE)
-#'  p <- ptriang(q, lower_tail = TRUE)
+#'  upper_p <- ptri(q, lower_tail = FALSE)
+#'  p <- ptri(q, lower_tail = TRUE)
 #'  all.equal(upper_p, 1 - p)
 #'
 #'  # Log probabilities is supported through the log_p argument
-#'  log_p <- ptriang(q, log_p = TRUE)
-#'  p <- ptriang(q, log_p = FALSE)
+#'  log_p <- ptri(q, log_p = TRUE)
+#'  p <- ptri(q, log_p = FALSE)
 #'  all.equal(upper_p, 1 - p)
 #'
 #'  p <- q
 #'
 #'  # The same applies to the quantile function
-#'  upper_q <- ptriang(1 - p, lower_tail = FALSE)
-#'  q <- ptriang(p, lower_tail = TRUE)
+#'  upper_q <- ptri(1 - p, lower_tail = FALSE)
+#'  q <- ptri(p, lower_tail = TRUE)
 #'  all.equal(upper_q, q)
 #'
-#'  log_q <- qtriang(log(p), log_p = TRUE)
-#'  q <- qtriang(p, log_p = FALSE)
+#'  log_q <- qtri(log(p), log_p = TRUE)
+#'  q <- qtri(p, log_p = FALSE)
 #'  all.equal(log_q, q)
-dtriang <- function(x, min = 0, max = 1, mode = 0.5, log = FALSE) {
-  if (is.null(x) || is.null(min) || is.null(max) || is.null(mode)) {
-    stop("\nArguments x, min, max, and mode must have non-NULL values.")
-  }
-
-  if (!is.numeric(x) || !is.numeric(min) || !is.numeric(max) ||
-      !is.numeric(mode)) {
-    stop("\nArguments x, min, max, and mode must have numeric values.")
-  }
-
-  if (!is.logical(log) || length(log) > 1L) {
-    stop(paste0("\nArgument log must have a single logical value."))
-  }
-
-  x_size <- length(x)
-
-  tryCatch({
-    params <- vctrs::vec_recycle_common(min, max, mode, .size = x_size)
-  }, error = function(c) {
-    stop(paste0("\nArguments min, max, and mode must be values of length ",
-                "equal to length of x or one. \nOnly values of length one are ",
-                "recycled."))
-  })
-
-  if (x_size == 1L) {
-    DTriangC(x, min, max, mode, log)
-  } else {
-    DTriangC2(x, params[[1]], params[[2]], params[[3]], log)
-  }
-}
+NULL

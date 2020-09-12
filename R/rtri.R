@@ -1,9 +1,10 @@
-#' @include dtriang.R
+# Random Deviates Generator Function
+
+#' @include Triangular.R
 #' @rdname Triangular
 #' @importFrom stats runif
-#' @importFrom vctrs vec_recycle_common
 #' @export
-rtriang <- function(n, min = 0, max = 1, mode = 0.5) {
+rtri <- function(n, min = 0, max = 1, mode = 0.5) {
   if (is.null(n) || is.null(min) || is.null(max) || is.null(mode)) {
     stop("\nArguments n, min, max, and mode must have non-NULL values.")
   }
@@ -26,8 +27,8 @@ rtriang <- function(n, min = 0, max = 1, mode = 0.5) {
   })
 
   if (n == 1L) {
-    RTriangC(n, min, max, mode)
+    RTriC(n, min, max, mode)
   } else {
-    RTriangC2(n, params[[1]], params[[2]], params[[3]])
+    RTriC2(n, params[[1]], params[[2]], params[[3]])
   }
 }

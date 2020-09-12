@@ -1,8 +1,9 @@
-#' @include dtriang.R
+# Cumulative Distribution Function
+
+#' @include Triangular.R
 #' @rdname Triangular
-#' @importFrom vctrs vec_recycle_common
 #' @export
-ptriang <- function(q, min = 0, max = 1, mode = 0.5, lower_tail = TRUE,
+ptri <- function(q, min = 0, max = 1, mode = 0.5, lower_tail = TRUE,
                     log_p = FALSE) {
   if (is.null(q) || is.null(min) || is.null(max) || is.null(mode)) {
     stop("\nArguments q, min, max, and mode must have non-NULL values.")
@@ -30,8 +31,8 @@ ptriang <- function(q, min = 0, max = 1, mode = 0.5, lower_tail = TRUE,
   })
 
   if (q_size == 1L) {
-    PTriangC(q, min, max, mode, lower_tail, log_p)
+    PTriC(q, min, max, mode, lower_tail, log_p)
   } else {
-    PTriangC2(q, params[[1]], params[[2]], params[[3]], lower_tail, log_p)
+    PTriC2(q, params[[1]], params[[2]], params[[3]], lower_tail, log_p)
   }
 }
