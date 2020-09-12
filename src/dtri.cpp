@@ -1,21 +1,21 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-Rcpp::NumericVector DTri(
-    Rcpp::NumericVector x, double min, double max, double mode, bool log
+NumericVector DTri(
+    NumericVector x, double min, double max, double mode, bool log
 ) {
   int n = x.size();
 
   if (min >= max || mode > max || min > mode)
   {
-    Rcpp::warning("\nNaN(s) produced."
-                    "\n* min must be less than max"
-                    "\n* min must be less than or equal to mode"
-                    "\n* mode must be less than or equal to max.");
-    return Rcpp::NumericVector(n, R_NaN);
+    warning("\nNaN(s) produced."
+              "\n* min must be less than max"
+              "\n* min must be less than or equal to mode"
+              "\n* mode must be less than or equal to max.");
+    return NumericVector(n, R_NaN);
   }
 
-  Rcpp::NumericVector d(n);
+  NumericVector d(n);
   double int_len = max - min;
   for (int i = 0; i < n; i++)
   {
@@ -41,21 +41,21 @@ Rcpp::NumericVector DTri(
   return d;
 }
 
-Rcpp::NumericVector DTri(
-    Rcpp::NumericVector x, Rcpp::NumericVector min, Rcpp::NumericVector max,
-    Rcpp::NumericVector mode, bool log
+NumericVector DTri(
+    NumericVector x, NumericVector min, NumericVector max, NumericVector mode,
+    bool log
 ) {
   int n = x.size();
 
-  Rcpp::NumericVector d(n);
+  NumericVector d(n);
   for (int i = 0; i < n; i++)
   {
     if (min[i] >= max[i] || mode[i] > max[i] || min[i] > mode[i])
     {
-      Rcpp::warning("\nNaN produced."
-                      "\n* min must be less than max"
-                      "\n* min must be less than or equal to mode"
-                      "\n* mode must be less than or equal to max");
+      warning("\nNaN produced."
+                "\n* min must be less than max"
+                "\n* min must be less than or equal to mode"
+                "\n* mode must be less than or equal to max");
       d[i] = R_NaN;
     }
     else if (x[i] < min[i] || x[i] > max[i])
@@ -81,16 +81,16 @@ Rcpp::NumericVector DTri(
 }
 
 // [[Rcpp::export]]
-Rcpp::NumericVector DTriC(
-    Rcpp::NumericVector x, double min, double max, double mode, bool log
+NumericVector DTriC(
+    NumericVector x, double min, double max, double mode, bool log
 ) {
   return DTri(x, min, max, mode, log);
 }
 
 // [[Rcpp::export]]
-Rcpp::NumericVector DTriC2(
-    Rcpp::NumericVector x, Rcpp::NumericVector min, Rcpp::NumericVector max,
-    Rcpp::NumericVector mode, bool log
+NumericVector DTriC2(
+    NumericVector x, NumericVector min, NumericVector max, NumericVector mode,
+    bool log
 ) {
   return DTri(x, min, max, mode, log);
 }

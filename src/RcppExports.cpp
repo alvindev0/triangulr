@@ -34,12 +34,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // DTriC
-Rcpp::NumericVector DTriC(Rcpp::NumericVector x, double min, double max, double mode, bool log);
+NumericVector DTriC(NumericVector x, double min, double max, double mode, bool log);
 RcppExport SEXP _triangulr_DTriC(SEXP xSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP modeSEXP, SEXP logSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
     Rcpp::traits::input_parameter< double >::type min(minSEXP);
     Rcpp::traits::input_parameter< double >::type max(maxSEXP);
     Rcpp::traits::input_parameter< double >::type mode(modeSEXP);
@@ -49,15 +49,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // DTriC2
-Rcpp::NumericVector DTriC2(Rcpp::NumericVector x, Rcpp::NumericVector min, Rcpp::NumericVector max, Rcpp::NumericVector mode, bool log);
+NumericVector DTriC2(NumericVector x, NumericVector min, NumericVector max, NumericVector mode, bool log);
 RcppExport SEXP _triangulr_DTriC2(SEXP xSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP modeSEXP, SEXP logSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type x(xSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type min(minSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type max(maxSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type mode(modeSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type min(minSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type max(maxSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type mode(modeSEXP);
     Rcpp::traits::input_parameter< bool >::type log(logSEXP);
     rcpp_result_gen = Rcpp::wrap(DTriC2(x, min, max, mode, log));
     return rcpp_result_gen;
@@ -92,12 +92,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // PTriC
-Rcpp::NumericVector PTriC(Rcpp::NumericVector x, double min, double max, double mode, bool lower_tail, bool log_p);
+NumericVector PTriC(NumericVector x, double min, double max, double mode, bool lower_tail, bool log_p);
 RcppExport SEXP _triangulr_PTriC(SEXP xSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP modeSEXP, SEXP lower_tailSEXP, SEXP log_pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
     Rcpp::traits::input_parameter< double >::type min(minSEXP);
     Rcpp::traits::input_parameter< double >::type max(maxSEXP);
     Rcpp::traits::input_parameter< double >::type mode(modeSEXP);
@@ -108,15 +108,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // PTriC2
-Rcpp::NumericVector PTriC2(Rcpp::NumericVector x, Rcpp::NumericVector min, Rcpp::NumericVector max, Rcpp::NumericVector mode, bool lower_tail, bool log_p);
+NumericVector PTriC2(NumericVector x, NumericVector min, NumericVector max, NumericVector mode, bool lower_tail, bool log_p);
 RcppExport SEXP _triangulr_PTriC2(SEXP xSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP modeSEXP, SEXP lower_tailSEXP, SEXP log_pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type x(xSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type min(minSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type max(maxSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type mode(modeSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type min(minSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type max(maxSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type mode(modeSEXP);
     Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
     Rcpp::traits::input_parameter< bool >::type log_p(log_pSEXP);
     rcpp_result_gen = Rcpp::wrap(PTriC2(x, min, max, mode, lower_tail, log_p));
@@ -124,12 +124,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // QTriC
-Rcpp::NumericVector QTriC(Rcpp::NumericVector p, double min, double max, double mode, bool lower_tail, bool log_p);
+NumericVector QTriC(NumericVector p, double min, double max, double mode, bool lower_tail, bool log_p);
 RcppExport SEXP _triangulr_QTriC(SEXP pSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP modeSEXP, SEXP lower_tailSEXP, SEXP log_pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type p(pSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type p(pSEXP);
     Rcpp::traits::input_parameter< double >::type min(minSEXP);
     Rcpp::traits::input_parameter< double >::type max(maxSEXP);
     Rcpp::traits::input_parameter< double >::type mode(modeSEXP);
@@ -140,15 +140,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // QTriC2
-Rcpp::NumericVector QTriC2(Rcpp::NumericVector p, Rcpp::NumericVector min, Rcpp::NumericVector max, Rcpp::NumericVector mode, bool lower_tail, bool log_p);
+NumericVector QTriC2(NumericVector p, NumericVector min, NumericVector max, NumericVector mode, bool lower_tail, bool log_p);
 RcppExport SEXP _triangulr_QTriC2(SEXP pSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP modeSEXP, SEXP lower_tailSEXP, SEXP log_pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type p(pSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type min(minSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type max(maxSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type mode(modeSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type p(pSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type min(minSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type max(maxSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type mode(modeSEXP);
     Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
     Rcpp::traits::input_parameter< bool >::type log_p(log_pSEXP);
     rcpp_result_gen = Rcpp::wrap(QTriC2(p, min, max, mode, lower_tail, log_p));
@@ -156,7 +156,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // RTriC
-Rcpp::NumericVector RTriC(int n, double min, double max, double mode);
+NumericVector RTriC(int n, double min, double max, double mode);
 RcppExport SEXP _triangulr_RTriC(SEXP nSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP modeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -170,15 +170,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // RTriC2
-Rcpp::NumericVector RTriC2(int n, Rcpp::NumericVector min, Rcpp::NumericVector max, Rcpp::NumericVector mode);
+NumericVector RTriC2(int n, NumericVector min, NumericVector max, NumericVector mode);
 RcppExport SEXP _triangulr_RTriC2(SEXP nSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP modeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< int >::type n(nSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type min(minSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type max(maxSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type mode(modeSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type min(minSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type max(maxSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type mode(modeSEXP);
     rcpp_result_gen = Rcpp::wrap(RTriC2(n, min, max, mode));
     return rcpp_result_gen;
 END_RCPP

@@ -1,22 +1,22 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-Rcpp::NumericVector PTri(
-    Rcpp::NumericVector q, double min, double max, double mode, bool lower_tail,
+NumericVector PTri(
+    NumericVector q, double min, double max, double mode, bool lower_tail,
     bool log_p
 ) {
   int n = q.size();
 
   if (min >= max || mode > max || min > mode)
   {
-    Rcpp::warning("\nNaN(s) produced."
-                    "\n* min must be less than max"
-                    "\n* min must be less than or equal to mode"
-                    "\n* mode must be less than or equal to max.");
-    return Rcpp::NumericVector(n, R_NaN);
+    warning("\nNaN(s) produced."
+              "\n* min must be less than max"
+              "\n* min must be less than or equal to mode"
+              "\n* mode must be less than or equal to max.");
+    return NumericVector(n, R_NaN);
   }
 
-  Rcpp::NumericVector p(n);
+  NumericVector p(n);
   double int_len = max - min;
   for (int i = 0; i < n; i++)
   {
@@ -51,21 +51,21 @@ Rcpp::NumericVector PTri(
   return p;
 }
 
-Rcpp::NumericVector PTri(
-    Rcpp::NumericVector q, Rcpp::NumericVector min, Rcpp::NumericVector max,
-    Rcpp::NumericVector mode, bool lower_tail, bool log_p
+NumericVector PTri(
+    NumericVector q, NumericVector min, NumericVector max, NumericVector mode,
+    bool lower_tail, bool log_p
 ) {
   int n = q.size();
 
-  Rcpp::NumericVector p(n);
+  NumericVector p(n);
   for (int i = 0; i < n; i++)
   {
     if (min[i] >= max[i] || mode[i] > max[i] || min[i] > mode[i])
     {
-      Rcpp::warning("\nNaN produced."
-                      "\n* min must be less than max"
-                      "\n* min must be less than or equal to mode"
-                      "\n* mode must be less than or equal to max");
+      warning("\nNaN produced."
+                "\n* min must be less than max"
+                "\n* min must be less than or equal to mode"
+                "\n* mode must be less than or equal to max");
       p[i] = R_NaN;
     }
     else if (q[i] <= min[i])
@@ -101,17 +101,17 @@ Rcpp::NumericVector PTri(
 }
 
 // [[Rcpp::export]]
-Rcpp::NumericVector PTriC(
-    Rcpp::NumericVector x, double min, double max, double mode, bool lower_tail,
+NumericVector PTriC(
+    NumericVector x, double min, double max, double mode, bool lower_tail,
     bool log_p
 ) {
   return PTri(x, min, max, mode, lower_tail, log_p);
 }
 
 // [[Rcpp::export]]
-Rcpp::NumericVector PTriC2(
-    Rcpp::NumericVector x, Rcpp::NumericVector min, Rcpp::NumericVector max,
-    Rcpp::NumericVector mode, bool lower_tail, bool log_p
+NumericVector PTriC2(
+    NumericVector x, NumericVector min, NumericVector max, NumericVector mode,
+    bool lower_tail, bool log_p
 ) {
   return PTri(x, min, max, mode, lower_tail, log_p);
 }

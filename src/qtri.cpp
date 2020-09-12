@@ -4,13 +4,13 @@
 
 using namespace Rcpp;
 
-Rcpp::NumericVector QTri(
-    Rcpp::NumericVector p, double min, double max, double mode, bool lower_tail,
+NumericVector QTri(
+    NumericVector p, double min, double max, double mode, bool lower_tail,
     bool log_p
 ) {
   if (log_p)
   {
-    p = Rcpp::exp(p);
+    p = exp(p);
   }
 
   if (!lower_tail)
@@ -22,21 +22,21 @@ Rcpp::NumericVector QTri(
 
   if (min >= max || mode > max || min > mode)
   {
-    Rcpp::warning("\nNaN(s) produced."
-                    "\n* min must be less than max"
-                    "\n* min must be less than or equal to mode"
-                    "\n* mode must be less than or equal to max.");
-    return Rcpp::NumericVector(n, R_NaN);
+    warning("\nNaN(s) produced."
+              "\n* min must be less than max"
+              "\n* min must be less than or equal to mode"
+              "\n* mode must be less than or equal to max.");
+    return NumericVector(n, R_NaN);
   }
 
-  Rcpp::NumericVector q(n);
+  NumericVector q(n);
   double int_len = max - min;
   for (int i = 0; i < n; i++)
   {
     if (p[i] < 0 || p[i] > 1)
     {
-      Rcpp::warning("\nNaN produced."
-                      "\n* p must be between 0 and 1 inclusive");
+      warning("\nNaN produced."
+                "\n* p must be between 0 and 1 inclusive");
       q[i] = R_NaN;
     }
     else if (p[i] < (mode - min) / int_len)
@@ -52,13 +52,13 @@ Rcpp::NumericVector QTri(
   return q;
 }
 
-Rcpp::NumericVector QTri(
-    Rcpp::NumericVector p, Rcpp::NumericVector min, Rcpp::NumericVector max,
-    Rcpp::NumericVector mode, bool lower_tail, bool log_p
+NumericVector QTri(
+    NumericVector p, NumericVector min, NumericVector max, NumericVector mode,
+    bool lower_tail, bool log_p
 ) {
   if (log_p)
   {
-    p = Rcpp::exp(p);
+    p = exp(p);
   }
 
   if (!lower_tail)
@@ -68,21 +68,21 @@ Rcpp::NumericVector QTri(
 
   int n = p.size();
 
-  Rcpp::NumericVector q(n);
+  NumericVector q(n);
   for (int i = 0; i < n; i++)
   {
     if (min[i] >= max[i] || mode[i] > max[i] || min[i] > mode[i])
     {
-      Rcpp::warning("\nNaN produced."
-                      "\n* min must be less than max"
-                      "\n* min must be less than or equal to mode"
-                      "\n* mode must be less than or equal to max");
+      warning("\nNaN produced."
+                "\n* min must be less than max"
+                "\n* min must be less than or equal to mode"
+                "\n* mode must be less than or equal to max");
       q[i] = R_NaN;
     }
     else if (p[i] < 0 || p[i] > 1)
     {
-      Rcpp::warning("\nNaN produced."
-                      "\n* p must be between 0 and 1 inclusive.");
+      warning("\nNaN produced."
+                "\n* p must be between 0 and 1 inclusive.");
       q[i] = R_NaN;
     }
     else if (p[i] < (mode[i] - min[i]) / (max[i] - min[i]))
@@ -99,17 +99,17 @@ Rcpp::NumericVector QTri(
 }
 
 // [[Rcpp::export]]
-Rcpp::NumericVector QTriC(
-    Rcpp::NumericVector p, double min, double max, double mode, bool lower_tail,
+NumericVector QTriC(
+    NumericVector p, double min, double max, double mode, bool lower_tail,
     bool log_p
 ) {
   return QTri(p, min, max, mode, lower_tail, log_p);
 }
 
 // [[Rcpp::export]]
-Rcpp::NumericVector QTriC2(
-    Rcpp::NumericVector p, Rcpp::NumericVector min, Rcpp::NumericVector max,
-    Rcpp::NumericVector mode, bool lower_tail, bool log_p
+NumericVector QTriC2(
+    NumericVector p, NumericVector min, NumericVector max, NumericVector mode,
+    bool lower_tail, bool log_p
 ) {
   return QTri(p, min, max, mode, lower_tail, log_p);
 }
