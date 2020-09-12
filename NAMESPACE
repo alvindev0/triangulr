@@ -2,7 +2,6 @@
 
 export(ctri)
 export(dtri)
-export(dtri2)
 export(etri)
 export(mtri)
 export(ptri)

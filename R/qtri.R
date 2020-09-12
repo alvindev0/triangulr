@@ -20,19 +20,16 @@ qtri <- function(p, min = 0, max = 1, mode = 0.5, lower_tail = TRUE,
                 "value each."))
   }
 
-  p_size <- length(p)
-
-  tryCatch({
-    params <- vctrs::vec_recycle_common(min, max, mode, .size = p_size)
-  }, error = function(c) {
-    stop(paste0("\nArguments min, max, and mode must be values of length ",
-                "equal to length of p or one. \nOnly values of length one are ",
-                "recycled."))
-  })
-
-  if (p_size == 1L) {
+  if (length(min) == 1L && length(max) == 1L && length(mode) == 1L) {
     QTriC(p, min, max, mode, lower_tail, log_p)
   } else {
+    tryCatch({
+      params <- vctrs::vec_recycle_common(min, max, mode, .size = length(p))
+    }, error = function(c) {
+      stop(paste0("\nArguments min, max, and mode must be values of length ",
+                  "equal to length of p or one. \nOnly values of length one ",
+                  "are recycled."))
+    })
     QTriC2(p, params[[1]], params[[2]], params[[3]], lower_tail, log_p)
   }
 }
