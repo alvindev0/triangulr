@@ -14,8 +14,8 @@ rtri <- function(n, min = 0, max = 1, mode = 0.5) {
     stop("\nArguments n, min, max, and mode must have numeric values.")
   }
 
-  if (length(n) != 1L) {
-    stop("\nArgument n must have a single numeric value.")
+  if (length(n) != 1L || n < 0L) {
+    stop("\nArgument n must have a single positive numeric value.")
   }
 
   if (length(min) == 1L && length(max) == 1L && length(mode) == 1L) {
