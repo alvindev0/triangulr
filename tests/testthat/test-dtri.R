@@ -147,3 +147,9 @@ test_that("Error, Non-numeric arguments", {
 test_that("Error, Non-logical argument", {
   expect_error(dtri(x = 1, log = "FALSE"))
 })
+
+test_that("Error, illegal recycling", {
+  expect_error(dtri(seq(0.1, 1, 0.1), min = 0, max = c(1, 2), mode = 0.5))
+  expect_error(dtri(seq(0.1, 1, 0.1), min = c(0, 0.1), max = 1, mode = 0.5))
+  expect_error(dtri(seq(0.1, 1, 0.1), min = 0, max = 1, mode = c(0.5, 0.6)))
+})
