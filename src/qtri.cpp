@@ -43,7 +43,7 @@ NumericVector QTri(
     {
       q[i] = min + sqrt(p[i] * int_len * (mode - min));
     }
-    else
+    else // if (p[i] >= (mode - min) / int_len)
     {
       q[i] = max - sqrt((1.0 - p[i]) * int_len * (max - mode));
     }
@@ -89,7 +89,7 @@ NumericVector QTri(
     {
       q[i] = min[i] + sqrt(p[i] * (max[i] - min[i]) * (mode[i] - min[i]));
     }
-    else
+    else  // if (p[i] >= (mode[i] - min[i]) / (max[i] - min[i]))
     {
       q[i] = max[i] - sqrt((1 - p[i]) * (max[i] - min[i]) * (max[i] - mode[i]));
     }

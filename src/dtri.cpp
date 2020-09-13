@@ -16,7 +16,6 @@ NumericVector DTri(
   }
 
   NumericVector d(n);
-  double int_len = max - min;
   for (int i = 0; i < n; i++)
   {
     if (x[i] < min || x[i] > max)
@@ -25,17 +24,17 @@ NumericVector DTri(
     }
     else if (min <= x[i] && x[i] <= mode)
     {
-      d[i] = 2 * (x[i] - min) / (int_len * (mode - min));
+      d[i] = 2 * (x[i] - min) / ((max - min) * (mode - min));
     }
-    else if (mode < x[i] && x[i] <= max)
+    else // if (mode < x[i] && x[i] <= max)
     {
-      d[i] = 2 * (max - x[i]) / (int_len * (max - mode));
+      d[i] = 2 * (max - x[i]) / ((max - min) * (max - mode));
     }
   }
 
   if (log)
   {
-    d = Rcpp::log(d);
+    return Rcpp::log(d);
   }
 
   return d;
@@ -66,7 +65,7 @@ NumericVector DTri(
     {
       d[i] = 2 * (x[i] - min[i]) / ((max[i] - min[i]) * (mode[i] - min[i]));
     }
-    else if (mode[i] < x[i] && x[i] <= max[i])
+    else // if (mode[i] < x[i] && x[i] <= max[i])
     {
       d[i] = 2 * (max[i] - x[i]) / ((max[i] - min[i]) * (max[i] - mode[i]));
     }
@@ -74,7 +73,7 @@ NumericVector DTri(
 
   if (log)
   {
-    d = Rcpp::log(d);
+    return Rcpp::log(d);
   }
 
   return d;

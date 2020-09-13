@@ -17,7 +17,6 @@ NumericVector PTri(
   }
 
   NumericVector p(n);
-  double int_len = max - min;
   for (int i = 0; i < n; i++)
   {
     if (q[i] <= min)
@@ -26,13 +25,13 @@ NumericVector PTri(
     }
     else if (min < q[i] && q[i] <= mode)
     {
-      p[i] = pow((q[i] - min), 2) / (int_len * (mode - min));
+      p[i] = pow((q[i] - min), 2) / ((max - min) * (mode - min));
     }
     else if (mode < q[i] && q[i] < max)
     {
-      p[i] = 1 - pow((max - q[i]), 2) / (int_len * (max - mode));
+      p[i] = 1 - pow((max - q[i]), 2) / ((max - min) * (max - mode));
     }
-    else if (max <= q[i])
+    else // if (max <= q[i])
     {
       p[i] = 1;
     }
@@ -81,7 +80,7 @@ NumericVector PTri(
       p[i] = 1 - pow((max[i] - q[i]), 2) /
         ((max[i] - min[i]) * (max[i] - mode[i]));
     }
-    else if (max[i] <= q[i])
+    else // if (max[i] <= q[i])
     {
       p[i] = 1;
     }
