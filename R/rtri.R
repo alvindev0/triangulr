@@ -1,4 +1,4 @@
-# Random Deviates Generator Function
+# Random Variates Generator
 
 #' @include Triangular.R
 #' @rdname Triangular

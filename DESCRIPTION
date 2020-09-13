@@ -1,14 +1,21 @@
 Package: triangulr
-Title: High-Performance Triangular Distribution Functions in R
-Version: 0.0.0.9000
+Title: High-Performance Triangular Distribution Functions
+Version: 0.0.0.9001
 Authors@R: 
     person(given = "Alvin",
            family = "Nursalim",
            role = c("aut", "cre"),
            email = "alvin.nursalim@outlook.com")
-Description: triangulr provides high-performance distribution functions for the
-    triangular distribution with similar interfaces as those from the stats library.
+Description: A collection of high-performance functions for the triangular
+    distribution. It consists of the probability density function, cumulative
+    distribution function, quantile function, random variates generator,
+    moment generating function, characteristic function, Expected Shortfall,
+    and Value at Risk.
 License: MIT + file LICENSE
+URL: https://github.com/irkaal/triangulr
+BugReports: http://github.com/irkaal/triangulr/issues
+Depends:
+    R (>= 3.1)
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
@@ -19,18 +26,17 @@ Collate:
     'Triangular.R'
     'ctri.R'
     'dtri.R'
-    'etri.R'
-    'mtri.R'
+    'estri.R'
+    'mgtri.R'
     'ptri.R'
     'qtri.R'
     'rtri.R'
-    'utils.R'
-    'vtri.R'
+    'vartri.R'
 LinkingTo: 
     Rcpp
 Imports: 
-    Rcpp,
-    stats,
-    vctrs
+    Rcpp (>= 1.0.5),
+    stats (>= 4.0.2),
+    vctrs (>= 0.3.4)
 Suggests: 
-    testthat
+    testthat (>= 2.3.2)
