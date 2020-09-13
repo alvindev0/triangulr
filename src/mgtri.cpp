@@ -8,7 +8,7 @@ NumericVector MGTri(
   NumericVector m(n);
   for (int i = 0; i < n; i++)
   {
-    m[i] = 2 * ((max - mode) * exp(min * t[i]) - (max - min) *
+    m[i] = 2.0 * ((max - mode) * exp(min * t[i]) - (max - min) *
       exp(mode * t[i]) + (mode - min) * exp(max * t[i])) /
         ((max - min) * (mode - min) * (max - mode) *
           pow(t[i], 2));
@@ -23,7 +23,7 @@ NumericVector MGTri(
   NumericVector m(n);
   for (int i = 0; i < n; i++)
   {
-    m[i] = 2 * ((max[i] - mode[i]) * exp(min[i] * t[i]) - (max[i] - min[i]) *
+    m[i] = 2.0 * ((max[i] - mode[i]) * exp(min[i] * t[i]) - (max[i] - min[i]) *
       exp(mode[i] * t[i]) + (mode[i] - min[i]) * exp(max[i] * t[i])) /
         ((max[i] - min[i]) * (mode[i] - min[i]) * (max[i] - mode[i]) *
           pow(t[i], 2));

@@ -20,15 +20,19 @@ NumericVector DTri(
   {
     if (x[i] < min || x[i] > max)
     {
-      d[i] = 0;
+      d[i] = 0.0;
     }
-    else if (min <= x[i] && x[i] <= mode)
+    else if (min <= x[i] && x[i] < mode)
     {
-      d[i] = 2 * (x[i] - min) / ((max - min) * (mode - min));
+      d[i] = 2.0 * (x[i] - min) / ((max - min) * (mode - min));
+    }
+    else if (x[i] == mode)
+    {
+      d[i] = 2.0 / (max - min);
     }
     else // if (mode < x[i] && x[i] <= max)
     {
-      d[i] = 2 * (max - x[i]) / ((max - min) * (max - mode));
+      d[i] = 2.0 * (max - x[i]) / ((max - min) * (max - mode));
     }
   }
 
@@ -59,15 +63,15 @@ NumericVector DTri(
     }
     else if (x[i] < min[i] || x[i] > max[i])
     {
-      d[i] = 0;
+      d[i] = 0.0;
     }
     else if (min[i] <= x[i] && x[i] <= mode[i])
     {
-      d[i] = 2 * (x[i] - min[i]) / ((max[i] - min[i]) * (mode[i] - min[i]));
+      d[i] = 2.0 * (x[i] - min[i]) / ((max[i] - min[i]) * (mode[i] - min[i]));
     }
     else // if (mode[i] < x[i] && x[i] <= max[i])
     {
-      d[i] = 2 * (max[i] - x[i]) / ((max[i] - min[i]) * (max[i] - mode[i]));
+      d[i] = 2.0 * (max[i] - x[i]) / ((max[i] - min[i]) * (max[i] - mode[i]));
     }
   }
 

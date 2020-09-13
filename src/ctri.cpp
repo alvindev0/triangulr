@@ -25,13 +25,12 @@ ComplexVector CTri(
 ) {
   int n = t.size();
 
-  double k = 2.0;
   complex<double> x(0.0, 1.0);
   ComplexVector c(n);
   Rcomplex rc;
   for (int i = 0; i < n; i++)
   {
-    complex<double> cc = k * ((max[i] - mode[i]) * exp(x * min[i] * t[i]) -
+    complex<double> cc = 2.0 * ((max[i] - mode[i]) * exp(x * min[i] * t[i]) -
       (max[i] - min[i]) * exp(x * mode[i] * t[i]) + (mode[i] - min[i]) *
       exp(x * max[i] * t[i])) /
         ((max[i] - min[i]) * (mode[i] - min[i]) * (max[i] - mode[i]) *
