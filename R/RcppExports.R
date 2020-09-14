@@ -17,6 +17,10 @@ DTriC2 <- function(x, min, max, mode, log) {
     .Call('_triangulr_DTriC2', PACKAGE = 'triangulr', x, min, max, mode, log)
 }
 
+ESTri <- function(p, min, max, mode) {
+    .Call('_triangulr_ESTri', PACKAGE = 'triangulr', p, min, max, mode)
+}
+
 MGTriC <- function(t, min, max, mode) {
     .Call('_triangulr_MGTriC', PACKAGE = 'triangulr', t, min, max, mode)
 }

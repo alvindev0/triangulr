@@ -63,6 +63,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// ESTri
+NumericVector ESTri(NumericVector p, double min, double max, double mode);
+RcppExport SEXP _triangulr_ESTri(SEXP pSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP modeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type p(pSEXP);
+    Rcpp::traits::input_parameter< double >::type min(minSEXP);
+    Rcpp::traits::input_parameter< double >::type max(maxSEXP);
+    Rcpp::traits::input_parameter< double >::type mode(modeSEXP);
+    rcpp_result_gen = Rcpp::wrap(ESTri(p, min, max, mode));
+    return rcpp_result_gen;
+END_RCPP
+}
 // MGTriC
 NumericVector MGTriC(NumericVector t, double min, double max, double mode);
 RcppExport SEXP _triangulr_MGTriC(SEXP tSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP modeSEXP) {
@@ -189,6 +203,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_triangulr_CTriC2", (DL_FUNC) &_triangulr_CTriC2, 4},
     {"_triangulr_DTriC", (DL_FUNC) &_triangulr_DTriC, 5},
     {"_triangulr_DTriC2", (DL_FUNC) &_triangulr_DTriC2, 5},
+    {"_triangulr_ESTri", (DL_FUNC) &_triangulr_ESTri, 4},
     {"_triangulr_MGTriC", (DL_FUNC) &_triangulr_MGTriC, 4},
     {"_triangulr_MGTriC2", (DL_FUNC) &_triangulr_MGTriC2, 4},
     {"_triangulr_PTriC", (DL_FUNC) &_triangulr_PTriC, 6},
