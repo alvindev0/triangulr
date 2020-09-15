@@ -15,11 +15,6 @@ distribution functions which includes density function, distribution
 function, quantile function, and random deviates generator for the
 triangular distribution.
 
-While there are already existing packages that provide these functions,
-`triangulr` aims to provide functions that closely follow the interface
-of existing distribution functions from the `stats` library and not
-sacrifice on performance.
-
 ## Installation
 
 <!-- You can install the released version of triangulr from [CRAN](https://CRAN.R-project.org) with: -->
@@ -51,54 +46,117 @@ library(triangulr)
 Using the density function, `dtri`.
 
 ``` r
-x <- seq(0.1, 1, 0.1)
+x <- c(0.1, 0.5, 0.9)
 
-# min, max, and mode will be recycled to the length of x
-recycle_d <- dtri(x, min = 0, max = 1, mode = 0.5)
+dtri(x, min = 0, max = 1, mode = 0.5)
+#> [1] 0.4 2.0 0.4
 
-# min, max, and mode with lengths equal to the length of x
-d <- dtri(x,
-          min  = rep.int(0, 10),
-          max  = rep.int(1, 10),
-          mode = rep.int(0.5, 10))
+dtri(x, min  = 0, max  = rep.int(1, 3), mode = 0.5)
+#> [1] 0.4 2.0 0.4
 ```
 
 Using the distribution function, `ptri`.
 
 ``` r
-q <- seq(0.1, 1, 0.1)
+q <- c(0.1, 0.5, 0.9)
 
-# Upper tail probabilities is supported through the lower_tail argument
-upper_p <- ptri(q, lower_tail = FALSE)
-p <- ptri(q, lower_tail = TRUE)
+1 - ptri(q, lower_tail = FALSE)
+#> [1] 0.02 0.50 0.98
 
-# Log probabilities is supported through the log_p argument
-log_p <- ptri(q, log_p = TRUE)
-p <- ptri(q, log_p = FALSE)
+ptri(q, lower_tail = TRUE)
+#> [1] 0.02 0.50 0.98
+
+ptri(q, log_p = TRUE)
+#> [1] -3.91202301 -0.69314718 -0.02020271
+
+log(ptri(q, log_p = FALSE))
+#> [1] -3.91202301 -0.69314718 -0.02020271
 ```
 
 Using the quantile function, `qtri`.
 
 ``` r
-# The same applies to the quantile function
-upper_q <- ptri(1 - p, lower_tail = FALSE)
-q <- ptri(p, lower_tail = TRUE)
+p <- c(0.1, 0.5, 0.9)
 
-log_q <- qtri(log(p), log_p = TRUE)
-q <- qtri(p, log_p = FALSE)
+ptri(1 - p, lower_tail = FALSE)
+#> [1] 0.02 0.50 0.98
+
+ptri(p, lower_tail = TRUE)
+#> [1] 0.02 0.50 0.98
+
+qtri(log(p), log_p = TRUE)
+#> [1] 0.2236068 0.5000000 0.7763932
+
+qtri(p, log_p = FALSE)
+#> [1] 0.2236068 0.5000000 0.7763932
 ```
 
-Using the random deviates generator, `rtri`.
+Using the random variates generator, `rtri`.
 
 ``` r
-n <- 10
+n <- 3
 
-set.seed(1)
-recycle_r <- rtri(n, min = 0, max = 1, mode = 0.5)
+rtri(n, min = 0, max = 1, mode = 0.5)
+#> [1] 0.2215745 0.4847674 0.5156000
 
-set.seed(1)
-r <- rtri(n,
-          min  = rep.int(0, 10),
-          max  = rep.int(1, 10),
-          mode = rep.int(0.5, 10))
+rtri(n, min  = 0, max  = rep.int(1, 3), 0.5)
+#> [1] 0.5924629 0.7284529 0.2348261
 ```
+
+Using the moment generating function, `mgtri`.
+
+``` r
+t <- c(1, 2, 3)
+
+mgtri(t, min = 0, max = 1, mode = 0.5)
+#> [1] 1.683357 2.952492 5.387626
+
+mgtri(t, min = rep.int(0, 3), max = 1, mode = 0.5)
+#> [1] 1.683357 2.952492 5.387626
+```
+
+Using the characteristic function, `ctri`.
+
+``` r
+t <- c(1, 2, 3)
+
+ctri(t, min = 0, max = 1, mode = 0.5)
+#> [1] 0.8594513+0.4695204i 0.4967514+0.7736445i 0.0584297+0.8239422i
+
+ctri(t, min = rep.int(0, 3), max = 1, mode = 0.5)
+#> [1] 0.8594513+0.4695204i 0.4967514+0.7736445i 0.0584297+0.8239422i
+```
+
+Using the expected shortfall function, `estri`.
+
+``` r
+p <- c(0.1, 0.5, 0.9)
+
+estri(p, min = 0, max = 1, mode = 0.5)
+#> [1] 0.1490712 0.3333333 0.4610079
+
+estri(p, min = rep.int(0, 3), max = 1, mode = 0.5)
+#> [1] 0.1490712 0.3333333 0.4610079
+```
+
+## Benchmarks
+
+### Benchmark for Probability Distribution Functions in R (1,000)
+
+![](benchmarks/plots/bench_ds_1000.png)
+
+### Benchmark for Probability Distribution Functions in R (10,000)
+
+![](benchmarks/plots/bench_ds_10000.png)
+
+### Benchmark for Probability Distribution Functions in R (100,000)
+
+![](benchmarks/plots/bench_ds_1e+05.png)
+
+### Benchmark for Probability Distribution Functions in R (1,000,000)
+
+![](benchmarks/plots/bench_ds_1e+06.png)
+
+### Benchmark for Probability Distribution Functions in R (10,000,000)
+
+![](benchmarks/plots/bench_ds_1e+07.png)
