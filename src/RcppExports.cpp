@@ -63,17 +63,35 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// ESTri
-NumericVector ESTri(NumericVector p, double min, double max, double mode);
-RcppExport SEXP _triangulr_ESTri(SEXP pSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP modeSEXP) {
+// ESTriC
+NumericVector ESTriC(NumericVector x, double min, double max, double mode, bool lower_tail, bool log_p);
+RcppExport SEXP _triangulr_ESTriC(SEXP xSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP modeSEXP, SEXP lower_tailSEXP, SEXP log_pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type p(pSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
     Rcpp::traits::input_parameter< double >::type min(minSEXP);
     Rcpp::traits::input_parameter< double >::type max(maxSEXP);
     Rcpp::traits::input_parameter< double >::type mode(modeSEXP);
-    rcpp_result_gen = Rcpp::wrap(ESTri(p, min, max, mode));
+    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< bool >::type log_p(log_pSEXP);
+    rcpp_result_gen = Rcpp::wrap(ESTriC(x, min, max, mode, lower_tail, log_p));
+    return rcpp_result_gen;
+END_RCPP
+}
+// ESTriC2
+NumericVector ESTriC2(NumericVector x, NumericVector min, NumericVector max, NumericVector mode, bool lower_tail, bool log_p);
+RcppExport SEXP _triangulr_ESTriC2(SEXP xSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP modeSEXP, SEXP lower_tailSEXP, SEXP log_pSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type min(minSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type max(maxSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type mode(modeSEXP);
+    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< bool >::type log_p(log_pSEXP);
+    rcpp_result_gen = Rcpp::wrap(ESTriC2(x, min, max, mode, lower_tail, log_p));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -203,7 +221,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_triangulr_CTriC2", (DL_FUNC) &_triangulr_CTriC2, 4},
     {"_triangulr_DTriC", (DL_FUNC) &_triangulr_DTriC, 5},
     {"_triangulr_DTriC2", (DL_FUNC) &_triangulr_DTriC2, 5},
-    {"_triangulr_ESTri", (DL_FUNC) &_triangulr_ESTri, 4},
+    {"_triangulr_ESTriC", (DL_FUNC) &_triangulr_ESTriC, 6},
+    {"_triangulr_ESTriC2", (DL_FUNC) &_triangulr_ESTriC2, 6},
     {"_triangulr_MGTriC", (DL_FUNC) &_triangulr_MGTriC, 4},
     {"_triangulr_MGTriC2", (DL_FUNC) &_triangulr_MGTriC2, 4},
     {"_triangulr_PTriC", (DL_FUNC) &_triangulr_PTriC, 6},

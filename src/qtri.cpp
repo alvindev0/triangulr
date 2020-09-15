@@ -15,7 +15,7 @@ NumericVector QTri(
 
   if (!lower_tail)
   {
-    p = 1 - p;
+    p = 1.0 - p;
   }
 
   int n = p.size();
@@ -33,7 +33,7 @@ NumericVector QTri(
   double int_len = max - min;
   for (int i = 0; i < n; i++)
   {
-    if (p[i] < 0 || p[i] > 1)
+    if (p[i] < 0.0 || p[i] > 1.0)
     {
       warning("\nNaN produced."
                 "\n* p must be between 0 and 1 inclusive");
@@ -63,7 +63,7 @@ NumericVector QTri(
 
   if (!lower_tail)
   {
-    p = 1 - p;
+    p = 1.0 - p;
   }
 
   int n = p.size();
@@ -79,7 +79,7 @@ NumericVector QTri(
                 "\n* mode must be less than or equal to max");
       q[i] = R_NaN;
     }
-    else if (p[i] < 0 || p[i] > 1)
+    else if (p[i] < 0.0 || p[i] > 1.0)
     {
       warning("\nNaN produced."
                 "\n* p must be between 0 and 1 inclusive.");
@@ -91,7 +91,7 @@ NumericVector QTri(
     }
     else  // if (p[i] >= (mode[i] - min[i]) / (max[i] - min[i]))
     {
-      q[i] = max[i] - sqrt((1 - p[i]) * (max[i] - min[i]) * (max[i] - mode[i]));
+      q[i] = max[i] - sqrt((1.0 - p[i]) * (max[i] - min[i]) * (max[i] - mode[i]));
     }
   }
 

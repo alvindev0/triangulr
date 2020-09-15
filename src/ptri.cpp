@@ -21,7 +21,7 @@ NumericVector PTri(
   {
     if (q[i] <= min)
     {
-      p[i] = 0;
+      p[i] = 0.0;
     }
     else if (min < q[i] && q[i] <= mode)
     {
@@ -29,17 +29,17 @@ NumericVector PTri(
     }
     else if (mode < q[i] && q[i] < max)
     {
-      p[i] = 1 - pow((max - q[i]), 2) / ((max - min) * (max - mode));
+      p[i] = 1.0 - pow((max - q[i]), 2) / ((max - min) * (max - mode));
     }
     else // if (max <= q[i])
     {
-      p[i] = 1;
+      p[i] = 1.0;
     }
   }
 
   if (!lower_tail)
   {
-    p = 1 - p;
+    p = 1.0 - p;
   }
 
   if (log_p)
@@ -69,7 +69,7 @@ NumericVector PTri(
     }
     else if (q[i] <= min[i])
     {
-      p[i] = 0;
+      p[i] = 0.0;
     }
     else if (min[i] < q[i] && q[i] <= mode[i])
     {
@@ -77,18 +77,18 @@ NumericVector PTri(
     }
     else if (mode[i] < q[i] && q[i] < max[i])
     {
-      p[i] = 1 - pow((max[i] - q[i]), 2) /
+      p[i] = 1.0 - pow((max[i] - q[i]), 2) /
         ((max[i] - min[i]) * (max[i] - mode[i]));
     }
     else // if (max[i] <= q[i])
     {
-      p[i] = 1;
+      p[i] = 1.0;
     }
   }
 
   if (!lower_tail)
   {
-    p = 1 - p;
+    p = 1.0 - p;
   }
 
   if (log_p)
