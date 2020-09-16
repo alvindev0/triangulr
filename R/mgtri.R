@@ -20,9 +20,9 @@ mgtri <- function(t, min = 0, max = 1, mode = 0.5) {
       params <- vctrs::vec_recycle_common(min, max, mode, .size = length(t))
     }, error = function(c) {
       stop(paste0("\nArguments min, max, and mode must be values of length ",
-                  "equal to length of t or one. \nOnly values of length one are ",
-                  "recycled."))
+                  "equal to length of t or one. \nOnly values of length one ",
+                  "are recycled."))
     })
-    MGTriC2(t, params[[1]], params[[2]], params[[3]])
+    MGTriC2(t, params[[1L]], params[[2L]], params[[3L]])
   }
 }

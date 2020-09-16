@@ -30,6 +30,6 @@ ptri <- function(q, min = 0, max = 1, mode = 0.5, lower_tail = TRUE,
                   "equal to length of q or one. \nOnly values of length one ",
                   "are recycled."))
     })
-    PTriC2(q, params[[1]], params[[2]], params[[3]], lower_tail, log_p)
+    PTriC2(q, params[[1L]], params[[2L]], params[[3L]], lower_tail, log_p)
   }
 }

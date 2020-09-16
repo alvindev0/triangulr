@@ -28,6 +28,6 @@ rtri <- function(n, min = 0, max = 1, mode = 0.5) {
       stop(paste0("\nArguments min, max, and mode must be values of length n ",
                   "or one. \nOnly values of length one are recycled."))
     })
-    RTriC2(n, params[[1]], params[[2]], params[[3]])
+    RTriC2(n, params[[1L]], params[[2L]], params[[3L]])
   }
 }

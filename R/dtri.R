@@ -27,6 +27,6 @@ dtri <- function(x, min = 0, max = 1, mode = 0.5, log = FALSE) {
                   "equal to length of x or one. \nOnly values of length one ",
                   "are recycled."))
     })
-    DTriC2(x, params[[1]], params[[2]], params[[3]], log)
+    DTriC2(x, params[[1L]], params[[2L]], params[[3L]], log)
   }
 }
