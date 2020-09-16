@@ -127,27 +127,3 @@ estri(p, min = 0, max = 1, mode = 0.5)
 
 estri(p, min = rep.int(0, 3), max = 1, mode = 0.5)
 ```
-
-
-
-## Benchmarks
-
-### Benchmark for Probability Distribution Functions in R (1,000)
-
-![](benchmarks/plots/bench_ds_1000.png)
-
-### Benchmark for Probability Distribution Functions in R (10,000)
-
-![](benchmarks/plots/bench_ds_10000.png)
-
-### Benchmark for Probability Distribution Functions in R (100,000)
-
-![](benchmarks/plots/bench_ds_1e+05.png)
-
-### Benchmark for Probability Distribution Functions in R (1,000,000)
-
-![](benchmarks/plots/bench_ds_1e+06.png)
-
-### Benchmark for Probability Distribution Functions in R (10,000,000)
-
-![](benchmarks/plots/bench_ds_1e+07.png)

@@ -103,15 +103,15 @@ generation algorithms.
 }
 \examples{
 
-x <- c(0, 0.5, 1)
 # min, max, and mode with lengths equal to the length of x
+x <- c(0, 0.5, 1)
 d <- dtri(x, min = c(0, 0, 0), max = c(1, 1, 1), mode = c(0.5, 0.5, 0.5))
 # min and max will be recycled to the length of x
 rec_d <- dtri(x, min = 0, max = 1, mode = c(0.5, 0.5, 0.5))
 all.equal(d, rec_d)
 
-n <- 3
 # min, max, and mode with lengths equal to the length of x
+n <- 3
 set.seed(1)
 r <- rtri(n, min = c(0, 0, 0), max = c(1, 1, 1), mode = c(0.5, 0.5, 0.5))
 # min and max will be recycled to the length of n
@@ -120,17 +120,19 @@ rec_r <- rtri(n, min = 0, max = 1, mode = c(0.5, 0.5, 0.5))
 all.equal(r, rec_r)
 
 # Log quantiles
+x <- c(0, 0.5, 1)
 log_d <- dtri(x, log = TRUE)
 d <- dtri(x, log = FALSE)
 all.equal(log(d), log_d)
 
-q <- c(0, 0.5, 1)
 # Upper tail probabilities
+q <- c(0, 0.5, 1)
 upper_p <- ptri(q, lower_tail = FALSE)
 p <- ptri(q, lower_tail = TRUE)
 all.equal(upper_p, 1 - p)
 
 # Log probabilities
+q <- c(0, 0.5, 1)
 log_p <- ptri(q, log_p = TRUE)
 p <- ptri(q, log_p = FALSE)
 all.equal(upper_p, 1 - p)
@@ -141,6 +143,7 @@ upper_q <- ptri(1 - p, lower_tail = FALSE)
 q <- ptri(p, lower_tail = TRUE)
 all.equal(upper_q, q)
 
+p <- c(0, 0.5, 1)
 log_q <- qtri(log(p), log_p = TRUE)
 q <- qtri(p, log_p = FALSE)
 all.equal(log_q, q)

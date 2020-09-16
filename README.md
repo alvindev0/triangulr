@@ -97,10 +97,10 @@ Using the random variates generator, `rtri`.
 n <- 3
 
 rtri(n, min = 0, max = 1, mode = 0.5)
-#> [1] 0.2215745 0.4847674 0.5156000
+#> [1] 0.4366718 0.7186445 0.3041584
 
 rtri(n, min  = 0, max  = rep.int(1, 3), 0.5)
-#> [1] 0.5924629 0.7284529 0.2348261
+#> [1] 0.5599053 0.7888957 0.6683234
 ```
 
 Using the moment generating function, `mgtri`.
@@ -138,25 +138,3 @@ estri(p, min = 0, max = 1, mode = 0.5)
 estri(p, min = rep.int(0, 3), max = 1, mode = 0.5)
 #> [1] 0.1490712 0.3333333 0.4610079
 ```
-
-## Benchmarks
-
-### Benchmark for Probability Distribution Functions in R (1,000)
-
-![](benchmarks/plots/bench_ds_1000.png)
-
-### Benchmark for Probability Distribution Functions in R (10,000)
-
-![](benchmarks/plots/bench_ds_10000.png)
-
-### Benchmark for Probability Distribution Functions in R (100,000)
-
-![](benchmarks/plots/bench_ds_1e+05.png)
-
-### Benchmark for Probability Distribution Functions in R (1,000,000)
-
-![](benchmarks/plots/bench_ds_1e+06.png)
-
-### Benchmark for Probability Distribution Functions in R (10,000,000)
-
-![](benchmarks/plots/bench_ds_1e+07.png)
