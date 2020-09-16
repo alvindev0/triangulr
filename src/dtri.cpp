@@ -65,9 +65,13 @@ NumericVector DTri(
     {
       d[i] = 0.0;
     }
-    else if (min[i] <= x[i] && x[i] <= mode[i])
+    else if (min[i] <= x[i] && x[i] < mode[i])
     {
       d[i] = 2.0 * (x[i] - min[i]) / ((max[i] - min[i]) * (mode[i] - min[i]));
+    }
+    else if (x[i] == mode[i])
+    {
+      d[i] = 2.0 / (max[i] - min[i]);
     }
     else // if (mode[i] < x[i] && x[i] <= max[i])
     {
