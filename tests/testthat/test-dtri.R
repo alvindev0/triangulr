@@ -28,140 +28,107 @@ dtri_vec_test <- function(x, a, b, c) {
 
 test_that("scalar x, scalar params, symmetric", {
   d <- dtri(0.5, min = 0, max = 1, mode = 0.5)
-  expect_equal(d, dtri_test(0.5, 0, 1, 0.5))
+  d_test <- dtri_test(0.5, 0, 1, 0.5)
+  expect_equal(d, d_test)
 })
 
 test_that("scalar x, scalar params, non-symmetric", {
   d <- dtri(0.5, min = 0, max = 1, mode = 0.8)
-  expect_equal(d, dtri_test(0.5, 0, 1, 0.8))
+  d_test <- dtri_test(0.5, 0, 1, 0.8)
+  expect_equal(d, d_test)
 })
 
 test_that("scalar x, scalar params, non-symmetric, log-scale", {
   d <- dtri(0.5, min = 0, max = 1, mode = 0.8, log = TRUE)
-  expect_equal(exp(d), dtri_test(0.5, 0, 1, 0.8))
+  d_test <- dtri_test(0.5, 0, 1, 0.8)
+  expect_equal(exp(d), d_test)
 })
 
 test_that("vector x, scalar params, symmetric", {
-  x <- seq(0, 1, 0.1)
-  d <- dtri(x, min = 0, max = 1, mode = 0.5)
-  expect_equal(d, dtri_test(x, 0, 1, 0.5))
+  d <- dtri(c(0.1, 0.6, 0.9), min = 0, max = 1, mode = 0.5)
+  d_test <- dtri_test(c(0.1, 0.6, 0.9), 0, 1, 0.5)
+  expect_equal(d, d_test)
 })
 
 test_that("vector x, scalar params, non-symmetric", {
-  x <- seq(0, 1, 0.1)
-  d <- dtri(x, min = 0, max = 1, mode = 0.8)
-  expect_equal(d, dtri_test(x, 0, 1, 0.8))
+  d <- dtri(c(0.1, 0.6, 0.9), min = 0, max = 1, mode = 0.8)
+  d_test <- dtri_test(c(0.1, 0.6, 0.9), 0, 1, 0.8)
+  expect_equal(d, d_test)
 })
 
 test_that("vector x, scalar params, non-symmetric, log-scale", {
-  x <- seq(0, 1, 0.1)
-  d <- dtri(x, min = 0, max = 1, mode = 0.8, log = TRUE)
-  expect_equal(exp(d), dtri_test(x, 0, 1, 0.8))
+  d <- dtri(c(0.1, 0.6, 0.9), min = 0, max = 1, mode = 0.8, log = TRUE)
+  d_test <- dtri_test(c(0.1, 0.6, 0.9), 0, 1, 0.8)
+  expect_equal(exp(d), d_test)
 })
 
 test_that("vector x, vector params, symmetric", {
-  x <- seq(1, 2, 0.1)
-  a <- seq(0, 1, 0.1)
-  b <- seq(2, 3, 0.1)
-  c <- seq(1, 2, 0.1)
-  d <- dtri(x, min = a, max = b, mode = c)
-  expect_equal(d, dtri_test(x, a, b, c))
+  d <- dtri(c(0.1, 0.6, 0.9), min = c(0, 0, 0), max = 2, mode = 1)
+  d_test <- dtri_vec_test(c(0.1, 0.6, 0.9), c(0, 0, 0), 2, 1)
+  expect_equal(d, d_test)
 })
 
 test_that("vector x, vector params, non-symmetric", {
-  x <- seq(1, 2, 0.1)
-  a <- seq(0, 1, 0.1)
-  b <- seq(3, 4, 0.1)
-  c <- seq(1.8, 3.8, 0.2)
-  d <- dtri(x, min = a, max = b, mode = c)
-  expect_equal(d, dtri_test(x, a, b, c))
-})
-
-test_that("vector x, vector params recycled, symmetric", {
-  x <- seq(1, 2, 0.1)
-  a <- 0
-  b <- seq(2, 3, 0.1)
-  c <- seq(1, 2, 0.1)
-  d <- dtri(x, min = a, max = b, mode = c)
-  expect_equal(d, dtri_test(x, a, b, c))
-})
-
-test_that("vector x, vector params recycled, non-symmetric", {
-  x <- seq(1, 2, 0.1)
-  a <- 0
-  b <- seq(2, 3, 0.1)
-  c <- seq(1.3, 2.3, 0.1)
-  d <- dtri(x, min = a, max = b, mode = c)
-  expect_equal(d, dtri_test(x, a, b, c))
+  d <- dtri(c(0.1, 0.6, 0.9), min = 0:2, max = 7, mode = 6)
+  d_test <- dtri_vec_test(c(0.1, 0.6, 0.9), 0:2, 7, 6)
+  expect_equal(d, d_test)
 })
 
 test_that("Mode at bound, min == mode", {
-  x <- seq(0, 1, 0.1)
-  d <- dtri(x, min = 0, max = 1, mode = 0)
-  expect_equal(d, dtri_test(x, 0, 1, 0))
-  a <- rep.int(0, 11)
-  d <- dtri(x, min = a, max = 1, mode = 0)
-  expect_equal(d, dtri_vec_test(x, a, 1, 0))
+  d <- dtri(c(0.1, 0.6, 0.9), min = 0, max = 1, mode = 0)
+  d_test <- dtri_test(c(0.1, 0.6, 0.9), 0, 1, 0)
+  expect_equal(d, d_test)
+  d <- dtri(c(0.1, 0.6, 0.9), min = 0:2, max = 3, mode = 2)
+  d_test <- dtri_vec_test(c(0.1, 0.6, 0.9), 0:2, 3, 2)
+  expect_equal(d, d_test)
 })
 
 test_that("Mode at bound, max == mode", {
-  x <- seq(0, 1, 0.1)
-  d <- dtri(x, min = 0, max = 1, mode = 1)
-  expect_equal(d, dtri_test(x, 0, 1, 1))
-  a <- rep.int(0, 11)
-  d <- dtri(x, min = a, max = 1, mode = 1)
-  expect_equal(d, dtri_vec_test(x, a, 1, 1))
+  d <- dtri(c(0.1, 0.6, 0.9), min = 0, max = 1, mode = 1)
+  d_test <- dtri_test(c(0.1, 0.6, 0.9), 0, 1, 1)
+  expect_equal(d, d_test)
+  d <- dtri(c(0.1, 0.6, 0.9), min = 0:2, max = 3, mode = 3)
+  d_test <- dtri_vec_test(c(0.1, 0.6, 0.9), 0:2, 3, 3)
+  expect_equal(d, d_test)
 })
 
 test_that("Zeros produced, x < min", {
-  x <- seq(0, 1, 0.1)
-  d <- dtri(x, min = 0.4, max = 1.4, mode = 0.9)
-  expect_equal(d, dtri_test(x, 0.4, 1.4, 0.9))
-  a <- rep.int(0.4, 11)
-  d <- dtri(x, min = a, max = 1.4, mode = 0.9)
-  expect_equal(d, dtri_vec_test(x, a, 1.4, 0.9))
+  d <- dtri(1:3, min = 2, max = 4, mode = 3)
+  d_test <- dtri_test(1:3, 2, 4, 3)
+  expect_equal(d, d_test)
+  d <- dtri(1:3, min = 2:4, max = 6, mode = 5)
+  d_test <- dtri_vec_test(1:3, 2:4, 6, 5)
+  expect_equal(d, d_test)
 })
 
 test_that("Zeros produced, x > max", {
-  x <- seq(0, 1, 0.1)
-  d <- dtri(x, min = -0.5, max = 0.5, mode = 0)
-  expect_equal(d, dtri_test(x, -0.5, 0.5, 0))
-  a <- rep.int(-0.5, 11)
-  d <- dtri(x, min = a, max = 0.5, mode = 0)
-  expect_equal(d, dtri_vec_test(x, a, 0.5, 0))
+  d <- dtri(1:3, min = 0, max = 2, mode = 1)
+  d_test <- dtri_test(1:3, 0, 2, 1)
+  expect_equal(d, d_test)
+  d <- dtri(2:4, min = 0:2, max = 3, mode = 2)
+  d_test <- dtri_vec_test(2:4, 0:2, 3, 2)
+  expect_equal(d, d_test)
 })
 
 test_that("NaN produced, mode < min", {
   d <- expect_warning(dtri(1, min = 0, max = 2, mode = -1))
   expect_equal(d, NaN)
-  x <- c(1, 2, 3)
-  a <- c(0, 1, 2)
-  b <- c(2, 3, 4)
-  c <- c(-1, 2, 3)
-  d <- expect_warning(dtri(x, min = a, max = b, mode = c))
-  expect_equal(d, c(NaN, 1, 1))
+  d <- expect_warning(dtri(1:3, min = 1:3, max = 4, mode = 2))
+  expect_equal(d, c(0, 1, NaN))
 })
 
 test_that("NaN produced, min == mode == max", {
-  d <- expect_warning(dtri(3, min = 3, max = 3, mode = 3))
+  d <- expect_warning(dtri(1, min = 3, max = 3, mode = 3))
   expect_equal(d, NaN)
-  x <- c(1, 2, 3)
-  a <- c(0, 1, 3)
-  b <- c(2, 3, 3)
-  c <- c(1, 2, 3)
-  d <- expect_warning(dtri(x, min = a, max = b, mode = c))
-  expect_equal(d, c(1, 1, NaN))
+  d <- expect_warning(dtri(0:2, min = 0:2, max = 2, mode = 2))
+  expect_equal(d, c(0, 0, NaN))
 })
 
 test_that("NaN produced, min > max", {
   d <- expect_warning(dtri(1, min = 0, max = -1, mode = 1))
   expect_equal(d, NaN)
-  x <- c(1, 2, 3)
-  a <- c(0, 1, 2)
-  b <- c(-1, 3, 4)
-  c <- c(1, 2, 3)
-  d <- expect_warning(dtri(x, min = a, max = b, mode = c))
-  expect_equal(d, c(NaN, 1, 1))
+  d <- expect_warning(dtri(c(1, 1.5, 2), min = c(1, 1, 3), max = 2, mode = 2))
+  expect_equal(d, c(0, 1, NaN))
 })
 
 test_that("Error, NULL arguments", {
