@@ -5,6 +5,16 @@ NumericVector ESTri(
     NumericVector p, double min, double max, double mode, bool lower_tail,
     bool log_p
 ) {
+  if (log_p)
+  {
+    p = exp(p);
+  }
+
+  if (!lower_tail)
+  {
+    p = 1.0 - p;
+  }
+
   int n = p.size();
 
   if (min >= max || mode > max || min > mode)
@@ -54,6 +64,16 @@ NumericVector ESTri(
     NumericVector p, NumericVector min, NumericVector max, NumericVector mode,
     bool lower_tail, bool log_p
 ) {
+  if (log_p)
+  {
+    p = exp(p);
+  }
+
+  if (!lower_tail)
+  {
+    p = 1.0 - p;
+  }
+
   int n = p.size();
 
   NumericVector es(n);
@@ -100,18 +120,18 @@ NumericVector ESTri(
 
 // [[Rcpp::export]]
 NumericVector ESTriC(
-    NumericVector x, double min, double max, double mode, bool lower_tail,
+    NumericVector p, double min, double max, double mode, bool lower_tail,
     bool log_p
 ) {
-  return ESTri(x, min, max, mode, lower_tail, log_p);
+  return ESTri(p, min, max, mode, lower_tail, log_p);
 }
 
 // [[Rcpp::export]]
 NumericVector ESTriC2(
-    NumericVector x, NumericVector min, NumericVector max, NumericVector mode,
+    NumericVector p, NumericVector min, NumericVector max, NumericVector mode,
     bool lower_tail, bool log_p
 ) {
-  return ESTri(x, min, max, mode, lower_tail, log_p);
+  return ESTri(p, min, max, mode, lower_tail, log_p);
 }
 
 /*** R

@@ -5,7 +5,7 @@ using namespace std;
 ComplexVector CTri(NumericVector t, double min, double max, double mode) {
   int n = t.size();
 
-  if (min >= max || mode > max || min > mode)
+  if (min >= max || mode >= max || min >= mode)
   {
     warning("\nNaN(s) produced."
               "\n* min must be less than max"
@@ -19,12 +19,23 @@ ComplexVector CTri(NumericVector t, double min, double max, double mode) {
   Rcomplex rc;
   for (int i = 0; i < n; i++)
   {
-    complex<double> cc = -2.0 * ((max - mode) * exp(x * min * t[i]) -
-      (max - min) * exp(x * mode * t[i]) + (mode - min) * exp(x * max * t[i])) /
-        ((max - min) * (mode - min) * (max - mode) * pow(t[i], 2));
-    rc.r = cc.real();
-    rc.i = cc.imag();
-    c[i] = rc;
+    if (t[i] == 0.0)
+    {
+      warning("\nNaN produced."
+                "\n* t must not be zero");
+      rc.r = R_NaN;
+      rc.i = 0.0;
+      c[i] = rc;
+    }
+    else
+    {
+      complex<double> cc = -2.0 * ((max - mode) * exp(x * min * t[i]) -
+        (max - min) * exp(x * mode * t[i]) + (mode - min) * exp(x * max * t[i])) /
+          ((max - min) * (mode - min) * (max - mode) * pow(t[i], 2));
+      rc.r = cc.real();
+      rc.i = cc.imag();
+      c[i] = rc;
+    }
   }
   return c;
 }
@@ -39,9 +50,11 @@ ComplexVector CTri(
   Rcomplex rc;
   for (int i = 0; i < n; i++)
   {
-    if (min[i] >= max[i] || mode[i] > max[i] || min[i] > mode[i])
+    if (t[i] == 0.0 ||
+        min[i] >= max[i] || mode[i] >= max[i] || min[i] >= mode[i])
     {
-      warning("\nNaN(s) produced."
+      warning("\nNaN produced."
+                "\n* t must not be zero"
                 "\n* min must be less than max"
                 "\n* min must be less than or equal to mode"
                 "\n* mode must be less than or equal to max");

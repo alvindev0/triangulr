@@ -17,12 +17,12 @@ DTriC2 <- function(x, min, max, mode, log) {
     .Call('_triangulr_DTriC2', PACKAGE = 'triangulr', x, min, max, mode, log)
 }
 
-ESTriC <- function(x, min, max, mode, lower_tail, log_p) {
-    .Call('_triangulr_ESTriC', PACKAGE = 'triangulr', x, min, max, mode, lower_tail, log_p)
+ESTriC <- function(p, min, max, mode, lower_tail, log_p) {
+    .Call('_triangulr_ESTriC', PACKAGE = 'triangulr', p, min, max, mode, lower_tail, log_p)
 }
 
-ESTriC2 <- function(x, min, max, mode, lower_tail, log_p) {
-    .Call('_triangulr_ESTriC2', PACKAGE = 'triangulr', x, min, max, mode, lower_tail, log_p)
+ESTriC2 <- function(p, min, max, mode, lower_tail, log_p) {
+    .Call('_triangulr_ESTriC2', PACKAGE = 'triangulr', p, min, max, mode, lower_tail, log_p)
 }
 
 MGTriC <- function(t, min, max, mode) {
@@ -33,12 +33,12 @@ MGTriC2 <- function(t, min, max, mode) {
     .Call('_triangulr_MGTriC2', PACKAGE = 'triangulr', t, min, max, mode)
 }
 
-PTriC <- function(x, min, max, mode, lower_tail, log_p) {
-    .Call('_triangulr_PTriC', PACKAGE = 'triangulr', x, min, max, mode, lower_tail, log_p)
+PTriC <- function(q, min, max, mode, lower_tail, log_p) {
+    .Call('_triangulr_PTriC', PACKAGE = 'triangulr', q, min, max, mode, lower_tail, log_p)
 }
 
-PTriC2 <- function(x, min, max, mode, lower_tail, log_p) {
-    .Call('_triangulr_PTriC2', PACKAGE = 'triangulr', x, min, max, mode, lower_tail, log_p)
+PTriC2 <- function(q, min, max, mode, lower_tail, log_p) {
+    .Call('_triangulr_PTriC2', PACKAGE = 'triangulr', q, min, max, mode, lower_tail, log_p)
 }
 
 QTriC <- function(p, min, max, mode, lower_tail, log_p) {

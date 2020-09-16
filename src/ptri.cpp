@@ -101,18 +101,18 @@ NumericVector PTri(
 
 // [[Rcpp::export]]
 NumericVector PTriC(
-    NumericVector x, double min, double max, double mode, bool lower_tail,
+    NumericVector q, double min, double max, double mode, bool lower_tail,
     bool log_p
 ) {
-  return PTri(x, min, max, mode, lower_tail, log_p);
+  return PTri(q, min, max, mode, lower_tail, log_p);
 }
 
 // [[Rcpp::export]]
 NumericVector PTriC2(
-    NumericVector x, NumericVector min, NumericVector max, NumericVector mode,
+    NumericVector q, NumericVector min, NumericVector max, NumericVector mode,
     bool lower_tail, bool log_p
 ) {
-  return PTri(x, min, max, mode, lower_tail, log_p);
+  return PTri(q, min, max, mode, lower_tail, log_p);
 }
 
 /*** R
