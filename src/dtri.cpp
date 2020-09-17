@@ -1,7 +1,9 @@
 #include <Rcpp.h>
+
 using namespace Rcpp;
 
-NumericVector DTri(
+// [[Rcpp::export]]
+NumericVector DTriC(
     NumericVector x, double min, double max, double mode, bool log
 ) {
   int n = x.size();
@@ -44,7 +46,8 @@ NumericVector DTri(
   return d;
 }
 
-NumericVector DTri(
+// [[Rcpp::export]]
+NumericVector DTriC2(
     NumericVector x, NumericVector min, NumericVector max, NumericVector mode,
     bool log
 ) {
@@ -85,21 +88,6 @@ NumericVector DTri(
   }
 
   return d;
-}
-
-// [[Rcpp::export]]
-NumericVector DTriC(
-    NumericVector x, double min, double max, double mode, bool log
-) {
-  return DTri(x, min, max, mode, log);
-}
-
-// [[Rcpp::export]]
-NumericVector DTriC2(
-    NumericVector x, NumericVector min, NumericVector max, NumericVector mode,
-    bool log
-) {
-  return DTri(x, min, max, mode, log);
 }
 
 /*** R

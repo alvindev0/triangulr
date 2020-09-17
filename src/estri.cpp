@@ -1,20 +1,11 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-NumericVector ESTri(
+// [[Rcpp::export]]
+NumericVector ESTriC(
     NumericVector p, double min, double max, double mode, bool lower_tail,
     bool log_p
 ) {
-  if (log_p)
-  {
-    p = exp(p);
-  }
-
-  if (!lower_tail)
-  {
-    p = 1.0 - p;
-  }
-
   int n = p.size();
 
   if (min >= max || mode > max || min > mode)
@@ -29,6 +20,16 @@ NumericVector ESTri(
   NumericVector es(n);
   for (int i = 0; i < n; i++)
   {
+    if (log_p)
+    {
+      p[i] = std::exp(p[i]);
+    }
+
+    if (!lower_tail)
+    {
+      p[i] = 1.0 - p[i];
+    }
+
     if (p[i] == 0.0 || p[i] < 0.0 || p[i] > 1.0)
     {
       warning("\nNaN produced."
@@ -60,25 +61,26 @@ NumericVector ESTri(
   return es;
 }
 
-NumericVector ESTri(
+// [[Rcpp::export]]
+NumericVector ESTriC2(
     NumericVector p, NumericVector min, NumericVector max, NumericVector mode,
     bool lower_tail, bool log_p
 ) {
-  if (log_p)
-  {
-    p = exp(p);
-  }
-
-  if (!lower_tail)
-  {
-    p = 1.0 - p;
-  }
-
   int n = p.size();
 
   NumericVector es(n);
   for (int i = 0; i < n; i++)
   {
+    if (log_p)
+    {
+      p[i] = std::exp(p[i]);
+    }
+
+    if (!lower_tail)
+    {
+      p[i] = 1.0 - p[i];
+    }
+
     if (min[i] >= max[i] || mode[i] > max[i] || min[i] > mode[i])
     {
       warning("\nNaN produced."
@@ -116,22 +118,6 @@ NumericVector ESTri(
     }
   }
   return es;
-}
-
-// [[Rcpp::export]]
-NumericVector ESTriC(
-    NumericVector p, double min, double max, double mode, bool lower_tail,
-    bool log_p
-) {
-  return ESTri(p, min, max, mode, lower_tail, log_p);
-}
-
-// [[Rcpp::export]]
-NumericVector ESTriC2(
-    NumericVector p, NumericVector min, NumericVector max, NumericVector mode,
-    bool lower_tail, bool log_p
-) {
-  return ESTri(p, min, max, mode, lower_tail, log_p);
 }
 
 /*** R

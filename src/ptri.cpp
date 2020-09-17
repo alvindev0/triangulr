@@ -1,7 +1,9 @@
 #include <Rcpp.h>
+
 using namespace Rcpp;
 
-NumericVector PTri(
+// [[Rcpp::export]]
+NumericVector PTriC(
     NumericVector q, double min, double max, double mode, bool lower_tail,
     bool log_p
 ) {
@@ -50,7 +52,8 @@ NumericVector PTri(
   return p;
 }
 
-NumericVector PTri(
+// [[Rcpp::export]]
+NumericVector PTriC2(
     NumericVector q, NumericVector min, NumericVector max, NumericVector mode,
     bool lower_tail, bool log_p
 ) {
@@ -97,22 +100,6 @@ NumericVector PTri(
   }
 
   return p;
-}
-
-// [[Rcpp::export]]
-NumericVector PTriC(
-    NumericVector q, double min, double max, double mode, bool lower_tail,
-    bool log_p
-) {
-  return PTri(q, min, max, mode, lower_tail, log_p);
-}
-
-// [[Rcpp::export]]
-NumericVector PTriC2(
-    NumericVector q, NumericVector min, NumericVector max, NumericVector mode,
-    bool lower_tail, bool log_p
-) {
-  return PTri(q, min, max, mode, lower_tail, log_p);
 }
 
 /*** R

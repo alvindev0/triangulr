@@ -1,7 +1,8 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-NumericVector MGTri(
+// [[Rcpp::export]]
+NumericVector MGTriC(
     NumericVector t, double min, double max, double mode
 ) {
   int n = t.size();
@@ -35,7 +36,8 @@ NumericVector MGTri(
   return m;
 }
 
-NumericVector MGTri(
+// [[Rcpp::export]]
+NumericVector MGTriC2(
     NumericVector t, NumericVector min, NumericVector max, NumericVector mode
 ) {
   int n = t.size();
@@ -63,18 +65,6 @@ NumericVector MGTri(
     }
   }
   return m;
-}
-
-// [[Rcpp::export]]
-NumericVector MGTriC(NumericVector t, double min, double max, double mode) {
-  return MGTri(t, min, max, mode);
-}
-
-// [[Rcpp::export]]
-NumericVector MGTriC2(
-    NumericVector t, NumericVector min, NumericVector max, NumericVector mode
-) {
-  return MGTri(t, min, max, mode);
 }
 
 /*** R

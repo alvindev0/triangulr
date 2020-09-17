@@ -1,16 +1,17 @@
 #include <Rcpp.h>
+
 using namespace Rcpp;
 using namespace std;
 
-ComplexVector CTri(NumericVector t, double min, double max, double mode) {
+// [[Rcpp::export]]
+ComplexVector CTriC(NumericVector t, double min, double max, double mode) {
   int n = t.size();
 
   if (min >= max || mode >= max || min >= mode)
   {
-    warning("\nNaN(s) produced."
-              "\n* min must be less than max"
-              "\n* min must be less than or equal to mode"
-              "\n* mode must be less than or equal to max");
+    warning("\nNaN produced."
+              "\n* min must be less than max and mode"
+              "\n* mode must be less than max");
     return ComplexVector(n, complex<double>(R_NaN, 0.0));
   }
 
@@ -40,7 +41,8 @@ ComplexVector CTri(NumericVector t, double min, double max, double mode) {
   return c;
 }
 
-ComplexVector CTri(
+// [[Rcpp::export]]
+ComplexVector CTriC2(
     NumericVector t, NumericVector min, NumericVector max, NumericVector mode
 ) {
   int n = t.size();
@@ -55,9 +57,8 @@ ComplexVector CTri(
     {
       warning("\nNaN produced."
                 "\n* t must not be zero"
-                "\n* min must be less than max"
-                "\n* min must be less than or equal to mode"
-                "\n* mode must be less than or equal to max");
+                "\n* min must be less than max and mode"
+                "\n* mode must be less than max");
       rc.r = R_NaN;
       rc.i = 0.0;
       c[i] = rc;
@@ -75,18 +76,6 @@ ComplexVector CTri(
     }
   }
   return c;
-}
-
-// [[Rcpp::export]]
-ComplexVector CTriC(NumericVector t, double min, double max, double mode) {
-  return CTri(t, min, max, mode);
-}
-
-// [[Rcpp::export]]
-ComplexVector CTriC2(
-    NumericVector t, NumericVector min, NumericVector max, NumericVector mode
-) {
-  return CTri(t, min, max, mode);
 }
 
 /*** R

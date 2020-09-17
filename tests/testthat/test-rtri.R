@@ -28,7 +28,7 @@ rtri_vec_test <- function(n, a, b, c) {
 }
 
 ################################################################################
-## Test cases for the random deviates generator function
+## Test cases for the random variate generator function
 
 test_that("n == 1, scalar params, symmetric", {
   before_each()

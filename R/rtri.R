@@ -2,7 +2,6 @@
 
 #' @include Triangular.R
 #' @rdname Triangular
-#' @importFrom stats runif
 #' @export
 rtri <- function(n, min = 0, max = 1, mode = 0.5) {
   if (is.null(n) || is.null(min) || is.null(max) || is.null(mode)) {

@@ -2,144 +2,165 @@ library(testthat)
 library(triangulr)
 
 ################################################################################
+## Setup
+
+ptri_test <- function(q, a, b, c) {
+  p <- (q - a)^2 / ((b - a) * (c - a))
+  p[q <= a] <- 0
+  p[b <= q] <- 1
+  i <- c < q & q < b
+  p[i] <- 1 - (b - q[i])^2 / ((b - a) * (b - c))
+  p
+}
+
+ptri_vec_test <- function(q, a, b, c) {
+  p <- (q - a)^2 / ((b - a) * (c - a))
+  p[q <= a] <- 0
+  p[b <= q] <- 1
+  i <- c < q & q < b
+  p[i] <- 1 - (b - q[i])^2 / ((b - a[i]) * (b - c))
+  p
+}
+
+################################################################################
 ## Test cases for the cumulative distribution function
 
 test_that("scalar q, scalar params, symmetric", {
   p <- ptri(0.5, min = 0, max = 1, mode = 0.5)
-  expect_equal(p, 0.5)
+  p_test <- ptri_test(0.5, 0, 1, 0.5)
+  expect_equal(p, p_test)
 })
 
 test_that("scalar q, scalar params, non-symmetric", {
   p <- ptri(0.5, min = 0, max = 1, mode = 0.8)
-  expect_equal(p, 0.3125)
+  p_test <- ptri_test(0.5, 0, 1, 0.8)
+  expect_equal(p, p_test)
 })
 
 test_that("scalar q, scalar params, non-symmetric, upper_tail", {
-  p <- ptri(0.5, min = 0, max = 1, mode = 0.8, lower_tail = FALSE)
-  expect_equal(p, 0.6875)
+  p <- ptri(0.4, min = 0, max = 1, mode = 0.8, lower_tail = FALSE)
+  p_test <- ptri_test(0.4, 0, 1, 0.8)
+  expect_equal(1 - p, p_test)
 })
 
 test_that("scalar q, scalar params, non-symmetric, log_p", {
   p <- ptri(0.5, min = 0, max = 1, mode = 0.8, log_p = TRUE)
-  expect_equal(exp(p), 0.3125)
+  p_test <- ptri_test(0.5, 0, 1, 0.8)
+  expect_equal(exp(p), p_test)
 })
 
 test_that("scalar q, scalar params, non-symmetric, upper_tail, log_p", {
-  p <- ptri(0.5, min = 0, max = 1, mode = 0.8, lower_tail = FALSE, log_p = TRUE)
-  expect_equal(exp(p), 0.6875)
+  p <- ptri(0.4, min = 0, max = 1, mode = 0.8, lower_tail = FALSE, log_p = TRUE)
+  p_test <- ptri_test(0.4, 0, 1, 0.8)
+  expect_equal(1 - exp(p), p_test)
 })
 
 test_that("vector q, scalar params, symmetric", {
-  q <- seq(0, 1, 0.1)
-  p <- ptri(q, min = 0, max = 1, mode = 0.5)
-  expect_equal(p, c(0, 0.02, 0.08, 0.18, 0.32, 0.5, 0.68, 0.82, 0.92, 0.98, 1))
+  p <- ptri(c(0.1, 0.6, 0.9), min = 0, max = 1, mode = 0.5)
+  p_test <- ptri_test(c(0.1, 0.6, 0.9), 0, 1, 0.5)
+  expect_equal(p, p_test)
 })
 
 test_that("vector q, scalar params, non-symmetric", {
-  q <- seq(0, 1, 0.1)
-  p <- ptri(q, min = 0, max = 1, mode = 0.8)
-  expect_equal(p, c(   0, 0.0125, 0.05, 0.1125, 0.2, 0.3125, 0.45, 0.6125, 0.8,
-                    0.95,      1))
+  p <- ptri(c(0.1, 0.6, 0.9), min = 0, max = 1, mode = 0.8)
+  p_test <- ptri_test(c(0.1, 0.6, 0.9), 0, 1, 0.8)
+  expect_equal(p, p_test)
 })
 
 test_that("vector q, scalar params, non-symmetric, log_p", {
-  q <- seq(0, 1, 0.1)
-  p <- ptri(q, min = 0, max = 1, mode = 0.8, log_p = TRUE)
-  expect_equal(exp(p), c(  0, 0.0125, 0.05, 0.1125, 0.2, 0.3125, 0.45, 0.6125,
-                         0.8,   0.95,    1))
+  p <- ptri(c(0.1, 0.6, 0.9), min = 0, max = 1, mode = 0.8, log_p = TRUE)
+  p_test <- ptri_test(c(0.1, 0.6, 0.9), 0, 1, 0.8)
+  expect_equal(exp(p), p_test)
 })
 
 test_that("vector q, vector params, symmetric", {
-  q <- seq(1, 2, 0.1)
-  a <- seq(0, 1, 0.1)
-  b <- seq(2, 3, 0.1)
-  c <- seq(1, 2, 0.1)
-  p <- ptri(q, min = a, max = b, mode = c)
-  expect_equal(p, rep.int(0.5, 11))
+  p <- ptri(c(0.1, 0.6, 0.9), min = c(0, 0, 0), max = 2, mode = 1)
+  p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(0, 0, 0), 2, 1)
+  expect_equal(p, p_test)
 })
 
 test_that("vector q, vector params, non-symmetric", {
-  q <- seq(1, 2, 0.1)
-  a <- seq(0, 1, 0.1)
-  b <- seq(3, 4, 0.1)
-  c <- seq(1.8, 3.8, 0.2)
-  p <- ptri(q, min = a, max = b, mode = c)
-  expect_equal(round(p, 7), c(0.1851852, 0.1754386, 0.1666667, 0.1587302,
-                              0.1515152, 0.1449275, 0.1388889, 0.1333333,
-                              0.1282051, 0.1234568, 0.1190476))
+  p <- ptri(c(0.1, 0.6, 0.9), min = c(-0.1, 0, 0.1), max = 3, mode = 2)
+  p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(-0.1, 0, 0.1), 3, 2)
+  expect_equal(p, p_test)
 })
 
-test_that("vector q, vector params recycled, symmetric", {
-  q <- seq(1, 2, 0.1)
-  a <- 0
-  b <- seq(2, 3, 0.1)
-  c <- seq(1, 2, 0.1)
-  p <- ptri(q, min = a, max = b, mode = c)
-  expect_equal(round(p, 7), c(      0.5, 0.5238095, 0.5454545, 0.5652174,
-                              0.5833333,       0.6, 0.6153846, 0.6296296,
-                              0.6428571, 0.6551724, 0.6666667))
+test_that("vector q, vector params, upper_tail", {
+  p <- ptri(c(0.1, 0.6, 0.9), min = c(0, 0.01, 0.02), max = 1, mode = 0.8,
+            lower_tail = FALSE)
+  p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(0, 0.01, 0.02), 1, 0.8)
+  expect_equal(1 - p, p_test)
 })
 
-test_that("vector q, vector params recycled, non-symmetric", {
-  q <- seq(1, 2, 0.1)
-  a <- 0
-  b <- seq(2, 3, 0.1)
-  c <- seq(1.3, 2.3, 0.1)
-  p <- ptri(q, min = a, max = b, mode = c)
-  expect_equal(round(p, 7), c(0.3846154, 0.4115646, 0.4363636, 0.4592391,
-                              0.4803922,       0.5, 0.5182186, 0.5351852,
-                              0.5510204, 0.5658307, 0.5797101))
+test_that("vector q, vector params, log_p", {
+  p <- ptri(c(0.1, 0.6, 0.9), min = c(0, 0.01, 0.02), max = 1, mode = 0.8,
+            log_p = TRUE)
+  p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(0, 0.01, 0.02), 1, 0.8)
+  expect_equal(exp(p), p_test)
+})
+
+test_that("vector q, vector params, upper_tail, log_p", {
+  p <- ptri(c(0.1, 0.6, 0.9), min = c(0, 0.01, 0.02), max = 1, mode = 0.8, lower_tail = FALSE, log_p = TRUE)
+  p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(0, 0.01, 0.02), 1, 0.8)
+  expect_equal(1 - exp(p), p_test)
 })
 
 test_that("Mode at bound, min == mode", {
-  q <- seq(0, 1, 0.1)
+  q <- c(0.1, 0.6, 0.9)
   p <- ptri(q, min = 0, max = 1, mode = 0)
-  expect_equal(p, c(0, 0.19, 0.36, 0.51, 0.64, 0.75, 0.84, 0.91, 0.96, 0.99, 1))
+  p_test <- ptri_test(c(0.1, 0.6, 0.9), 0, 1, 0)
+  expect_equal(p, p_test)
+  p <- ptri(q, min = c(0, 0, 0), max = 1, mode = 0)
+  p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(0, 0, 0), 1, 0)
+  expect_equal(p, p_test)
 })
 
 test_that("Mode at bound, max == mode", {
-  q <- seq(0, 1, 0.1)
-  p <- ptri(q, min = 0, max = 1, mode = 1)
-  expect_equal(p, c(0, 0.01, 0.04, 0.09, 0.16, 0.25, 0.36, 0.49, 0.64, 0.81, 1))
+  p <- ptri(c(0.1, 0.6, 0.9), min = 0, max = 1, mode = 1)
+  p_test <- ptri_test(c(0.1, 0.6, 0.9), 0, 1, 1)
+  expect_equal(p, p_test)
+  p <- ptri(c(0.1, 0.6, 0.9), min = c(0, 0, 0), max = 1, mode = 1)
+  p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(0, 0, 0), 1, 1)
+  expect_equal(p, p_test)
 })
 
-test_that("Zeros produced, x < min", {
-  q <- seq(0, 1, 0.1)
-  p <- ptri(q, min = 0.4, max = 1.4, mode = 0.9)
-  expect_equal(p, c(0, 0, 0, 0, 0, 0.02, 0.08, 0.18, 0.32, 0.5, 0.68))
+test_that("Zeros produced, q < min", {
+  p <- ptri(c(0.1, 0.6, 0.9), min = 0.4, max = 1.4, mode = 0.9)
+  p_test <- ptri_test(c(0.1, 0.6, 0.9), 0.4, 1.4, 0.9)
+  expect_equal(p, p_test)
+  p <- ptri(c(0.1, 0.6, 0.9), min = c(0.4, 0.4, 0.4), max = 1.4, mode = 0.9)
+  p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(0.4, 0.4, 0.4), 1.4, 0.9)
+  expect_equal(p, p_test)
 })
 
-test_that("Ones produced, x > max", {
-  q <- seq(0, 1, 0.1)
-  p <- ptri(q, min = -0.5, max = 0.5, mode = 0)
-  expect_equal(p, c(0.5, 0.68, 0.82, 0.92, 0.98, 1, 1, 1, 1, 1, 1))
+test_that("Ones produced, q > max", {
+  p <- ptri(c(0.1, 0.6, 0.9), min = -0.5, max = 0.5, mode = 0)
+  p_test <- ptri_test(c(0.1, 0.6, 0.9), -0.5, 0.5, 0)
+  expect_equal(p, p_test)
+  p <- ptri(c(0.1, 0.6, 0.9), min = c(-0.5, -0.5, -0.5), max = 0.5, mode = 0)
+  p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(-0.5, -0.5, -0.5), 0.5, 0)
+  expect_equal(p, p_test)
 })
 
 test_that("NaN produced, mode < min", {
-  q <- c(1, 2, 3)
-  a <- c(0, 1, 2)
-  b <- c(2, 3, 4)
-  c <- c(-1, 2, 3)
-  p <- expect_warning(ptri(q, min = a, max = b, mode = c))
-  expect_equal(p, c(NaN, 0.5, 0.5))
+  p <- expect_warning(ptri(1, min = 0, max = 2, mode = -1))
+  expect_equal(p, NaN)
+  p <- expect_warning(ptri(c(1, 2, 3), min = c(-1, 0, 1), max = 3, mode = -1))
+  expect_equal(p, c(0.75, NaN, NaN))
 })
 
 test_that("NaN produced, min == mode == max", {
-  q <- c(1, 2, 3)
-  a <- c(0, 1, 3)
-  b <- c(2, 3, 3)
-  c <- c(1, 2, 3)
-  p <- expect_warning(ptri(q, min = a, max = b, mode = c))
-  expect_equal(p, c(0.5, 0.5, NaN))
+  p <- expect_warning(ptri(3, min = 3, max = 3, mode = 3))
+  expect_equal(p, NaN)
+  p <- expect_warning(ptri(c(1, 2, 3), min = c(0, 1, 3), max = 3, mode = 3))
+  expect_equal(round(p, 7), c(0.1111111, 0.25, NaN))
 })
 
 test_that("NaN produced, min > max", {
-  q <- c(1, 2, 3)
-  a <- c(0, 1, 2)
-  b <- c(-1, 3, 4)
-  c <- c(1, 2, 3)
-  p <- expect_warning(ptri(q, min = a, max = b, mode = c))
-  expect_equal(p, c(NaN, 0.5, 0.5))
+  p <- expect_warning(ptri(1, min = 0, max = -1, mode = 1))
+  expect_equal(p, NaN)
+  p <- expect_warning(ptri(c(1, 2, 3), min = c(1, 2, 3), max = 2.5, mode = 2))
+  expect_equal(p, c(0, 0, NaN))
 })
 
 test_that("Error, NULL arguments", {

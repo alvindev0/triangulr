@@ -13,7 +13,7 @@ ctri_test <- function(t, a, b, c) {
 }
 
 ################################################################################
-## Test cases for the probability density function
+## Test cases for the characteristic function
 
 test_that("scalar t, scalar params, symmetric", {
   c <- ctri(0.5, min = 0, max = 1, mode = 0.5)
@@ -58,8 +58,8 @@ test_that("vector t, vector params recycled, symmetric", {
 })
 
 test_that("vector t, vector params recycled, non-symmetric", {
-  c <- ctri(1:3, min = c(0, 0.5, 1), max = 2, mode = 1)
-  c_test <- ctri_test(1:3, c(0, 0.5, 1), 2, 1)
+  c <- ctri(1:3, min = c(0, 0.5, 1), max = 3, mode = 2)
+  c_test <- ctri_test(1:3, c(0, 0.5, 1), 3, 2)
   expect_equal(c, c_test)
 })
 
