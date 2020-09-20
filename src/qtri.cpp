@@ -12,10 +12,7 @@ NumericVector QTriC(
 
   if (min >= max || mode > max || min > mode)
   {
-    warning("\nNaN(s) produced."
-              "\n* min must be less than max"
-              "\n* min must be less than or equal to mode"
-              "\n* mode must be less than or equal to max.");
+    warning("NaN(s) produced.");
     return NumericVector(n, R_NaN);
   }
 
@@ -31,14 +28,15 @@ NumericVector QTriC(
     q = 1.0 - q;
   }
 
+  bool has_nan = false;
   double int_len = max - min;
+
   for (int i = 0; i < n; i++)
   {
     if (q[i] < 0.0 || q[i] > 1.0)
     {
-      warning("\nNaN produced."
-                "\n* p must be between 0 and 1 inclusive");
       q[i] = R_NaN;
+      has_nan = true;
     }
     else if (q[i] < (mode - min) / int_len)
     {
@@ -50,6 +48,11 @@ NumericVector QTriC(
     }
   }
 
+  if (has_nan)
+  {
+    warning("NaN(s) produced.");
+  }
+
   return q;
 }
 
@@ -59,9 +62,8 @@ NumericVector QTriC2(
     bool lower_tail, bool log_p
 ) {
   int n = p.size();
-
   NumericVector q = Rcpp::clone(p);
-  
+
   if (log_p)
   {
     q = exp(q);
@@ -72,21 +74,15 @@ NumericVector QTriC2(
     q = 1.0 - q;
   }
 
+  bool has_nan = false;
+
   for (int i = 0; i < n; i++)
   {
-    if (min[i] >= max[i] || mode[i] > max[i] || min[i] > mode[i])
+    if (min[i] >= max[i] || mode[i] > max[i] || min[i] > mode[i] ||
+        q[i] < 0.0 || q[i] > 1.0)
     {
-      warning("\nNaN produced."
-                "\n* min must be less than max"
-                "\n* min must be less than or equal to mode"
-                "\n* mode must be less than or equal to max");
       q[i] = R_NaN;
-    }
-    else if (q[i] < 0.0 || q[i] > 1.0)
-    {
-      warning("\nNaN produced."
-                "\n* p must be between 0 and 1 inclusive.");
-      q[i] = R_NaN;
+      has_nan = true;
     }
     else if (q[i] < (mode[i] - min[i]) / (max[i] - min[i]))
     {
@@ -96,6 +92,11 @@ NumericVector QTriC2(
     {
       q[i] = max[i] - sqrt((1.0 - q[i]) * (max[i] - min[i]) * (max[i] - mode[i]));
     }
+  }
+
+  if (has_nan)
+  {
+    warning("NaN(s) produced.");
   }
 
   return q;

@@ -9,21 +9,19 @@ NumericVector MGTriC(
 
   if (min >= max || mode >= max || min >= mode)
   {
-    warning("\nNaN(s) produced."
-              "\n* min must be less than max"
-              "\n* min must be less than or equal to mode"
-              "\n* mode must be less than or equal to max");
+    warning("NaN(s) produced.");
     return NumericVector(n, R_NaN);
   }
 
+  bool has_nan = false;
   NumericVector m(n);
+
   for (int i = 0; i < n; i++)
   {
     if (t[i] == 0.0)
     {
-      warning("\nNaN produced."
-                "\n* t must not be zero");
       m[i] = R_NaN;
+      has_nan = true;
     }
     else
     {
@@ -33,6 +31,12 @@ NumericVector MGTriC(
             pow(t[i], 2));
     }
   }
+
+  if (has_nan)
+  {
+    warning("NaN(s) produced.");
+  }
+
   return m;
 }
 
@@ -41,19 +45,16 @@ NumericVector MGTriC2(
     NumericVector t, NumericVector min, NumericVector max, NumericVector mode
 ) {
   int n = t.size();
-
+  bool has_nan = false;
   NumericVector m(n);
+
   for (int i = 0; i < n; i++)
   {
     if (t[i] == 0.0 ||
         min[i] >= max[i] || mode[i] >= max[i] || min[i] >= mode[i])
     {
-      warning("\nNaN produced."
-                "\n* t must not be zero"
-                "\n* min must be less than max"
-                "\n* min must be less than or equal to mode"
-                "\n* mode must be less than or equal to max");
       m[i] = R_NaN;
+      has_nan = true;
     }
     else
     {
@@ -64,6 +65,12 @@ NumericVector MGTriC2(
             pow(t[i], 2));
     }
   }
+
+  if (has_nan)
+  {
+    warning("NaN(s) produced.");
+  }
+
   return m;
 }
 

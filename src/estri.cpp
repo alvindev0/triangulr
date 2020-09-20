@@ -10,14 +10,13 @@ NumericVector ESTriC(
 
   if (min >= max || mode > max || min > mode)
   {
-    warning("\nNaN(s) produced."
-              "\n* min must be less than max"
-              "\n* min must be less than or equal to mode"
-              "\n* mode must be less than or equal to max");
+    warning("NaN(s) produced.");
     return NumericVector(n, R_NaN);
   }
 
+  bool has_nan = false;
   NumericVector es(n);
+
   for (int i = 0; i < n; i++)
   {
     if (log_p)
@@ -32,32 +31,29 @@ NumericVector ESTriC(
 
     if (p[i] == 0.0 || p[i] < 0.0 || p[i] > 1.0)
     {
-      warning("\nNaN produced."
-                "\n* p must be greater than 0 and less than or equal to 1");
       es[i] = R_NaN;
+      has_nan = true;
     }
     else if (p[i] < (mode - min) / (max - min))
     {
-      es[i] = (
-        (p[i] * min) + (2.0 / 3.0) * sqrt((max - min) * (mode - min)) *
-          pow(p[i], 1.5)
-      ) / p[i];
+      es[i] = ((p[i] * min) + (2.0 / 3.0) * sqrt((max - min) * (mode - min)) *
+        pow(p[i], 1.5)) / p[i];
     }
     else // if (p[i] >= (mode - min) / (max - min))
     {
       double b = (mode - min) / (max - min);
-      es[i] = (
-        (b * min) + (2.0 / 3.0) * sqrt((max - min) * (mode - min)) *
-          pow(b, 1.5) +
-          (
-            ((p[i] * max) + (2.0 / 3.0) * sqrt((max - min) * (max - mode)) *
-              pow((1.0 - p[i]), 1.5)) -
-              ((b * max) + (2.0 / 3.0) * sqrt((max - min) * (max - mode)) *
-              pow((1.0 - b), 1.5))
-          )
-      ) / p[i];
+      es[i] = ((b * min) + (2.0 / 3.0) * sqrt((max - min) * (mode - min)) *
+        pow(b, 1.5) + (((p[i] * max) + (2.0 / 3.0) * sqrt((max - min) *
+        (max - mode)) * pow((1.0 - p[i]), 1.5)) - ((b * max) + (2.0 / 3.0) *
+        sqrt((max - min) * (max - mode)) * pow((1.0 - b), 1.5)))) / p[i];
     }
   }
+
+  if (has_nan)
+  {
+    warning("NaN(s) produced.");
+  }
+
   return es;
 }
 
@@ -67,8 +63,9 @@ NumericVector ESTriC2(
     bool lower_tail, bool log_p
 ) {
   int n = p.size();
-
+  bool has_nan = false;
   NumericVector es(n);
+
   for (int i = 0; i < n; i++)
   {
     if (log_p)
@@ -81,42 +78,33 @@ NumericVector ESTriC2(
       p[i] = 1.0 - p[i];
     }
 
-    if (min[i] >= max[i] || mode[i] > max[i] || min[i] > mode[i])
+    if (min[i] >= max[i] || mode[i] > max[i] || min[i] > mode[i] ||
+        p[i] <= 0.0 || p[i] > 1.0)
     {
-      warning("\nNaN produced."
-                "\n* min must be less than max"
-                "\n* min must be less than or equal to mode"
-                "\n* mode must be less than or equal to max");
       es[i] = R_NaN;
-    }
-    else if (p[i] == 0.0 || p[i] < 0.0 || p[i] > 1.0)
-    {
-      warning("\nNaN produced."
-                "\n* p must be greater than 0 and less than or equal to 1");
-      es[i] = R_NaN;
+      has_nan = true;
     }
     else if (p[i] < (mode[i] - min[i]) / (max[i] - min[i]))
     {
-      es[i] = (
-        (p[i] * min[i]) + (2.0 / 3.0) * sqrt((max[i] - min[i]) *
-          (mode[i] - min[i])) * pow(p[i], 1.5)
-      ) / p[i];
+      es[i] = ((p[i] * min[i]) + (2.0 / 3.0) * sqrt((max[i] - min[i]) *
+        (mode[i] - min[i])) * pow(p[i], 1.5)) / p[i];
     }
     else // if (p[i] >= (mode - min) / (max - min))
     {
       double b = (mode[i] - min[i]) / (max[i] - min[i]);
-      es[i] = (
-        (b * min[i]) + (2.0 / 3.0) * sqrt((max[i] - min[i]) *
-          (mode[i] - min[i])) * pow(b, 1.5) +
-          (
-              ((p[i] * max[i]) + (2.0 / 3.0) * sqrt((max[i] - min[i]) *
-                (max[i] - mode[i])) * pow((1.0 - p[i]), 1.5)) -
-                ((b * max[i]) + (2.0 / 3.0) * sqrt((max[i] - min[i]) *
-                (max[i] - mode[i])) * pow((1.0 - b), 1.5))
-          )
-      ) / p[i];
+      es[i] = ((b * min[i]) + (2.0 / 3.0) * sqrt((max[i] - min[i]) *
+        (mode[i] - min[i])) * pow(b, 1.5) + (((p[i] * max[i]) + (2.0 / 3.0) *
+        sqrt((max[i] - min[i]) * (max[i] - mode[i])) * pow((1.0 - p[i]), 1.5)) -
+        ((b * max[i]) + (2.0 / 3.0) * sqrt((max[i] - min[i]) *
+        (max[i] - mode[i])) * pow((1.0 - b), 1.5)))) / p[i];
     }
   }
+
+  if (has_nan)
+  {
+    warning("NaN(s) produced.");
+  }
+
   return es;
 }
 

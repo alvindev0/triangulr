@@ -10,14 +10,12 @@ NumericVector DTriC(
 
   if (min >= max || mode > max || min > mode)
   {
-    warning("\nNaN(s) produced."
-              "\n* min must be less than max"
-              "\n* min must be less than or equal to mode"
-              "\n* mode must be less than or equal to max.");
+    warning("NaN(s) produced.");
     return NumericVector(n, R_NaN);
   }
 
   NumericVector d(n);
+
   for (int i = 0; i < n; i++)
   {
     if (x[i] < min || x[i] > max)
@@ -52,17 +50,15 @@ NumericVector DTriC2(
     bool log
 ) {
   int n = x.size();
-
+  bool has_nan = false;
   NumericVector d(n);
+
   for (int i = 0; i < n; i++)
   {
     if (min[i] >= max[i] || mode[i] > max[i] || min[i] > mode[i])
     {
-      warning("\nNaN produced."
-                "\n* min must be less than max"
-                "\n* min must be less than or equal to mode"
-                "\n* mode must be less than or equal to max");
       d[i] = R_NaN;
+      has_nan = true;
     }
     else if (x[i] < min[i] || x[i] > max[i])
     {
@@ -85,6 +81,11 @@ NumericVector DTriC2(
   if (log)
   {
     return Rcpp::log(d);
+  }
+
+  if (has_nan)
+  {
+    warning("NaN(s) produced.");
   }
 
   return d;

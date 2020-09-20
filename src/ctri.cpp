@@ -9,24 +9,23 @@ ComplexVector CTriC(NumericVector t, double min, double max, double mode) {
 
   if (min >= max || mode >= max || min >= mode)
   {
-    warning("\nNaN produced."
-              "\n* min must be less than max and mode"
-              "\n* mode must be less than max");
+    warning("NaN(s) produced.");
     return ComplexVector(n, complex<double>(R_NaN, 0.0));
   }
 
+  bool has_nan = false;
   complex<double> x(0.0, 1.0);
   ComplexVector c(n);
   Rcomplex rc;
+
   for (int i = 0; i < n; i++)
   {
     if (t[i] == 0.0)
     {
-      warning("\nNaN produced."
-                "\n* t must not be zero");
       rc.r = R_NaN;
       rc.i = 0.0;
       c[i] = rc;
+      has_nan = true;
     }
     else
     {
@@ -38,6 +37,12 @@ ComplexVector CTriC(NumericVector t, double min, double max, double mode) {
       c[i] = rc;
     }
   }
+
+  if (has_nan)
+  {
+    warning("NaN(s) produced.");
+  }
+
   return c;
 }
 
@@ -46,22 +51,20 @@ ComplexVector CTriC2(
     NumericVector t, NumericVector min, NumericVector max, NumericVector mode
 ) {
   int n = t.size();
-
+  bool has_nan = false;
   complex<double> x(0.0, 1.0);
   ComplexVector c(n);
   Rcomplex rc;
+
   for (int i = 0; i < n; i++)
   {
-    if (t[i] == 0.0 ||
-        min[i] >= max[i] || mode[i] >= max[i] || min[i] >= mode[i])
+    if (t[i] == 0.0 || min[i] >= max[i] || mode[i] >= max[i] ||
+        min[i] >= mode[i])
     {
-      warning("\nNaN produced."
-                "\n* t must not be zero"
-                "\n* min must be less than max and mode"
-                "\n* mode must be less than max");
       rc.r = R_NaN;
       rc.i = 0.0;
       c[i] = rc;
+      has_nan = true;
     }
     else
     {
@@ -75,6 +78,12 @@ ComplexVector CTriC2(
       c[i] = rc;
     }
   }
+
+  if (has_nan)
+  {
+    warning("NaN(s) produced.");
+  }
+
   return c;
 }
 

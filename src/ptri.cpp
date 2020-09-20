@@ -11,10 +11,7 @@ NumericVector PTriC(
 
   if (min >= max || mode > max || min > mode)
   {
-    warning("\nNaN(s) produced."
-              "\n* min must be less than max"
-              "\n* min must be less than or equal to mode"
-              "\n* mode must be less than or equal to max.");
+    warning("NaN(s) produced.");
     return NumericVector(n, R_NaN);
   }
 
@@ -58,17 +55,15 @@ NumericVector PTriC2(
     bool lower_tail, bool log_p
 ) {
   int n = q.size();
-
+  bool has_nan = false;
   NumericVector p(n);
+
   for (int i = 0; i < n; i++)
   {
     if (min[i] >= max[i] || mode[i] > max[i] || min[i] > mode[i])
     {
-      warning("\nNaN produced."
-                "\n* min must be less than max"
-                "\n* min must be less than or equal to mode"
-                "\n* mode must be less than or equal to max");
       p[i] = R_NaN;
+      has_nan = true;
     }
     else if (q[i] <= min[i])
     {
@@ -97,6 +92,11 @@ NumericVector PTriC2(
   if (log_p)
   {
     p = Rcpp::log(p);
+  }
+
+  if (has_nan)
+  {
+    warning("NaN(s) produced.");
   }
 
   return p;
