@@ -74,6 +74,12 @@ test_that("vector x, vector params, non-symmetric", {
   expect_equal(d, d_test)
 })
 
+test_that("vector x, vector params, non-symmetric, log-scale", {
+  d <- dtri(c(0.1, 0.6, 0.9), min = 0:2, max = 7, mode = 6, log = TRUE)
+  d_test <- dtri_vec_test(c(0.1, 0.6, 0.9), 0:2, 7, 6)
+  expect_equal(exp(d), d_test)
+})
+
 test_that("Mode at bound, min == mode", {
   d <- dtri(c(0.1, 0.6, 0.9), min = 0, max = 1, mode = 0)
   d_test <- dtri_test(c(0.1, 0.6, 0.9), 0, 1, 0)

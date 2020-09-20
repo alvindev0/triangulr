@@ -79,6 +79,13 @@ test_that("vector p, vector params, non-symmetric", {
   expect_equal2(es, es_test)
 })
 
+test_that("vector p, vector params, non-symmetric, upper_tail, log_p", {
+  es <- estri(log(c(0.1, 0.6, 0.9)), min = 0:2, max = 5:7, mode = 4:6,
+              lower_tail = FALSE, log_p = TRUE)
+  es_test <- estri_test(1 - c(0.1, 0.6, 0.9), 0:2, 5:7, 4:6)
+  expect_equal2(es, es_test)
+})
+
 test_that("vector p, vector params recycled, symmetric", {
   es <- estri(c(0.1, 0.6, 0.9), min = c(0, 0, 0), max = 1, mode = 0.5)
   es_test <- estri_test(c(0.1, 0.6, 0.9), c(0, 0, 0), 1, 0.5)
