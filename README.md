@@ -45,7 +45,8 @@ These are basic examples of using the included functions:
 library(triangulr)
 ```
 
-Using the density function, `dtri`.
+Using the density function,
+[`dtri()`](https://irkaal.github.io/triangulr/reference/Triangular.html).
 
 ``` r
 x <- c(0.1, 0.5, 0.9)
@@ -57,7 +58,8 @@ dtri(x, min  = 0, max  = rep.int(1, 3), mode = 0.5)
 #> [1] 0.4 2.0 0.4
 ```
 
-Using the distribution function, `ptri`.
+Using the distribution function,
+[`ptri()`](https://irkaal.github.io/triangulr/reference/Triangular.html).
 
 ``` r
 q <- c(0.1, 0.5, 0.9)
@@ -75,16 +77,17 @@ log(ptri(q, log_p = FALSE))
 #> [1] -3.91202301 -0.69314718 -0.02020271
 ```
 
-Using the quantile function, `qtri`.
+Using the quantile function,
+[`qtri()`](https://irkaal.github.io/triangulr/reference/Triangular.html).
 
 ``` r
 p <- c(0.1, 0.5, 0.9)
 
-ptri(1 - p, lower_tail = FALSE)
-#> [1] 0.02 0.50 0.98
+qtri(1 - p, lower_tail = FALSE)
+#> [1] 0.2236068 0.5000000 0.7763932
 
-ptri(p, lower_tail = TRUE)
-#> [1] 0.02 0.50 0.98
+qtri(p, lower_tail = TRUE)
+#> [1] 0.2236068 0.5000000 0.7763932
 
 qtri(log(p), log_p = TRUE)
 #> [1] 0.2236068 0.5000000 0.7763932
@@ -93,7 +96,8 @@ qtri(p, log_p = FALSE)
 #> [1] 0.2236068 0.5000000 0.7763932
 ```
 
-Using the random variate generator, `rtri`.
+Using the random variate generator,
+[`rtri()`](https://irkaal.github.io/triangulr/reference/Triangular.html).
 
 ``` r
 set.seed(1)
@@ -106,7 +110,8 @@ rtri(n, min  = 0, max  = rep.int(1, 3), 0.5)
 #> [1] 0.7857662 0.3175547 0.7746000
 ```
 
-Using the moment generating function, `mgtri`.
+Using the moment generating function,
+[`mgtri()`](https://irkaal.github.io/triangulr/reference/Triangular.html).
 
 ``` r
 t <- c(1, 2, 3)
@@ -118,7 +123,8 @@ mgtri(t, min = rep.int(0, 3), max = 1, mode = 0.5)
 #> [1] 1.683357 2.952492 5.387626
 ```
 
-Using the characteristic function, `ctri`.
+Using the characteristic function,
+[`ctri()`](https://irkaal.github.io/triangulr/reference/Triangular.html).
 
 ``` r
 t <- c(1, 2, 3)
@@ -130,7 +136,8 @@ ctri(t, min = rep.int(0, 3), max = 1, mode = 0.5)
 #> [1] 0.8594513+0.4695204i 0.4967514+0.7736445i 0.0584297+0.8239422i
 ```
 
-Using the expected shortfall function, `estri`.
+Using the expected shortfall function,
+[`estri()`](https://irkaal.github.io/triangulr/reference/Triangular.html).
 
 ``` r
 p <- c(0.1, 0.5, 0.9)
