@@ -74,6 +74,7 @@
 #' @useDynLib triangulr
 #'
 #' @importFrom Rcpp sourceCpp
+#' @importFrom rlang cnd_signal
 #' @importFrom vctrs vec_recycle_common
 #'
 #' @examples
