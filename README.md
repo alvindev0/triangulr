@@ -3,10 +3,11 @@
 
 # triangulr <a href="https://irkaal.github.io/triangulr"><img src="man/figures/logo.png" align="right" height="139" /></a>
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/triangulr)](http://cran.r-project.org/web/packages/triangulr)
+[![Build](https://github.com/irkaal/triangulr/workflows/R-CMD-check/badge.svg)](https://github.com/irkaal/triangulr/actions)
+[![Codecov](https://codecov.io/gh/irkaal/triangulr/branch/master/graph/badge.svg)](https://codecov.io/gh/irkaal/triangulr?branch=master)
+[![CRAN](http://www.r-pkg.org/badges/version/triangulr)](http://cran.r-project.org/web/packages/triangulr)
 [![Downloads](http://cranlogs.r-pkg.org/badges/triangulr)](http://cran.rstudio.com/package=triangulr)
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 
 ## Introduction
 
