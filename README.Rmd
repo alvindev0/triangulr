@@ -24,7 +24,8 @@ knitr::opts_chunk$set(
 
 The `triangulr` package provides high-performance triangular distribution
 functions which includes density function, distribution function, quantile
-function, and random deviates generator for the triangular distribution.
+function, random variate generator, moment generating function, characteristic 
+function, and expected shortfall function for the triangular distribution.
 
 
 ## Installation
@@ -42,6 +43,7 @@ You can install the development version from [GitHub](https://github.com/) with:
 # install.packages("devtools")
 devtools::install_github("irkaal/triangulr")
 ```
+
 ## Example
 
 These are basic examples of using the included functions:
@@ -88,9 +90,10 @@ qtri(log(p), log_p = TRUE)
 qtri(p, log_p = FALSE)
 ```
 
-Using the random variates generator, `rtri`.
+Using the random variate generator, `rtri`.
 
 ```{r}
+set.seed(1)
 n <- 3
 
 rtri(n, min = 0, max = 1, mode = 0.5)

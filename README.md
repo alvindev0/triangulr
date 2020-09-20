@@ -12,8 +12,9 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 The `triangulr` package provides high-performance triangular
 distribution functions which includes density function, distribution
-function, quantile function, and random deviates generator for the
-triangular distribution.
+function, quantile function, random variate generator, moment generating
+function, characteristic function, and expected shortfall function for
+the triangular distribution.
 
 ## Installation
 
@@ -91,16 +92,17 @@ qtri(p, log_p = FALSE)
 #> [1] 0.2236068 0.5000000 0.7763932
 ```
 
-Using the random variates generator, `rtri`.
+Using the random variate generator, `rtri`.
 
 ``` r
+set.seed(1)
 n <- 3
 
 rtri(n, min = 0, max = 1, mode = 0.5)
-#> [1] 0.4366718 0.7186445 0.3041584
+#> [1] 0.3643547 0.4313490 0.5378601
 
 rtri(n, min  = 0, max  = rep.int(1, 3), 0.5)
-#> [1] 0.5599053 0.7888957 0.6683234
+#> [1] 0.7857662 0.3175547 0.7746000
 ```
 
 Using the moment generating function, `mgtri`.
