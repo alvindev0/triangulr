@@ -11,7 +11,7 @@ Description: A collection of high-performance functions for the triangular
     distribution function, quantile function, random variates generator,
     moment generating function, characteristic function, and expected shortfall.
 License: MIT + file LICENSE
-URL: https://github.com/irkaal/triangulr
+URL: https://github.com/irkaal/triangulr/ https://irkaal.github.io/triangulr/
 BugReports: https://github.com/irkaal/triangulr/issues
 Depends:
     R (>= 3.1)
