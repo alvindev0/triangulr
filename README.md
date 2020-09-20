@@ -1,12 +1,12 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# triangulr <a href="https://irkaal.github.io/triangulr"><img src="man/figures/logo.png" align="right" height="139" /></a>
+# triangulr <a href="https://irkaal.github.io/triangulr/"><img src="man/figures/logo.png" align="right" height="139" /></a>
 
 [![Build](https://github.com/irkaal/triangulr/workflows/R-CMD-check/badge.svg)](https://github.com/irkaal/triangulr/actions)
 [![Codecov](https://codecov.io/gh/irkaal/triangulr/branch/master/graph/badge.svg)](https://codecov.io/gh/irkaal/triangulr?branch=master)
-[![CRAN](http://www.r-pkg.org/badges/version/triangulr)](http://cran.r-project.org/web/packages/triangulr)
-[![Downloads](http://cranlogs.r-pkg.org/badges/triangulr)](http://cran.rstudio.com/package=triangulr)
+[![CRAN](http://www.r-pkg.org/badges/version/triangulr)](https://cran.r-project.org/package=triangulr)
+[![Downloads](http://cranlogs.r-pkg.org/badges/triangulr)](https://cran.r-project.org/package=triangulr)
 [![Lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 
 ## Introduction

@@ -10,7 +10,9 @@ Description: A collection of high-performance functions for the triangular
     distribution that consists of the probability density function, cumulative
     distribution function, quantile function, random variate generator, moment
     generating function, characteristic function, and expected shortfall
-    function.
+    function. References: Samuel Kotz, Johan Ren Van Dorp (2004)
+    <doi: 10.1142/9789812701282> and Acerbi, Carlo & Tasche, Dirk. (2002)
+    <doi: 10.1111/1468-0300.00091>.
 License: MIT + file LICENSE
 URL: https://github.com/irkaal/triangulr/ https://irkaal.github.io/triangulr/
 BugReports: https://github.com/irkaal/triangulr/issues
