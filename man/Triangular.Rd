@@ -57,7 +57,7 @@ are \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.}
 \code{mgtri} gives the moment generating function,
 \code{ptri} gives the distribution function,
 \code{qtri} gives the quantile function, and
-\code{rtri} generates random variates.
+\code{rtri} generates random variate generator.
 
 The numerical arguments other than \code{n} with values of size one are
 recycled to the length of \code{t} for \code{ctri} and \code{mgtri}, the
@@ -75,7 +75,7 @@ to \code{mode}. \code{ctri} gives the characteristic function, \code{dtri}
 gives the density function, \code{estri} gives the expected shortfall,
 \code{mgtri} gives the moment generating function, \code{ptri} gives the
 distribution function, \code{qtri} gives the quantile function, and
-\code{rtri} generates random variates.
+\code{rtri} gives the random variate generator.
 }
 \details{
 If \code{min}, \code{max}, or \code{mode} are not specified they assume the

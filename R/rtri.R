@@ -1,4 +1,4 @@
-# Random Variates Generator
+# Random Variate Generator
 
 #' @include Triangular.R
 #' @rdname Triangular
