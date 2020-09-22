@@ -50,7 +50,7 @@
 #'  \code{mgtri} gives the moment generating function,
 #'  \code{ptri} gives the distribution function,
 #'  \code{qtri} gives the quantile function, and
-#'  \code{rtri} generates random variate generator.
+#'  \code{rtri} gives the random variate generator.
 #'
 #'  The numerical arguments other than \code{n} with values of size one are
 #'  recycled to the length of \code{t} for \code{ctri} and \code{mgtri}, the
