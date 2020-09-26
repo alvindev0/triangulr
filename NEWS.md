@@ -1,3 +1,8 @@
+# `triangulr` (Development Version)
+
+* Updated `rtri` to use less memory.
+
+
 # `triangulr` 1.0.0
 
 * Expected shortfall function `estri` was added.
