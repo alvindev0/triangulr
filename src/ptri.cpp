@@ -101,7 +101,3 @@ NumericVector PTriC2(
 
   return p;
 }
-
-/*** R
-
-*/

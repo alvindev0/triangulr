@@ -1,21 +1,63 @@
 #include <Rcpp.h>
-#include "qtri.h"
 
 using namespace Rcpp;
 
 // [[Rcpp::export]]
 NumericVector RTriC(int n, double min, double max, double mode)
 {
-  return QTriC(runif(n), min, max, mode, true, false);
+  if (min >= max || mode > max || min > mode)
+  {
+    warning("NaN(s) produced.");
+    return NumericVector(n, R_NaN);
+  }
+
+  NumericVector r = runif(n);
+  double int_len = max - min;
+
+  for (int i = 0; i < n; i++)
+  {
+    if (r[i] < (mode - min) / int_len)
+    {
+      r[i] = min + sqrt(r[i] * int_len * (mode - min));
+    }
+    else // if (r[i] >= (mode - min) / int_len)
+    {
+      r[i] = max - sqrt((1.0 - r[i]) * int_len * (max - mode));
+    }
+  }
+
+  return r;
 }
 
 // [[Rcpp::export]]
 NumericVector RTriC2(
     int n, NumericVector min, NumericVector max, NumericVector mode
 ) {
-  return QTriC2(runif(n), min, max, mode, true, false);
+  NumericVector r = runif(n);
+  bool has_nan = false;
+
+  for (int i = 0; i < n; i++)
+  {
+    if (min[i] >= max[i] || mode[i] > max[i] || min[i] > mode[i])
+    {
+      r[i] = R_NaN;
+      has_nan = true;
+    }
+    else if (r[i] < (mode[i] - min[i]) / (max[i] - min[i]))
+    {
+      r[i] = min[i] + sqrt(r[i] * (max[i] - min[i]) * (mode[i] - min[i]));
+    }
+    else // if (r[i] >= (mode[i] - min[i]) / (max[i] - min[i]))
+    {
+      r[i] = max[i] - sqrt((1.0 - r[i]) * (max[i] - min[i]) *
+        (max[i] - mode[i]));
+    }
+  }
+
+  if (has_nan)
+  {
+    warning("NaN(s) produced.");
+  }
+
+  return r;
 }
-
-/*** R
-
-*/

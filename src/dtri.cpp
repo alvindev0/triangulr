@@ -90,7 +90,3 @@ NumericVector DTriC2(
 
   return d;
 }
-
-/*** R
-
-*/

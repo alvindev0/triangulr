@@ -73,7 +73,3 @@ NumericVector MGTriC2(
 
   return m;
 }
-
-/*** R
-
-*/

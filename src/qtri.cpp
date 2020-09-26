@@ -1,5 +1,4 @@
 #include <Rcpp.h>
-#include "qtri.h"
 
 using namespace Rcpp;
 
@@ -88,7 +87,7 @@ NumericVector QTriC2(
     {
       q[i] = min[i] + sqrt(q[i] * (max[i] - min[i]) * (mode[i] - min[i]));
     }
-    else  // if (q[i] >= (mode[i] - min[i]) / (max[i] - min[i]))
+    else // if (q[i] >= (mode[i] - min[i]) / (max[i] - min[i]))
     {
       q[i] = max[i] - sqrt((1.0 - q[i]) * (max[i] - min[i]) * (max[i] - mode[i]));
     }
@@ -101,7 +100,3 @@ NumericVector QTriC2(
 
   return q;
 }
-
-/*** R
-
-*/

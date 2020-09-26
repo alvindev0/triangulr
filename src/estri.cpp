@@ -107,7 +107,3 @@ NumericVector ESTriC2(
 
   return es;
 }
-
-/*** R
-
-*/

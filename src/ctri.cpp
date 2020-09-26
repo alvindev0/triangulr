@@ -86,7 +86,3 @@ ComplexVector CTriC2(
 
   return c;
 }
-
-/*** R
-
-*/
