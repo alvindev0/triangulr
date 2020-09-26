@@ -5,28 +5,28 @@
 
 ## Methodology
 
-I used [bench](bench.r-lib.org) for speed and memory benchmarking. The bench package is preferred as it provides a number of advantages over other alternatives, such as tracking of memory allocation and number of garbage collections. More info: [bench.r-lib.org](http://bench.r-lib.org/)
+I used [bench](https://bench.r-lib.org/) for speed and memory benchmarking. The bench package is preferred as it provides a number of advantages over other alternatives, such as tracking of memory allocation and number of garbage collections. More info: [bench.r-lib.org](https://bench.r-lib.org/)
 
 
 ## Environment
 
 R 4.0.2
 
-Package    | Version
----------- | -------
-EnvStats   | 2.3.1
-extraDistr | 1.9.1
-fitODBOD   | 1.4.1-1
-jmuOutlier | 2.2
-mc2d       | 0.1-18
-metRology  | 0.9-28-1
-OOmisc     | 1.2
-propagate  | 1.0-6
-Runuran    | 0.30
-triangle   | 0.12
-triangulr  | 1.0.1
-VaRES      | 1.0
-VGAM       | 1.1-3
+Package                                                     | Version
+----------------------------------------------------------- | --------
+[EnvStats](https://www.probstatinfo.com/)                   | 2.3.1
+[extraDistr](https://github.com/twolodzko/extraDistr)       | 1.9.1
+[fitODBOD](https://amalan-constat.github.io/R-fitODBOD/)    | 1.4.1-1
+[jmuOutlier](https://CRAN.R-project.org/package=jmuOutlier) | 2.2
+[mc2d](https://cran.r-project.org/package=mc2d)             | 0.1-18
+[metRology](https://cran.r-project.org/package=metRology)   | 0.9-28-1
+[OOmisc](https://cran.r-project.org/package=OOmisc)         | 1.2
+[propagate](https://cran.r-project.org/package=propagate)   | 1.0-6
+[Runuran](https://statmath.wu.ac.at/unuran/)                | 0.30
+[triangle](https://bertcarnell.github.io/triangle/)         | 0.12
+[triangulr](https://irkaal.github.io/triangulr/)            | 1.0.1
+[VaRES](https://cran.r-project.org/package=VaRES)           | 1.0
+[VGAM](https://www.stat.auckland.ac.nz/~yee/VGAM/)          | 1.1-3
 
 Component |	Value
 --------- | -----
