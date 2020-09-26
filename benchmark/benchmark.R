@@ -1,0 +1,6 @@
+source("R/dbench.R")
+source("R/esbench.R")
+source("R/pbench.R")
+source("R/qbench.R")
+source("R/rbench.R")
+source("R/benchplot.R")
