@@ -12,6 +12,22 @@ I used [bench](bench.r-lib.org) for speed and memory benchmarking. The bench pac
 
 R 4.0.2
 
+Package    | Version
+---------- | -------
+EnvStats   | 2.3.1
+extraDistr | 1.9.1
+fitODBOD   | 1.4.1-1
+jmuOutlier | 2.2
+mc2d       | 0.1-18
+metRology  | 0.9-28-1
+OOmisc     | 1.2
+propagate  | 1.0-6
+Runuran    | 0.30
+triangle   | 0.12
+triangulr  | 1.0.1
+VaRES      | 1.0
+VGAM       | 1.1-3
+
 Component |	Value
 --------- | -----
 CPU Model | AMD Ryzen 5 3600 @ 3.6 Ghz
