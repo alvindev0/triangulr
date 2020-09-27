@@ -1,5 +1,7 @@
 #include <Rcpp.h>
-using namespace Rcpp;
+
+using Rcpp::NumericVector;
+using Rcpp::warning;
 
 // [[Rcpp::export]]
 NumericVector MGTriC(

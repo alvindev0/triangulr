@@ -1,7 +1,9 @@
 #include <Rcpp.h>
 
-using namespace Rcpp;
-using namespace std;
+using Rcpp::ComplexVector;
+using Rcpp::NumericVector;
+using Rcpp::warning;
+using std::complex;
 
 // [[Rcpp::export]]
 ComplexVector CTriC(NumericVector t, double min, double max, double mode) {

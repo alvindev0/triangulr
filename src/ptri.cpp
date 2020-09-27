@@ -1,6 +1,8 @@
 #include <Rcpp.h>
 
-using namespace Rcpp;
+using Rcpp::NumericVector;
+using Rcpp::warning;
+using Rcpp::log;
 
 // [[Rcpp::export]]
 NumericVector PTriC(
@@ -43,7 +45,7 @@ NumericVector PTriC(
 
   if (log_p)
   {
-    p = Rcpp::log(p);
+    p = log(p);
   }
 
   return p;
@@ -91,7 +93,7 @@ NumericVector PTriC2(
 
   if (log_p)
   {
-    p = Rcpp::log(p);
+    p = log(p);
   }
 
   if (has_nan)

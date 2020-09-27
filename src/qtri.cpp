@@ -1,6 +1,8 @@
 #include <Rcpp.h>
 
-using namespace Rcpp;
+using Rcpp::NumericVector;
+using Rcpp::warning;
+using Rcpp::clone;
 
 // [[Rcpp::export]]
 NumericVector QTriC(
@@ -15,7 +17,7 @@ NumericVector QTriC(
     return NumericVector(n, R_NaN);
   }
 
-  NumericVector q = Rcpp::clone(p);
+  NumericVector q = clone(p);
 
   if (log_p)
   {
@@ -61,7 +63,7 @@ NumericVector QTriC2(
     bool lower_tail, bool log_p
 ) {
   int n = p.size();
-  NumericVector q = Rcpp::clone(p);
+  NumericVector q = clone(p);
 
   if (log_p)
   {

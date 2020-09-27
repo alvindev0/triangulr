@@ -1,6 +1,8 @@
 #include <Rcpp.h>
 
-using namespace Rcpp;
+using Rcpp::NumericVector;
+using Rcpp::warning;
+using Rcpp::log;
 
 // [[Rcpp::export]]
 NumericVector DTriC(
@@ -38,7 +40,7 @@ NumericVector DTriC(
 
   if (log)
   {
-    return Rcpp::log(d);
+    return log(d);
   }
 
   return d;
@@ -80,7 +82,7 @@ NumericVector DTriC2(
 
   if (log)
   {
-    return Rcpp::log(d);
+    return log(d);
   }
 
   if (has_nan)
