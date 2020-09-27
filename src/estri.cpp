@@ -23,7 +23,7 @@ NumericVector ESTriC(
   {
     if (log_p)
     {
-      p[i] = std::exp(p[i]);
+      p[i] = exp(p[i]);
     }
 
     if (!lower_tail)
@@ -72,7 +72,7 @@ NumericVector ESTriC2(
   {
     if (log_p)
     {
-      p[i] = std::exp(p[i]);
+      p[i] = exp(p[i]);
     }
 
     if (!lower_tail)
