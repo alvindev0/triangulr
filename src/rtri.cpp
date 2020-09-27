@@ -1,6 +1,9 @@
 #include <Rcpp.h>
+#include <dqrng.h>
 
-using namespace Rcpp;
+using Rcpp::NumericVector;
+using Rcpp::warning;
+using dqrng::dqrunif;
 
 // [[Rcpp::export]]
 NumericVector RTriC(int n, double min, double max, double mode)
@@ -11,7 +14,7 @@ NumericVector RTriC(int n, double min, double max, double mode)
     return NumericVector(n, R_NaN);
   }
 
-  NumericVector r = runif(n);
+  NumericVector r = dqrunif(n);
   double int_len = max - min;
 
   for (int i = 0; i < n; i++)
@@ -33,7 +36,7 @@ NumericVector RTriC(int n, double min, double max, double mode)
 NumericVector RTriC2(
     int n, NumericVector min, NumericVector max, NumericVector mode
 ) {
-  NumericVector r = runif(n);
+  NumericVector r = dqrunif(n);
   bool has_nan = false;
 
   for (int i = 0; i < n; i++)

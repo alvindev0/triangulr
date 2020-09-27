@@ -35,10 +35,12 @@ Collate:
     'qtri.R'
     'rtri.R'
 LinkingTo: 
-    Rcpp
+    Rcpp,
+    dqrng
 Imports: 
     Rcpp (>= 1.0.5),
     rlang (>= 0.4.7),
-    vctrs (>= 0.3.4)
+    vctrs (>= 0.3.4),
+    dqrng (>= 0.2.1)
 Suggests: 
     testthat (>= 2.3.2)

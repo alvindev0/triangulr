@@ -1,14 +1,15 @@
 library(testthat)
 library(triangulr)
+library(dqrng)
 
 ################################################################################
 ## Setup
 
-before_each <- function() set.seed(1)
+before_each <- function() dqset.seed(1)
 
 rtri_rand <- function(n) {
   before_each()
-  runif(n)
+  dqrunif(n)
 }
 
 rtri_test <- function(n, a, b, c) {
@@ -99,8 +100,8 @@ test_that("NaN produced, mode < min", {
   r <- expect_warning(rtri(2, min = 1, max = 2, mode = 0))
   expect_equal(r, c(NaN, NaN))
   before_each()
-  r <- expect_warning(rtri(2, min = c(0, 1), max = 2, mode = 0))
-  expect_equal(round(r, 7), c(0.2859506, NaN))
+  r <- expect_warning(rtri(2, min = c(1, 1), max = 2, mode = 0))
+  expect_equal(round(r, 7), c(NaN, NaN))
 })
 
 test_that("NaN produced, min == mode == max", {
@@ -108,8 +109,8 @@ test_that("NaN produced, min == mode == max", {
   r <- expect_warning(rtri(2, min = 0, max = 0, mode = 0))
   expect_equal(r, c(NaN, NaN))
   before_each()
-  r <- expect_warning(rtri(2, min = 0, max = c(0, 1), mode = 0))
-  expect_equal(round(r, 7), c(NaN, 0.2076137))
+  r <- expect_warning(rtri(2, min = 0, max = c(0, 0), mode = 0))
+  expect_equal(round(r, 7), c(NaN, NaN))
 })
 
 test_that("NaN produced, min > max", {
@@ -117,8 +118,8 @@ test_that("NaN produced, min > max", {
   r <- expect_warning(rtri(2, min = 0, max = -1, mode = 1))
   expect_equal(r, c(NaN, NaN))
   before_each()
-  r <- expect_warning(rtri(2, min = 0, max = c(-1, 1), mode = 1))
-  expect_equal(round(r, 7), c(NaN, 0.6100196))
+  r <- expect_warning(rtri(2, min = 0, max = c(-1, -1), mode = 1))
+  expect_equal(round(r, 7), c(NaN, NaN))
 })
 
 test_that("Error, Negative n", {
