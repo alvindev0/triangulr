@@ -24,7 +24,7 @@ Package                                                     | Version
 [propagate](https://cran.r-project.org/package=propagate)   | 1.0-6
 [Runuran](https://statmath.wu.ac.at/unuran/)                | 0.30
 [triangle](https://bertcarnell.github.io/triangle/)         | 0.12
-[triangulr](https://irkaal.github.io/triangulr/)            | 1.0.1
+[triangulr](https://irkaal.github.io/triangulr/)            | dev
 [VaRES](https://cran.r-project.org/package=VaRES)           | 1.0
 [VGAM](https://www.stat.auckland.ac.nz/~yee/VGAM/)          | 1.1-3
 
