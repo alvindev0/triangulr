@@ -98,6 +98,10 @@
 #' rec_r <- rtri(n, min = 0, max = 1, mode = c(0.5, 0.5, 0.5))
 #' all.equal(r, rec_r)
 #'
+#' # Using dqrng::dqrunif()
+#' dqrng::dqset.seed(1)
+#' r <- rtri(n, min = 0, max = 1, mode = 0.5, dqrng = TRUE)
+#'
 #' # Log quantiles
 #' x <- c(0, 0.5, 1)
 #' log_d <- dtri(x, log = TRUE)

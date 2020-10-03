@@ -152,7 +152,7 @@ distribution function, <code>qtri</code> gives the quantile function, and
 
 <span class='fu'>qtri</span>(<span class='kw'>p</span>, min = <span class='fl'>0</span>, max = <span class='fl'>1</span>, mode = <span class='fl'>0.5</span>, lower_tail = <span class='fl'>TRUE</span>, log_p = <span class='fl'>FALSE</span>)
 
-<span class='fu'>rtri</span>(<span class='kw'>n</span>, min = <span class='fl'>0</span>, max = <span class='fl'>1</span>, mode = <span class='fl'>0.5</span>)</pre>
+<span class='fu'>rtri</span>(<span class='kw'>n</span>, min = <span class='fl'>0</span>, max = <span class='fl'>1</span>, mode = <span class='fl'>0.5</span>, dqrng = <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -197,6 +197,12 @@ are \(P[X \le x]\), otherwise, \(P[X &gt; x]\).</p></td>
     <tr>
       <th>n</th>
       <td><p>Number of observations. Must have length of one.</p></td>
+    </tr>
+    <tr>
+      <th>dqrng</th>
+      <td><p>Logical; if <code>FALSE</code> (default), <code><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></code> will be
+used to generate random numbers instead of <code>dqrunif</code> from the
+<code>dqrng</code> package.</p></td>
     </tr>
     </table>
 
@@ -259,6 +265,10 @@ generation algorithms.</p>
 <span class='kw'>rec_r</span> <span class='op'>&lt;-</span> <span class='fu'>rtri</span>(<span class='kw'>n</span>, min = <span class='fl'>0</span>, max = <span class='fl'>1</span>, mode = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.5</span>, <span class='fl'>0.5</span>, <span class='fl'>0.5</span>))
 <span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span>(<span class='kw'>r</span>, <span class='kw'>rec_r</span>)
 </div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='co'># Using dqrng::dqrunif()</span>
+<span class='kw'>dqrng</span>::<span class='fu'><a href='https://rdrr.io/pkg/dqrng/man/dqrng-functions.html'>dqset.seed</a></span>(<span class='fl'>1</span>)
+<span class='kw'>r</span> <span class='op'>&lt;-</span> <span class='fu'>rtri</span>(<span class='kw'>n</span>, min = <span class='fl'>0</span>, max = <span class='fl'>1</span>, mode = <span class='fl'>0.5</span>, dqrng = <span class='fl'>TRUE</span>)
+
 <span class='co'># Log quantiles</span>
 <span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0.5</span>, <span class='fl'>1</span>)
 <span class='kw'>log_d</span> <span class='op'>&lt;-</span> <span class='fu'>dtri</span>(<span class='kw'>x</span>, log = <span class='fl'>TRUE</span>)
