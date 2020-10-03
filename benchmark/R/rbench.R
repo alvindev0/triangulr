@@ -32,7 +32,7 @@ for (i in 1:length(sizes)) {
       propagate:::rtriang(n = size, a     = min, c     = max, b     = mode),
       Runuran::urtriang(n   = size, a     = min, b     = max, m     = mode),
       triangle::rtriangle(n = size, a     = min, b     = max, c     = mode),
-      triangulr::rtri(n     = size, min   = min, max   = max, mode  = mode),
+      triangulr::rtri(n     = size, min   = min, max   = max, mode  = mode, TRUE),
       VGAM::rtriangle(n     = size, lower = min, upper = max, theta = mode),
       check = FALSE
     ) %>%
