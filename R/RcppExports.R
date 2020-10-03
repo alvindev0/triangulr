@@ -49,11 +49,11 @@ QTriC2 <- function(p, min, max, mode, lower_tail, log_p) {
     .Call('_triangulr_QTriC2', PACKAGE = 'triangulr', p, min, max, mode, lower_tail, log_p)
 }
 
-RTriC <- function(n, min, max, mode) {
-    .Call('_triangulr_RTriC', PACKAGE = 'triangulr', n, min, max, mode)
+RTriC <- function(n, min, max, mode, dqrng) {
+    .Call('_triangulr_RTriC', PACKAGE = 'triangulr', n, min, max, mode, dqrng)
 }
 
-RTriC2 <- function(n, min, max, mode) {
-    .Call('_triangulr_RTriC2', PACKAGE = 'triangulr', n, min, max, mode)
+RTriC2 <- function(n, min, max, mode, dqrng) {
+    .Call('_triangulr_RTriC2', PACKAGE = 'triangulr', n, min, max, mode, dqrng)
 }
 

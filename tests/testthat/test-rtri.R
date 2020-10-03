@@ -5,11 +5,11 @@ library(dqrng)
 ################################################################################
 ## Setup
 
-before_each <- function() dqset.seed(1)
+before_each <- function() set.seed(1)
 
 rtri_rand <- function(n) {
   before_each()
-  dqrunif(n)
+  runif(n)
 }
 
 rtri_test <- function(n, a, b, c) {
@@ -148,4 +148,34 @@ test_that("Error, illegal recycling", {
   expect_error(rtri(n = 10, min = 0, max = c(1, 2), mode = 0.5))
   expect_error(rtri(n = 10, min = c(0, 0.1), max = 1, mode = 0.5))
   expect_error(rtri(n = 10, min = 0, max = 1, mode = c(0.5, 0.6)))
+})
+
+test_that("dqrunif, scalar params", {
+  dqset.seed(1)
+  r <- rtri(3, min = 0, max = 1, mode = 0.5, dqrng = TRUE)
+  dqset.seed(1)
+  p <- dqrunif(3)
+  a <- 0
+  b <- 1
+  c <- 0.5
+  q <- a + sqrt(p * (b - a) * (c - a))
+  i <- p >= (c - a) / (b - a)
+  q[i] <- b - sqrt((1 - p[i]) * (b - a) * (b - c))
+  r_test <- q
+  expect_equal(r, r_test)
+})
+
+test_that("dqrunif, vector params", {
+  dqset.seed(1)
+  r <- rtri(3, min = rep.int(0, 3), max = 1, mode = 0.5, dqrng = TRUE)
+  dqset.seed(1)
+  p <- dqrunif(3)
+  a <- rep.int(0, 3)
+  b <- 1
+  c <- 0.5
+  q <- a + sqrt(p * (b - a) * (c - a))
+  i <- p >= (c - a) / (b - a)
+  q[i] <- b - sqrt((1 - p[i]) * (b - a[i]) * (b - c))
+  r_test <- q
+  expect_equal(r, r_test)
 })

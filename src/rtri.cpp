@@ -3,10 +3,11 @@
 
 using Rcpp::NumericVector;
 using Rcpp::warning;
+using Rcpp::runif;
 using dqrng::dqrunif;
 
 // [[Rcpp::export]]
-NumericVector RTriC(int n, double min, double max, double mode)
+NumericVector RTriC(int n, double min, double max, double mode, bool dqrng)
 {
   if (min >= max || mode > max || min > mode)
   {
@@ -14,7 +15,7 @@ NumericVector RTriC(int n, double min, double max, double mode)
     return NumericVector(n, R_NaN);
   }
 
-  NumericVector r = dqrunif(n);
+  NumericVector r = dqrng ? dqrunif(n) : runif(n);
   double int_len = max - min;
 
   for (int i = 0; i < n; i++)
@@ -34,9 +35,9 @@ NumericVector RTriC(int n, double min, double max, double mode)
 
 // [[Rcpp::export]]
 NumericVector RTriC2(
-    int n, NumericVector min, NumericVector max, NumericVector mode
+    int n, NumericVector min, NumericVector max, NumericVector mode, bool dqrng
 ) {
-  NumericVector r = dqrunif(n);
+  NumericVector r = dqrng ? dqrunif(n) : runif(n);
   bool has_nan = false;
 
   for (int i = 0; i < n; i++)

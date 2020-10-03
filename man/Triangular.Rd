@@ -24,7 +24,7 @@ ptri(q, min = 0, max = 1, mode = 0.5, lower_tail = TRUE, log_p = FALSE)
 
 qtri(p, min = 0, max = 1, mode = 0.5, lower_tail = TRUE, log_p = FALSE)
 
-rtri(n, min = 0, max = 1, mode = 0.5)
+rtri(n, min = 0, max = 1, mode = 0.5, dqrng = FALSE)
 }
 \arguments{
 \item{t}{Vector of dummy variables.}
@@ -49,6 +49,10 @@ rtri(n, min = 0, max = 1, mode = 0.5)
 are \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.}
 
 \item{n}{Number of observations. Must have length of one.}
+
+\item{dqrng}{Logical; if \code{FALSE} (default), \code{\link{runif}} will be
+used to generate random numbers instead of \code{\link{dqrunif}} from the
+\code{\link{dqrng}} package.}
 }
 \value{
 \code{ctri} gives the characteristic function,
