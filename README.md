@@ -19,18 +19,14 @@ the triangular distribution.
 
 ## Installation
 
-<!-- You can install the released version of triangulr from [CRAN](https://CRAN.R-project.org) with: -->
+You can install the released version of `triangulr` from
+[CRAN](https://CRAN.R-project.org) with:
 
-<!-- ``` r -->
+``` r
+install.packages("triangulr")
+```
 
-<!-- install.packages("triangulr") -->
-
-<!-- ``` -->
-
-<!-- And the development version from [GitHub](https://github.com/) with: -->
-
-You can install the development version from
-[GitHub](https://github.com/) with:
+And the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
@@ -108,6 +104,11 @@ rtri(n, min = 0, max = 1, mode = 0.5)
 
 rtri(n, min  = 0, max  = rep.int(1, 3), 0.5)
 #> [1] 0.7857662 0.3175547 0.7746000
+
+# Using dqrng::dqrunif()
+dqrng::dqset.seed(1)
+rtri(n, min  = 0, max  = rep.int(1, 3), 0.5, dqrng = TRUE)
+#> [1] 0.3951856 0.8516496 0.4494472
 ```
 
 Using the moment generating function,

@@ -1,7 +1,7 @@
 # `triangulr` (Development Version)
 
 * Updated `rtri` to use less memory.
-* Updated `rtri` to use `dqunif()` instead of `runif()`.
+* Added optional argument `dqrng` for `rtri` for using `dqrunif()` instead of `runif()`.
 
 
 # `triangulr` 1.0.0
