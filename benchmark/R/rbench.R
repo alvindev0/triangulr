@@ -19,7 +19,7 @@ if (file.exists(rds_path)) {
 pb <- txtProgressBar(min = 0, max = length(sizes), initial = 0)
 
 for (i in 1:length(sizes)) {
-  size <- sizes[i]
+  size <- as.integer(sizes[i])
 
   suppressWarnings({
     rbench <- bench::mark(
@@ -36,8 +36,10 @@ for (i in 1:length(sizes)) {
       VGAM::rtriangle(n     = size, lower = min, upper = max, theta = mode),
       check = FALSE
     ) %>%
-      mutate(size)
+      mutate(size = sizes[i])
   })
+
+  gc()
 
   if (file.exists(rds_path)) {
     read_rds(rds_path) %>%
@@ -49,6 +51,4 @@ for (i in 1:length(sizes)) {
   }
 
   setTxtProgressBar(pb, i)
-
-  gc()
 }

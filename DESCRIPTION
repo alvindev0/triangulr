@@ -41,7 +41,7 @@ LinkingTo:
     dqrng
 Imports: 
     Rcpp (>= 1.0.5),
-    rlang (>= 0.4.7),
+    rlang (>= 0.4.8),
     vctrs (>= 0.3.4),
     dqrng (>= 0.2.1)
 Suggests: 

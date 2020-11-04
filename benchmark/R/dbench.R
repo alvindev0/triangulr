@@ -41,6 +41,8 @@ for (i in 1:length(sizes)) {
       mutate(size = size)
   })
 
+  gc()
+
   if (file.exists(rds_path)) {
     read_rds(rds_path) %>%
       bind_rows(dbench) %>%
@@ -51,6 +53,4 @@ for (i in 1:length(sizes)) {
   }
 
   setTxtProgressBar(pb, i)
-
-  gc()
 }

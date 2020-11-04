@@ -9,19 +9,18 @@ cat("\nPlotting Results...\n")
 for (prefix in c("d", "p", "q", "r", "es")) {
   rds <- read_rds(glue("rds/{prefix}bench.rds"))
 
-  for (len in unique(rds$size[rds$size >= 1e5])) {
-    p <- rds %>%
-      filter(size == len) %>%
-      select(-size) %>%
-      autoplot() +
-      theme_minimal() +
-      theme(
-        axis.title = element_blank(),
-        legend.position = "bottom"
-      )
+  len <- max(rds$size)
+  p <- rds %>%
+    filter(size == len) %>%
+    select(-size) %>%
+    autoplot() +
+    theme_minimal() +
+    theme(
+      axis.title = element_blank(),
+      legend.position = "bottom"
+    )
 
-    ggsave(glue("plot/{prefix}bench_{log10(len)}.png"), p, width = 10, height = 5)
-  }
+  ggsave(glue("plot/{prefix}bench_{log10(len)}.png"), p, width = 10, height = 5)
 
   rds <- rds %>%
     filter(size >= 1e3) %>%

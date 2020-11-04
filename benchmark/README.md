@@ -13,20 +13,20 @@ I used [bench](https://bench.r-lib.org/) for speed and memory benchmarking. The 
 R 4.0.2
 
 Package                                                     | Version
------------------------------------------------------------ | --------
-[EnvStats](https://www.probstatinfo.com/)                   | 2.3.1
+----------------------------------------------------------- | -----------
+[EnvStats](https://www.probstatinfo.com/)                   | 2.4.0
 [extraDistr](https://github.com/twolodzko/extraDistr)       | 1.9.1
-[fitODBOD](https://amalan-constat.github.io/R-fitODBOD/)    | 1.4.1-1
+[fitODBOD](https://amalan-constat.github.io/R-fitODBOD/)    | 1.4.1.1
 [jmuOutlier](https://CRAN.R-project.org/package=jmuOutlier) | 2.2
-[mc2d](https://cran.r-project.org/package=mc2d)             | 0.1-18
-[metRology](https://cran.r-project.org/package=metRology)   | 0.9-28-1
+[mc2d](https://cran.r-project.org/package=mc2d)             | 0.1.18
+[metRology](https://cran.r-project.org/package=metRology)   | 0.9.28.1
 [OOmisc](https://cran.r-project.org/package=OOmisc)         | 1.2
-[propagate](https://cran.r-project.org/package=propagate)   | 1.0-6
-[Runuran](https://statmath.wu.ac.at/unuran/)                | 0.30
+[propagate](https://cran.r-project.org/package=propagate)   | 1.0.6
+[Runuran](https://statmath.wu.ac.at/unuran/)                | 0.33
 [triangle](https://bertcarnell.github.io/triangle/)         | 0.12
-[triangulr](https://irkaal.github.io/triangulr/)            | dev
+[triangulr](https://irkaal.github.io/triangulr/)            | Development
 [VaRES](https://cran.r-project.org/package=VaRES)           | 1.0
-[VGAM](https://www.stat.auckland.ac.nz/~yee/VGAM/)          | 1.1-3
+[VGAM](https://www.stat.auckland.ac.nz/~yee/VGAM/)          | 1.1.4
 
 Component |	Value
 --------- | -----
@@ -37,12 +37,6 @@ RAM GB    | 16
 
 
 ## Density Functions
-
-### 100K Quantiles
-![](plot/dbench_5.png)
-
-### 1M Quantiles
-![](plot/dbench_6.png)
 
 ### 10M Quantiles
 ![](plot/dbench_7.png)
@@ -56,12 +50,6 @@ RAM GB    | 16
 
 ## Distribution Functions
 
-### 100K Quantiles
-![](plot/pbench_5.png)
-
-### 1M Quantiles
-![](plot/pbench_6.png)
-
 ### 10M Quantiles
 ![](plot/pbench_7.png)
 
@@ -74,12 +62,6 @@ RAM GB    | 16
 
 ## Quantile Functions
 
-### 100K Probabilities
-![](plot/qbench_5.png)
-
-### 1M Probabilities
-![](plot/qbench_6.png)
-
 ### 10M Probabilities
 ![](plot/qbench_7.png)
 
@@ -91,12 +73,6 @@ RAM GB    | 16
 
 
 ## Random Variate Generator Functions
-
-### 100K Random Variates
-![](plot/rbench_5.png)
-
-### 1M Random Variates
-![](plot/rbench_6.png)
 
 ### 10M Random Variates
 ![](plot/rbench_7.png)
