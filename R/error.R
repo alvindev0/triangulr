@@ -78,5 +78,5 @@ tri_error <- function(x) {
   call <- sys.call(-1)
   fn_name <- as_name(call[[1]])
   class <- tri_error_class(gsub("^error_", "", fn_name))
-  error_cnd(.subclass = class, message = x)
+  error_cnd(class, message = x)
 }
