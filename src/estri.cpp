@@ -6,8 +6,8 @@ using Rcpp::warning;
 // [[Rcpp::export]]
 NumericVector ESTriC(
     NumericVector p, double min, double max, double mode, bool lower_tail,
-    bool log_p
-) {
+    bool log_p)
+{
   int n = p.size();
 
   if (min >= max || mode > max || min > mode)
@@ -39,15 +39,13 @@ NumericVector ESTriC(
     else if (p[i] < (mode - min) / (max - min))
     {
       es[i] = ((p[i] * min) + (2.0 / 3.0) * sqrt((max - min) * (mode - min)) *
-        pow(p[i], 1.5)) / p[i];
+                                  pow(p[i], 1.5)) /
+              p[i];
     }
     else // if (p[i] >= (mode - min) / (max - min))
     {
       double b = (mode - min) / (max - min);
-      es[i] = ((b * min) + (2.0 / 3.0) * sqrt((max - min) * (mode - min)) *
-        pow(b, 1.5) + (((p[i] * max) + (2.0 / 3.0) * sqrt((max - min) *
-        (max - mode)) * pow((1.0 - p[i]), 1.5)) - ((b * max) + (2.0 / 3.0) *
-        sqrt((max - min) * (max - mode)) * pow((1.0 - b), 1.5)))) / p[i];
+      es[i] = ((b * min) + (2.0 / 3.0) * sqrt((max - min) * (mode - min)) * pow(b, 1.5) + (((p[i] * max) + (2.0 / 3.0) * sqrt((max - min) * (max - mode)) * pow((1.0 - p[i]), 1.5)) - ((b * max) + (2.0 / 3.0) * sqrt((max - min) * (max - mode)) * pow((1.0 - b), 1.5)))) / p[i];
     }
   }
 
@@ -62,8 +60,8 @@ NumericVector ESTriC(
 // [[Rcpp::export]]
 NumericVector ESTriC2(
     NumericVector p, NumericVector min, NumericVector max, NumericVector mode,
-    bool lower_tail, bool log_p
-) {
+    bool lower_tail, bool log_p)
+{
   int n = p.size();
   bool has_nan = false;
   NumericVector es(n);
@@ -88,17 +86,12 @@ NumericVector ESTriC2(
     }
     else if (p[i] < (mode[i] - min[i]) / (max[i] - min[i]))
     {
-      es[i] = ((p[i] * min[i]) + (2.0 / 3.0) * sqrt((max[i] - min[i]) *
-        (mode[i] - min[i])) * pow(p[i], 1.5)) / p[i];
+      es[i] = ((p[i] * min[i]) + (2.0 / 3.0) * sqrt((max[i] - min[i]) * (mode[i] - min[i])) * pow(p[i], 1.5)) / p[i];
     }
     else // if (p[i] >= (mode - min) / (max - min))
     {
       double b = (mode[i] - min[i]) / (max[i] - min[i]);
-      es[i] = ((b * min[i]) + (2.0 / 3.0) * sqrt((max[i] - min[i]) *
-        (mode[i] - min[i])) * pow(b, 1.5) + (((p[i] * max[i]) + (2.0 / 3.0) *
-        sqrt((max[i] - min[i]) * (max[i] - mode[i])) * pow((1.0 - p[i]), 1.5)) -
-        ((b * max[i]) + (2.0 / 3.0) * sqrt((max[i] - min[i]) *
-        (max[i] - mode[i])) * pow((1.0 - b), 1.5)))) / p[i];
+      es[i] = ((b * min[i]) + (2.0 / 3.0) * sqrt((max[i] - min[i]) * (mode[i] - min[i])) * pow(b, 1.5) + (((p[i] * max[i]) + (2.0 / 3.0) * sqrt((max[i] - min[i]) * (max[i] - mode[i])) * pow((1.0 - p[i]), 1.5)) - ((b * max[i]) + (2.0 / 3.0) * sqrt((max[i] - min[i]) * (max[i] - mode[i])) * pow((1.0 - b), 1.5)))) / p[i];
     }
   }
 

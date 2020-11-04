@@ -3,13 +3,17 @@
 #' @include Triangular.R
 #' @rdname Triangular
 #' @export
-mgtri <- function(t, min = 0, max = 1, mode = 0.5) {
+mgtri <- function(t,
+                  min = 0,
+                  max = 1,
+                  mode = 0.5) {
   if (!is.numeric(t) || !is.numeric(min) || !is.numeric(max) ||
       !is.numeric(mode)) {
     cnd_signal(tri_error_numeric("t", t, min, max, mode))
   }
 
-  if (length(min) == 1L && length(max) == 1L && length(mode) == 1L) {
+  if (length(min) == 1L &&
+      length(max) == 1L && length(mode) == 1L) {
     MGTriC(t, min, max, mode)
   } else {
     tryCatch({

@@ -1,14 +1,14 @@
 #include <Rcpp.h>
 
+using Rcpp::clone;
 using Rcpp::NumericVector;
 using Rcpp::warning;
-using Rcpp::clone;
 
 // [[Rcpp::export]]
 NumericVector QTriC(
     NumericVector p, double min, double max, double mode, bool lower_tail,
-    bool log_p
-) {
+    bool log_p)
+{
   int n = p.size();
 
   if (min >= max || mode > max || min > mode)
@@ -60,8 +60,8 @@ NumericVector QTriC(
 // [[Rcpp::export]]
 NumericVector QTriC2(
     NumericVector p, NumericVector min, NumericVector max, NumericVector mode,
-    bool lower_tail, bool log_p
-) {
+    bool lower_tail, bool log_p)
+{
   int n = p.size();
   NumericVector q = clone(p);
 

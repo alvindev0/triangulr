@@ -1,10 +1,10 @@
 #include <Rcpp.h>
 #include <dqrng.h>
 
-using Rcpp::NumericVector;
-using Rcpp::warning;
-using Rcpp::runif;
 using dqrng::dqrunif;
+using Rcpp::NumericVector;
+using Rcpp::runif;
+using Rcpp::warning;
 
 // [[Rcpp::export]]
 NumericVector RTriC(int n, double min, double max, double mode, bool dqrng)
@@ -35,8 +35,8 @@ NumericVector RTriC(int n, double min, double max, double mode, bool dqrng)
 
 // [[Rcpp::export]]
 NumericVector RTriC2(
-    int n, NumericVector min, NumericVector max, NumericVector mode, bool dqrng
-) {
+    int n, NumericVector min, NumericVector max, NumericVector mode, bool dqrng)
+{
   NumericVector r = dqrng ? dqrunif(n) : runif(n);
   bool has_nan = false;
 
@@ -54,7 +54,7 @@ NumericVector RTriC2(
     else // if (r[i] >= (mode[i] - min[i]) / (max[i] - min[i]))
     {
       r[i] = max[i] - sqrt((1.0 - r[i]) * (max[i] - min[i]) *
-        (max[i] - mode[i]));
+                           (max[i] - mode[i]));
     }
   }
 

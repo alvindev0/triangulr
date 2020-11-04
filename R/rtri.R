@@ -3,7 +3,11 @@
 #' @include Triangular.R
 #' @rdname Triangular
 #' @export
-rtri <- function(n, min = 0, max = 1, mode = 0.5, dqrng = FALSE) {
+rtri <- function(n,
+                 min = 0,
+                 max = 1,
+                 mode = 0.5,
+                 dqrng = FALSE) {
   if (!is.numeric(n) || !is.numeric(min) || !is.numeric(max) ||
       !is.numeric(mode)) {
     cnd_signal(tri_error_numeric("n", n, min, max, mode))
@@ -13,7 +17,8 @@ rtri <- function(n, min = 0, max = 1, mode = 0.5, dqrng = FALSE) {
     cnd_signal(tri_error_n(n))
   }
 
-  if (length(min) == 1L && length(max) == 1L && length(mode) == 1L) {
+  if (length(min) == 1L &&
+      length(max) == 1L && length(mode) == 1L) {
     RTriC(n, min, max, mode, dqrng)
   } else {
     n <- as.integer(n)

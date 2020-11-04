@@ -6,7 +6,8 @@ using Rcpp::warning;
 using std::complex;
 
 // [[Rcpp::export]]
-ComplexVector CTriC(NumericVector t, double min, double max, double mode) {
+ComplexVector CTriC(NumericVector t, double min, double max, double mode)
+{
   int n = t.size();
 
   if (min >= max || mode >= max || min >= mode)
@@ -31,9 +32,8 @@ ComplexVector CTriC(NumericVector t, double min, double max, double mode) {
     }
     else
     {
-      complex<double> cc = -2.0 * ((max - mode) * exp(x * min * t[i]) -
-        (max - min) * exp(x * mode * t[i]) + (mode - min) * exp(x * max * t[i])) /
-          ((max - min) * (mode - min) * (max - mode) * pow(t[i], 2));
+      complex<double> cc = -2.0 * ((max - mode) * exp(x * min * t[i]) - (max - min) * exp(x * mode * t[i]) + (mode - min) * exp(x * max * t[i])) /
+                           ((max - min) * (mode - min) * (max - mode) * pow(t[i], 2));
       rc.r = cc.real();
       rc.i = cc.imag();
       c[i] = rc;
@@ -50,8 +50,8 @@ ComplexVector CTriC(NumericVector t, double min, double max, double mode) {
 
 // [[Rcpp::export]]
 ComplexVector CTriC2(
-    NumericVector t, NumericVector min, NumericVector max, NumericVector mode
-) {
+    NumericVector t, NumericVector min, NumericVector max, NumericVector mode)
+{
   int n = t.size();
   bool has_nan = false;
   complex<double> x(0.0, 1.0);
@@ -70,11 +70,9 @@ ComplexVector CTriC2(
     }
     else
     {
-      complex<double> cc = -2.0 * ((max[i] - mode[i]) * exp(x * min[i] * t[i]) -
-        (max[i] - min[i]) * exp(x * mode[i] * t[i]) + (mode[i] - min[i]) *
-        exp(x * max[i] * t[i])) /
-          ((max[i] - min[i]) * (mode[i] - min[i]) * (max[i] - mode[i]) *
-            pow(t[i], 2));
+      complex<double> cc = -2.0 * ((max[i] - mode[i]) * exp(x * min[i] * t[i]) - (max[i] - min[i]) * exp(x * mode[i] * t[i]) + (mode[i] - min[i]) * exp(x * max[i] * t[i])) /
+                           ((max[i] - min[i]) * (mode[i] - min[i]) * (max[i] - mode[i]) *
+                            pow(t[i], 2));
       rc.r = cc.real();
       rc.i = cc.imag();
       c[i] = rc;

@@ -3,7 +3,11 @@
 #' @include Triangular.R
 #' @rdname Triangular
 #' @export
-dtri <- function(x, min = 0, max = 1, mode = 0.5, log = FALSE) {
+dtri <- function(x,
+                 min = 0,
+                 max = 1,
+                 mode = 0.5,
+                 log = FALSE) {
   if (!is.numeric(x) || !is.numeric(min) || !is.numeric(max) ||
       !is.numeric(mode)) {
     cnd_signal(tri_error_numeric("x", x, min, max, mode))
@@ -13,7 +17,8 @@ dtri <- function(x, min = 0, max = 1, mode = 0.5, log = FALSE) {
     cnd_signal(tri_error_logical(log))
   }
 
-  if (length(min) == 1L && length(max) == 1L && length(mode) == 1L) {
+  if (length(min) == 1L &&
+      length(max) == 1L && length(mode) == 1L) {
     DTriC(x, min, max, mode, log)
   } else {
     tryCatch({

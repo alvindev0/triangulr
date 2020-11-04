@@ -5,8 +5,8 @@ using Rcpp::warning;
 
 // [[Rcpp::export]]
 NumericVector DTriC(
-    NumericVector x, double min, double max, double mode, bool log
-) {
+    NumericVector x, double min, double max, double mode, bool log)
+{
   int n = x.size();
 
   if (min >= max || mode > max || min > mode)
@@ -48,8 +48,8 @@ NumericVector DTriC(
 // [[Rcpp::export]]
 NumericVector DTriC2(
     NumericVector x, NumericVector min, NumericVector max, NumericVector mode,
-    bool log
-) {
+    bool log)
+{
   int n = x.size();
   bool has_nan = false;
   NumericVector d(n);
