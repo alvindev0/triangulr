@@ -45,4 +45,4 @@ Imports:
     vctrs (>= 0.3.4),
     dqrng (>= 0.2.1)
 Suggests: 
-    testthat (>= 2.3.2)
+    testthat (>= 3.0.0)
