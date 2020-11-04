@@ -7,6 +7,8 @@
 [![Codecov](https://codecov.io/gh/irkaal/triangulr/branch/master/graph/badge.svg)](https://codecov.io/gh/irkaal/triangulr?branch=master)
 [![CRAN](http://www.r-pkg.org/badges/version/triangulr)](https://cran.r-project.org/package=triangulr)
 [![Downloads](http://cranlogs.r-pkg.org/badges/triangulr)](https://cran.r-project.org/package=triangulr)
+[![Downloads
+Overall](http://cranlogs.r-pkg.org/badges/grand-total/triangulr)](https://cran.r-project.org/package=triangulr)
 [![Lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 
 ## Introduction
@@ -50,7 +52,10 @@ x <- c(0.1, 0.5, 0.9)
 dtri(x, min = 0, max = 1, mode = 0.5)
 #> [1] 0.4 2.0 0.4
 
-dtri(x, min  = 0, max  = rep.int(1, 3), mode = 0.5)
+dtri(x,
+     min = rep.int(0, 3),
+     max = 1,
+     mode = 0.5)
 #> [1] 0.4 2.0 0.4
 ```
 
@@ -96,18 +101,23 @@ Using the random variate generator,
 [`rtri()`](https://irkaal.github.io/triangulr/reference/Triangular.html).
 
 ``` r
-set.seed(1)
 n <- 3
 
+set.seed(1)
 rtri(n, min = 0, max = 1, mode = 0.5)
 #> [1] 0.3643547 0.4313490 0.5378601
 
-rtri(n, min  = 0, max  = rep.int(1, 3), 0.5)
-#> [1] 0.7857662 0.3175547 0.7746000
+set.seed(1)
+rtri(n, min = rep.int(0, 3), max = 1, 0.5)
+#> [1] 0.3643547 0.4313490 0.5378601
 
-# Using dqrng::dqrunif()
-dqrng::dqset.seed(1)
-rtri(n, min  = 0, max  = rep.int(1, 3), 0.5, dqrng = TRUE)
+library(dqrng)
+dqset.seed(1)
+rtri(n,
+     min = rep.int(0, 3),
+     max = 1,
+     0.5,
+     dqrng = TRUE)
 #> [1] 0.3951856 0.8516496 0.4494472
 ```
 
@@ -120,7 +130,10 @@ t <- c(1, 2, 3)
 mgtri(t, min = 0, max = 1, mode = 0.5)
 #> [1] 1.683357 2.952492 5.387626
 
-mgtri(t, min = rep.int(0, 3), max = 1, mode = 0.5)
+mgtri(t,
+      min = rep.int(0, 3),
+      max = 1,
+      mode = 0.5)
 #> [1] 1.683357 2.952492 5.387626
 ```
 
@@ -133,7 +146,10 @@ t <- c(1, 2, 3)
 ctri(t, min = 0, max = 1, mode = 0.5)
 #> [1] 0.8594513+0.4695204i 0.4967514+0.7736445i 0.0584297+0.8239422i
 
-ctri(t, min = rep.int(0, 3), max = 1, mode = 0.5)
+ctri(t,
+     min = rep.int(0, 3),
+     max = 1,
+     mode = 0.5)
 #> [1] 0.8594513+0.4695204i 0.4967514+0.7736445i 0.0584297+0.8239422i
 ```
 
@@ -146,6 +162,9 @@ p <- c(0.1, 0.5, 0.9)
 estri(p, min = 0, max = 1, mode = 0.5)
 #> [1] 0.1490712 0.3333333 0.4610079
 
-estri(p, min = rep.int(0, 3), max = 1, mode = 0.5)
+estri(p,
+      min = rep.int(0, 3),
+      max = 1,
+      mode = 0.5)
 #> [1] 0.1490712 0.3333333 0.4610079
 ```
