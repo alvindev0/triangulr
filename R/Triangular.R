@@ -84,23 +84,40 @@
 #'
 #' # min, max, and mode with lengths equal to the length of x
 #' x <- c(0, 0.5, 1)
-#' d <- dtri(x, min = c(0, 0, 0), max = c(1, 1, 1), mode = c(0.5, 0.5, 0.5))
+#' d <- dtri(x,
+#'           min = rep.int(0, 3),
+#'           max = rep.int(1, 3),
+#'           mode = rep.int(0.5, 3))
 #' # min and max will be recycled to the length of x
-#' rec_d <- dtri(x, min = 0, max = 1, mode = c(0.5, 0.5, 0.5))
+#' rec_d <- dtri(x,
+#'               min = 0,
+#'               max = 1,
+#'               mode = rep.int(0.5, 3))
 #' all.equal(d, rec_d)
 #'
 #' # min, max, and mode with lengths equal to the length of x
 #' n <- 3
 #' set.seed(1)
-#' r <- rtri(n, min = c(0, 0, 0), max = c(1, 1, 1), mode = c(0.5, 0.5, 0.5))
+#' r <- rtri(n,
+#'           min = rep.int(0, 3),
+#'           max = rep.int(1, 3),
+#'           mode = rep.int(0.5, 3))
 #' # min and max will be recycled to the length of n
 #' set.seed(1)
-#' rec_r <- rtri(n, min = 0, max = 1, mode = c(0.5, 0.5, 0.5))
+#' rec_r <- rtri(n,
+#'               min = 0,
+#'               max = 1,
+#'               mode = rep.int(0.5, 3))
 #' all.equal(r, rec_r)
 #'
-#' # Using dqrng::dqrunif()
 #' dqrng::dqset.seed(1)
-#' r <- rtri(n, min = 0, max = 1, mode = 0.5, dqrng = TRUE)
+#' r <- rtri(
+#'   n,
+#'   min = 0,
+#'   max = 1,
+#'   mode = 0.5,
+#'   dqrng = TRUE
+#' )
 #'
 #' # Log quantiles
 #' x <- c(0, 0.5, 1)
