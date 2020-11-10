@@ -49,11 +49,14 @@ Using the density function,
 ``` r
 x <- c(0.1, 0.5, 0.9)
 
-dtri(x, min = 0, max = 1, mode = 0.5)
+dtri(x,
+     min = 0,
+     max = 1,
+     mode = 0.5)
 #> [1] 0.4 2.0 0.4
 
 dtri(x,
-     min = rep.int(0, 3),
+     min = c(0, 0, 0),
      max = 1,
      mode = 0.5)
 #> [1] 0.4 2.0 0.4
@@ -104,20 +107,27 @@ Using the random variate generator,
 n <- 3
 
 set.seed(1)
-rtri(n, min = 0, max = 1, mode = 0.5)
+rtri(n,
+     min = 0,
+     max = 1,
+     mode = 0.5)
 #> [1] 0.3643547 0.4313490 0.5378601
 
 set.seed(1)
-rtri(n, min = rep.int(0, 3), max = 1, 0.5)
+rtri(n,
+     min = c(0, 0, 0),
+     max = 1,
+     mode = 0.5)
 #> [1] 0.3643547 0.4313490 0.5378601
 
-library(dqrng)
-dqset.seed(1)
-rtri(n,
-     min = rep.int(0, 3),
-     max = 1,
-     0.5,
-     dqrng = TRUE)
+dqrng::dqset.seed(1)
+rtri(
+  n,
+  min = c(0, 0, 0),
+  max = 1,
+  mode = 0.5,
+  dqrng = TRUE
+)
 #> [1] 0.3951856 0.8516496 0.4494472
 ```
 
@@ -127,11 +137,14 @@ Using the moment generating function,
 ``` r
 t <- c(1, 2, 3)
 
-mgtri(t, min = 0, max = 1, mode = 0.5)
+mgtri(t,
+      min = 0,
+      max = 1,
+      mode = 0.5)
 #> [1] 1.683357 2.952492 5.387626
 
 mgtri(t,
-      min = rep.int(0, 3),
+      min = c(0, 0, 0),
       max = 1,
       mode = 0.5)
 #> [1] 1.683357 2.952492 5.387626
@@ -143,11 +156,14 @@ Using the characteristic function,
 ``` r
 t <- c(1, 2, 3)
 
-ctri(t, min = 0, max = 1, mode = 0.5)
+ctri(t,
+     min = 0,
+     max = 1,
+     mode = 0.5)
 #> [1] 0.8594513+0.4695204i 0.4967514+0.7736445i 0.0584297+0.8239422i
 
 ctri(t,
-     min = rep.int(0, 3),
+     min = c(0, 0, 0),
      max = 1,
      mode = 0.5)
 #> [1] 0.8594513+0.4695204i 0.4967514+0.7736445i 0.0584297+0.8239422i
@@ -159,11 +175,14 @@ Using the expected shortfall function,
 ``` r
 p <- c(0.1, 0.5, 0.9)
 
-estri(p, min = 0, max = 1, mode = 0.5)
+estri(p,
+      min = 0,
+      max = 1,
+      mode = 0.5)
 #> [1] 0.1490712 0.3333333 0.4610079
 
 estri(p,
-      min = rep.int(0, 3),
+      min = c(0, 0, 0),
       max = 1,
       mode = 0.5)
 #> [1] 0.1490712 0.3333333 0.4610079

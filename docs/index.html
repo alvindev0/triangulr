@@ -98,34 +98,37 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install the released version of <code>triangulr</code> from <a href="https://CRAN.R-project.org">CRAN</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"triangulr"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"triangulr"</span><span class="op">)</span></code></pre></div>
 <p>And the development version from <a href="https://github.com/">GitHub</a> with:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"irkaal/triangulr"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"irkaal/triangulr"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
 <p>These are basic examples of using the included functions:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/irkaal/triangulr/">triangulr</a></span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/irkaal/triangulr/">triangulr</a></span><span class="op">)</span></code></pre></div>
 <p>Using the density function, <a href="https://irkaal.github.io/triangulr/reference/Triangular.html"><code>dtri()</code></a>.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span><span class="op">)</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span><span class="op">)</span>
 
-<span class="fu"><a href="reference/Triangular.html">dtri</a></span><span class="op">(</span><span class="va">x</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">1</span>, mode <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
+<span class="fu"><a href="reference/Triangular.html">dtri</a></span><span class="op">(</span><span class="va">x</span>,
+     min <span class="op">=</span> <span class="fl">0</span>,
+     max <span class="op">=</span> <span class="fl">1</span>,
+     mode <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0.4 2.0 0.4</span>
 
 <span class="fu"><a href="reference/Triangular.html">dtri</a></span><span class="op">(</span><span class="va">x</span>,
-     min <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep.int</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span><span class="op">)</span>,
+     min <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,
      max <span class="op">=</span> <span class="fl">1</span>,
      mode <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.4 2.0 0.4</span></pre></div>
+<span class="co">#&gt; [1] 0.4 2.0 0.4</span></code></pre></div>
 <p>Using the distribution function, <a href="https://irkaal.github.io/triangulr/reference/Triangular.html"><code>ptri()</code></a>.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="va">q</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span><span class="op">)</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">q</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span><span class="op">)</span>
 
 <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="reference/Triangular.html">ptri</a></span><span class="op">(</span><span class="va">q</span>, lower_tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0.02 0.50 0.98</span>
@@ -137,10 +140,10 @@
 <span class="co">#&gt; [1] -3.91202301 -0.69314718 -0.02020271</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="fu"><a href="reference/Triangular.html">ptri</a></span><span class="op">(</span><span class="va">q</span>, log_p <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] -3.91202301 -0.69314718 -0.02020271</span></pre></div>
+<span class="co">#&gt; [1] -3.91202301 -0.69314718 -0.02020271</span></code></pre></div>
 <p>Using the quantile function, <a href="https://irkaal.github.io/triangulr/reference/Triangular.html"><code>qtri()</code></a>.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span><span class="op">)</span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span><span class="op">)</span>
 
 <span class="fu"><a href="reference/Triangular.html">qtri</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">p</span>, lower_tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0.2236068 0.5000000 0.7763932</span>
@@ -152,63 +155,79 @@
 <span class="co">#&gt; [1] 0.2236068 0.5000000 0.7763932</span>
 
 <span class="fu"><a href="reference/Triangular.html">qtri</a></span><span class="op">(</span><span class="va">p</span>, log_p <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.2236068 0.5000000 0.7763932</span></pre></div>
+<span class="co">#&gt; [1] 0.2236068 0.5000000 0.7763932</span></code></pre></div>
 <p>Using the random variate generator, <a href="https://irkaal.github.io/triangulr/reference/Triangular.html"><code>rtri()</code></a>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">3</span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">3</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
-<span class="fu"><a href="reference/Triangular.html">rtri</a></span><span class="op">(</span><span class="va">n</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">1</span>, mode <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.3643547 0.4313490 0.5378601</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
-<span class="fu"><a href="reference/Triangular.html">rtri</a></span><span class="op">(</span><span class="va">n</span>, min <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep.int</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span><span class="op">)</span>, max <span class="op">=</span> <span class="fl">1</span>, <span class="fl">0.5</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.3643547 0.4313490 0.5378601</span>
-
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://www.daqana.org/dqrng">dqrng</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/dqrng/man/dqrng-functions.html">dqset.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
 <span class="fu"><a href="reference/Triangular.html">rtri</a></span><span class="op">(</span><span class="va">n</span>,
-     min <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep.int</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span><span class="op">)</span>,
+     min <span class="op">=</span> <span class="fl">0</span>,
      max <span class="op">=</span> <span class="fl">1</span>,
-     <span class="fl">0.5</span>,
-     dqrng <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.3951856 0.8516496 0.4494472</span></pre></div>
-<p>Using the moment generating function, <a href="https://irkaal.github.io/triangulr/reference/Triangular.html"><code>mgtri()</code></a>.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="va">t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>
+     mode <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
+<span class="co">#&gt; [1] 0.3643547 0.4313490 0.5378601</span>
 
-<span class="fu"><a href="reference/Triangular.html">mgtri</a></span><span class="op">(</span><span class="va">t</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">1</span>, mode <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
+<span class="fu"><a href="reference/Triangular.html">rtri</a></span><span class="op">(</span><span class="va">n</span>,
+     min <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,
+     max <span class="op">=</span> <span class="fl">1</span>,
+     mode <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
+<span class="co">#&gt; [1] 0.3643547 0.4313490 0.5378601</span>
+
+<span class="fu">dqrng</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dqrng/man/dqrng-functions.html">dqset.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
+<span class="fu"><a href="reference/Triangular.html">rtri</a></span><span class="op">(</span>
+  <span class="va">n</span>,
+  min <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,
+  max <span class="op">=</span> <span class="fl">1</span>,
+  mode <span class="op">=</span> <span class="fl">0.5</span>,
+  dqrng <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span>
+<span class="co">#&gt; [1] 0.3951856 0.8516496 0.4494472</span></code></pre></div>
+<p>Using the moment generating function, <a href="https://irkaal.github.io/triangulr/reference/Triangular.html"><code>mgtri()</code></a>.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>
+
+<span class="fu"><a href="reference/Triangular.html">mgtri</a></span><span class="op">(</span><span class="va">t</span>,
+      min <span class="op">=</span> <span class="fl">0</span>,
+      max <span class="op">=</span> <span class="fl">1</span>,
+      mode <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
 <span class="co">#&gt; [1] 1.683357 2.952492 5.387626</span>
 
 <span class="fu"><a href="reference/Triangular.html">mgtri</a></span><span class="op">(</span><span class="va">t</span>,
-      min <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep.int</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span><span class="op">)</span>,
+      min <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,
       max <span class="op">=</span> <span class="fl">1</span>,
       mode <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
-<span class="co">#&gt; [1] 1.683357 2.952492 5.387626</span></pre></div>
+<span class="co">#&gt; [1] 1.683357 2.952492 5.387626</span></code></pre></div>
 <p>Using the characteristic function, <a href="https://irkaal.github.io/triangulr/reference/Triangular.html"><code>ctri()</code></a>.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="va">t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>
 
-<span class="fu"><a href="reference/Triangular.html">ctri</a></span><span class="op">(</span><span class="va">t</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">1</span>, mode <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
+<span class="fu"><a href="reference/Triangular.html">ctri</a></span><span class="op">(</span><span class="va">t</span>,
+     min <span class="op">=</span> <span class="fl">0</span>,
+     max <span class="op">=</span> <span class="fl">1</span>,
+     mode <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0.8594513+0.4695204i 0.4967514+0.7736445i 0.0584297+0.8239422i</span>
 
 <span class="fu"><a href="reference/Triangular.html">ctri</a></span><span class="op">(</span><span class="va">t</span>,
-     min <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep.int</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span><span class="op">)</span>,
+     min <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,
      max <span class="op">=</span> <span class="fl">1</span>,
      mode <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.8594513+0.4695204i 0.4967514+0.7736445i 0.0584297+0.8239422i</span></pre></div>
+<span class="co">#&gt; [1] 0.8594513+0.4695204i 0.4967514+0.7736445i 0.0584297+0.8239422i</span></code></pre></div>
 <p>Using the expected shortfall function, <a href="https://irkaal.github.io/triangulr/reference/Triangular.html"><code>estri()</code></a>.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span><span class="op">)</span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span><span class="op">)</span>
 
-<span class="fu"><a href="reference/Triangular.html">estri</a></span><span class="op">(</span><span class="va">p</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">1</span>, mode <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
+<span class="fu"><a href="reference/Triangular.html">estri</a></span><span class="op">(</span><span class="va">p</span>,
+      min <span class="op">=</span> <span class="fl">0</span>,
+      max <span class="op">=</span> <span class="fl">1</span>,
+      mode <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0.1490712 0.3333333 0.4610079</span>
 
 <span class="fu"><a href="reference/Triangular.html">estri</a></span><span class="op">(</span><span class="va">p</span>,
-      min <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep.int</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span><span class="op">)</span>,
+      min <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,
       max <span class="op">=</span> <span class="fl">1</span>,
       mode <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.1490712 0.3333333 0.4610079</span></pre></div>
+<span class="co">#&gt; [1] 0.1490712 0.3333333 0.4610079</span></code></pre></div>
 </div>
 </div>
   </div>

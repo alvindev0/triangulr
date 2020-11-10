@@ -59,10 +59,13 @@ Using the density function, [`dtri()`](https://irkaal.github.io/triangulr/refere
 ```{r example_dtri}
 x <- c(0.1, 0.5, 0.9)
 
-dtri(x, min = 0, max = 1, mode = 0.5)
+dtri(x,
+     min = 0,
+     max = 1,
+     mode = 0.5)
 
 dtri(x,
-     min = rep.int(0, 3),
+     min = c(0, 0, 0),
      max = 1,
      mode = 0.5)
 ```
@@ -101,18 +104,25 @@ Using the random variate generator, [`rtri()`](https://irkaal.github.io/triangul
 n <- 3
 
 set.seed(1)
-rtri(n, min = 0, max = 1, mode = 0.5)
+rtri(n,
+     min = 0,
+     max = 1,
+     mode = 0.5)
 
 set.seed(1)
-rtri(n, min = rep.int(0, 3), max = 1, 0.5)
-
-library(dqrng)
-dqset.seed(1)
 rtri(n,
-     min = rep.int(0, 3),
+     min = c(0, 0, 0),
      max = 1,
-     0.5,
-     dqrng = TRUE)
+     mode = 0.5)
+
+dqrng::dqset.seed(1)
+rtri(
+  n,
+  min = c(0, 0, 0),
+  max = 1,
+  mode = 0.5,
+  dqrng = TRUE
+)
 ```
 
 Using the moment generating function, [`mgtri()`](https://irkaal.github.io/triangulr/reference/Triangular.html).
@@ -120,10 +130,13 @@ Using the moment generating function, [`mgtri()`](https://irkaal.github.io/trian
 ```{r example_mgtri}
 t <- c(1, 2, 3)
 
-mgtri(t, min = 0, max = 1, mode = 0.5)
+mgtri(t,
+      min = 0,
+      max = 1,
+      mode = 0.5)
 
 mgtri(t,
-      min = rep.int(0, 3),
+      min = c(0, 0, 0),
       max = 1,
       mode = 0.5)
 ```
@@ -133,10 +146,13 @@ Using the characteristic function, [`ctri()`](https://irkaal.github.io/triangulr
 ```{r example_ctri}
 t <- c(1, 2, 3)
 
-ctri(t, min = 0, max = 1, mode = 0.5)
+ctri(t,
+     min = 0,
+     max = 1,
+     mode = 0.5)
 
 ctri(t,
-     min = rep.int(0, 3),
+     min = c(0, 0, 0),
      max = 1,
      mode = 0.5)
 ```
@@ -146,10 +162,13 @@ Using the expected shortfall function, [`estri()`](https://irkaal.github.io/tria
 ```{r example_estri}
 p <- c(0.1, 0.5, 0.9)
 
-estri(p, min = 0, max = 1, mode = 0.5)
+estri(p,
+      min = 0,
+      max = 1,
+      mode = 0.5)
 
 estri(p,
-      min = rep.int(0, 3),
+      min = c(0, 0, 0),
       max = 1,
       mode = 0.5)
 ```
