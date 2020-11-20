@@ -1,7 +1,7 @@
-# `triangulr` 1.0.0.9000
+# `triangulr` 1.1.0
 
 - Updated `rtri` to use less memory.
-- Added optional argument `dqrng` for `rtri` for using `dqrunif()` instead of `runif()`.
+- Added optional argument `dqrng` for `rtri` to use the `dqrunif` generator.
 
 # `triangulr` 1.0.0
 
@@ -15,4 +15,4 @@
 
 # `triangulr` 0.1.0
 
-- Standard functions were reimplemented in C++
+- Standard functions were reimplemented in C++.

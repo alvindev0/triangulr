@@ -1,6 +1,6 @@
 Package: triangulr
 Title: High-Performance Triangular Distribution Functions
-Version: 1.0.0.9000
+Version: 1.1.0
 Authors@R: 
     person(given = "Alvin",
            family = "Nursalim",
@@ -19,7 +19,7 @@ License: MIT + file LICENSE
 URL: https://github.com/irkaal/triangulr/ https://irkaal.github.io/triangulr/
 BugReports: https://github.com/irkaal/triangulr/issues
 Depends:
-    R (>= 3.2)
+    R (>= 3.3)
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
@@ -42,7 +42,7 @@ LinkingTo:
 Imports: 
     Rcpp (>= 1.0.5),
     rlang (>= 0.4.8),
-    vctrs (>= 0.3.4),
+    vctrs (>= 0.3.5),
     dqrng (>= 0.2.1)
 Suggests: 
     testthat (>= 3.0.0)
