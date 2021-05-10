@@ -7,7 +7,6 @@
 \alias{qtri}
 \alias{rtri}
 \alias{mgtri}
-\alias{ctri}
 \alias{estri}
 \title{The Triangular Distribution}
 \usage{
@@ -20,8 +19,6 @@ qtri(p, min = 0, max = 1, mode = 0.5, lower_tail = TRUE, log_p = FALSE)
 rtri(n, min = 0, max = 1, mode = 0.5)
 
 mgtri(t, min = 0, max = 1, mode = 0.5)
-
-ctri(t, min = 0, max = 1, mode = 0.5)
 
 estri(p, min = 0, max = 1, mode = 0.5, lower_tail = TRUE, log_p = FALSE)
 }
@@ -50,7 +47,6 @@ are \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.}
 \item{t}{Vector of dummy variables.}
 }
 \value{
-\code{ctri} gives the characteristic function,
 \code{dtri} gives the density function,
 \code{estri} gives the expected shortfall,
 \code{mgtri} gives the moment generating function,
@@ -59,10 +55,10 @@ are \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.}
 \code{rtri} gives the random variate generator.
 
 The numerical arguments other than \code{n} with values of size one are
-recycled to the length of \code{t} for \code{ctri} and \code{mgtri}, the
-length of \code{x} for \code{dtri}, the length of \code{p} for \code{estri}
-and \code{qtri}, the length of \code{q} for \code{ptri}, and \code{n} for
-\code{rtri}. This determines the length of the result.
+recycled to the length of \code{t} for
+\code{mgtri}, the length of \code{x} for \code{dtri}, the length of \code{p}
+for \code{estri} and \code{qtri}, the length of \code{q} for \code{ptri},
+and \code{n} for \code{rtri}. This determines the length of the result.
 
 The logical arguments \code{log}, \code{lower_tail}, and \code{log_p} must
 be of length one each.
@@ -70,11 +66,11 @@ be of length one each.
 \description{
 These functions provide information about the triangular
 distribution on the interval from \code{min} to \code{max} with mode equal
-to \code{mode}. \code{ctri} gives the characteristic function, \code{dtri}
-gives the density function, \code{estri} gives the expected shortfall,
-\code{mgtri} gives the moment generating function, \code{ptri} gives the
-distribution function, \code{qtri} gives the quantile function, and
-\code{rtri} gives the random variate generator.
+to \code{mode}.
+\code{dtri} gives the density function, \code{estri} gives the expected
+shortfall, \code{mgtri} gives the moment generating function, \code{ptri}
+gives the distribution function, \code{qtri} gives the quantile function,
+and \code{rtri} gives the random variate generator.
 }
 \details{
 If \code{min}, \code{max}, or \code{mode} are not specified they assume the
@@ -170,9 +166,6 @@ all.equal(log_q, q)
 t <- c(1, 2, 3)
 mgtri(t)
 
-# Characteristic function
-t <- c(1, 2, 3)
-ctri(t)
 
 # Expected Shortfall
 p <- c(0.1, 0.5, 1)

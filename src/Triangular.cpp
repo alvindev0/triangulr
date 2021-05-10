@@ -1,25 +1,26 @@
-#include <Rcpp.h>
+#include "cpp11.hpp"
+#include "Rmath.h"
 
-using Rcpp::clone;
-using Rcpp::ComplexVector;
-using Rcpp::NumericVector;
-using Rcpp::runif;
-using Rcpp::warning;
-using std::complex;
+using namespace cpp11;
+namespace writable = cpp11::writable;
 
-// [[Rcpp::export]]
-NumericVector DTriC(
-    NumericVector x, double min, double max, double mode, bool log)
+[[cpp11::register]]
+doubles dtri_cpp(doubles x, double min, double max, double mode, bool log)
 {
   int n = x.size();
+  writable::doubles d(n);
 
   if (min >= max || mode > max || min > mode)
   {
-    warning("NaN(s) produced.");
-    return NumericVector(n, R_NaN);
-  }
+    for (int i = 0; i < n; i++)
+    {
+      d[i] = NA_REAL;
+    }
 
-  NumericVector d(n);
+    cpp11::warning("NaN(s) produced.");
+
+    return d;
+  }
 
   for (int i = 0; i < n; i++)
   {
@@ -39,30 +40,29 @@ NumericVector DTriC(
     {
       d[i] = 2.0 * (max - x[i]) / ((max - min) * (max - mode));
     }
-  }
 
-  if (log)
-  {
-    return Rcpp::log(d);
+    // TODO: This is inefficient
+    if (log)
+    {
+      d[i] = std::log(d[i]);
+    }
   }
 
   return d;
 }
 
-// [[Rcpp::export]]
-NumericVector DTriC2(
-    NumericVector x, NumericVector min, NumericVector max, NumericVector mode,
-    bool log)
+[[cpp11::register]]
+doubles dtri_cpp2(doubles x, doubles min, doubles max, doubles mode, bool log)
 {
   int n = x.size();
   bool has_nan = false;
-  NumericVector d(n);
+  writable::doubles d(n);
 
   for (int i = 0; i < n; i++)
   {
     if (min[i] >= max[i] || mode[i] > max[i] || min[i] > mode[i])
     {
-      d[i] = R_NaN;
+      d[i] = NA_REAL;
       has_nan = true;
     }
     else if (x[i] < min[i] || x[i] > max[i])
@@ -81,35 +81,41 @@ NumericVector DTriC2(
     {
       d[i] = 2.0 * (max[i] - x[i]) / ((max[i] - min[i]) * (max[i] - mode[i]));
     }
-  }
 
-  if (log)
-  {
-    return Rcpp::log(d);
+    // TODO: This is inefficient
+    if (log)
+    {
+      d[i] = std::log(d[i]);
+    }
   }
 
   if (has_nan)
   {
-    warning("NaN(s) produced.");
+    cpp11::warning("NaN(s) produced.");
   }
 
   return d;
 }
 
-// [[Rcpp::export]]
-NumericVector PTriC(
-    NumericVector q, double min, double max, double mode, bool lower_tail,
-    bool log_p)
+[[cpp11::register]]
+doubles ptri_cpp(
+    doubles q, double min, double max, double mode, bool lower_tail, bool log_p)
 {
   int n = q.size();
+  writable::doubles p(n);
 
   if (min >= max || mode > max || min > mode)
   {
-    warning("NaN(s) produced.");
-    return NumericVector(n, R_NaN);
+    for (int i = 0; i < n; i++)
+    {
+      p[i] = NA_REAL;
+    }
+
+    cpp11::warning("NaN(s) produced.");
+
+    return p;
   }
 
-  NumericVector p(n);
   for (int i = 0; i < n; i++)
   {
     if (q[i] <= min)
@@ -128,35 +134,37 @@ NumericVector PTriC(
     {
       p[i] = 1.0;
     }
-  }
 
-  if (!lower_tail)
-  {
-    p = 1.0 - p;
-  }
+    // TODO: This is inefficient
+    if (!lower_tail)
+    {
+      p[i] = 1.0 - p[i];
+    }
 
-  if (log_p)
-  {
-    p = Rcpp::log(p);
+    // TODO: This is inefficient
+    if (log_p)
+    {
+      p[i] = std::log(p[i]);
+    }
   }
 
   return p;
 }
 
-// [[Rcpp::export]]
-NumericVector PTriC2(
-    NumericVector q, NumericVector min, NumericVector max, NumericVector mode,
-    bool lower_tail, bool log_p)
+[[cpp11::register]]
+doubles ptri_cpp2(
+    doubles q, doubles min, doubles max, doubles mode, bool lower_tail,
+    bool log_p)
 {
   int n = q.size();
   bool has_nan = false;
-  NumericVector p(n);
+  writable::doubles p(n);
 
   for (int i = 0; i < n; i++)
   {
     if (min[i] >= max[i] || mode[i] > max[i] || min[i] > mode[i])
     {
-      p[i] = R_NaN;
+      p[i] = NA_REAL;
       has_nan = true;
     }
     else if (q[i] <= min[i])
@@ -176,49 +184,45 @@ NumericVector PTriC2(
     {
       p[i] = 1.0;
     }
-  }
 
-  if (!lower_tail)
-  {
-    p = 1.0 - p;
-  }
+    // TODO: This is inefficient
+    if (!lower_tail)
+    {
+      p[i] = 1.0 - p[i];
+    }
 
-  if (log_p)
-  {
-    p = Rcpp::log(p);
+    // TODO: This is inefficient
+    if (log_p)
+    {
+      p[i] = std::log(p[i]);
+    }
   }
 
   if (has_nan)
   {
-    warning("NaN(s) produced.");
+    cpp11::warning("NaN(s) produced.");
   }
 
   return p;
 }
 
-// [[Rcpp::export]]
-NumericVector QTriC(
-    NumericVector p, double min, double max, double mode, bool lower_tail,
-    bool log_p)
+[[cpp11::register]]
+doubles qtri_cpp(
+    doubles p, double min, double max, double mode, bool lower_tail, bool log_p)
 {
   int n = p.size();
+  writable::doubles q(n);
 
   if (min >= max || mode > max || min > mode)
   {
-    warning("NaN(s) produced.");
-    return NumericVector(n, R_NaN);
-  }
+    for (int i = 0; i < n; i++)
+    {
+      q[i] = NA_REAL;
+    }
 
-  NumericVector q = clone(p);
+    cpp11::warning("NaN(s) produced.");
 
-  if (log_p)
-  {
-    q = exp(q);
-  }
-
-  if (!lower_tail)
-  {
-    q = 1.0 - q;
+    return q;
   }
 
   bool has_nan = false;
@@ -226,9 +230,25 @@ NumericVector QTriC(
 
   for (int i = 0; i < n; i++)
   {
+    // TODO: This is inefficient
+    if (log_p)
+    {
+      q[i] = std::exp(p[i]);
+    }
+    else
+    {
+      q[i] = p[i];
+    }
+
+    // TODO: This is inefficient
+    if (!lower_tail)
+    {
+      q[i] = 1.0 - q[i];
+    }
+
     if (q[i] < 0.0 || q[i] > 1.0)
     {
-      q[i] = R_NaN;
+      q[i] = NA_REAL;
       has_nan = true;
     }
     else if (q[i] < (mode - min) / int_len)
@@ -243,38 +263,43 @@ NumericVector QTriC(
 
   if (has_nan)
   {
-    warning("NaN(s) produced.");
+    cpp11::warning("NaN(s) produced.");
   }
 
   return q;
 }
 
-// [[Rcpp::export]]
-NumericVector QTriC2(
-    NumericVector p, NumericVector min, NumericVector max, NumericVector mode,
-    bool lower_tail, bool log_p)
+[[cpp11::register]]
+doubles qtri_cpp2(
+    doubles p, doubles min, doubles max, doubles mode, bool lower_tail,
+    bool log_p)
 {
   int n = p.size();
-  NumericVector q = clone(p);
-
-  if (log_p)
-  {
-    q = exp(q);
-  }
-
-  if (!lower_tail)
-  {
-    q = 1.0 - q;
-  }
-
+  writable::doubles q(n);
   bool has_nan = false;
 
   for (int i = 0; i < n; i++)
   {
+    // TODO: This is inefficient
+    if (log_p)
+    {
+      q[i] = std::exp(p[i]);
+    }
+    else
+    {
+      q[i] = p[i];
+    }
+
+    // TODO: This is inefficient
+    if (!lower_tail)
+    {
+      q[i] = 1.0 - q[i];
+    }
+
     if (min[i] >= max[i] || mode[i] > max[i] || min[i] > mode[i] ||
         q[i] < 0.0 || q[i] > 1.0)
     {
-      q[i] = R_NaN;
+      q[i] = NA_REAL;
       has_nan = true;
     }
     else if (q[i] < (mode[i] - min[i]) / (max[i] - min[i]))
@@ -289,26 +314,35 @@ NumericVector QTriC2(
 
   if (has_nan)
   {
-    warning("NaN(s) produced.");
+    cpp11::warning("NaN(s) produced.");
   }
 
   return q;
 }
 
-// [[Rcpp::export]]
-NumericVector RTriC(int n, double min, double max, double mode)
+[[cpp11::register]]
+doubles rtri_cpp(int n, double min, double max, double mode)
 {
+  writable::doubles r(n);
+
   if (min >= max || mode > max || min > mode)
   {
-    warning("NaN(s) produced.");
-    return NumericVector(n, R_NaN);
+    for (int i = 0; i < n; i++)
+    {
+      r[i] = NA_REAL;
+    }
+
+    cpp11::warning("NaN(s) produced.");
+
+    return r;
   }
 
-  NumericVector r = runif(n);
   double int_len = max - min;
 
   for (int i = 0; i < n; i++)
   {
+    r[i] = unif_rand();
+
     if (r[i] < (mode - min) / int_len)
     {
       r[i] = min + sqrt(r[i] * int_len * (mode - min));
@@ -322,59 +356,68 @@ NumericVector RTriC(int n, double min, double max, double mode)
   return r;
 }
 
-// [[Rcpp::export]]
-NumericVector RTriC2(
-    int n, NumericVector min, NumericVector max, NumericVector mode)
+[[cpp11::register]]
+doubles rtri_cpp2(int n, doubles min, doubles max, doubles mode)
 {
-  NumericVector r = runif(n);
+  writable::doubles r(n);
   bool has_nan = false;
 
   for (int i = 0; i < n; i++)
   {
     if (min[i] >= max[i] || mode[i] > max[i] || min[i] > mode[i])
     {
-      r[i] = R_NaN;
+      r[i] = NA_REAL;
       has_nan = true;
     }
-    else if (r[i] < (mode[i] - min[i]) / (max[i] - min[i]))
+    else
     {
-      r[i] = min[i] + sqrt(r[i] * (max[i] - min[i]) * (mode[i] - min[i]));
-    }
-    else // if (r[i] >= (mode[i] - min[i]) / (max[i] - min[i]))
-    {
-      r[i] = max[i] - sqrt((1.0 - r[i]) * (max[i] - min[i]) *
-        (max[i] - mode[i]));
+      r[i] = unif_rand();
+
+      if (r[i] < (mode[i] - min[i]) / (max[i] - min[i]))
+      {
+        r[i] = min[i] + sqrt(r[i] * (max[i] - min[i]) * (mode[i] - min[i]));
+      }
+      else // if (r[i] >= (mode[i] - min[i]) / (max[i] - min[i]))
+      {
+        r[i] = max[i] - sqrt((1.0 - r[i]) * (max[i] - min[i]) *
+          (max[i] - mode[i]));
+      }
     }
   }
 
   if (has_nan)
   {
-    warning("NaN(s) produced.");
+    cpp11::warning("NaN(s) produced.");
   }
 
   return r;
 }
 
-// [[Rcpp::export]]
-NumericVector MGTriC(
-    NumericVector t, double min, double max, double mode)
+[[cpp11::register]]
+doubles mgtri_cpp(doubles t, double min, double max, double mode)
 {
   int n = t.size();
+  writable::doubles m(n);
 
   if (min >= max || mode >= max || min >= mode)
   {
+    for (int i = 0; i < n; i++)
+    {
+      m[i] = NA_REAL;
+    }
+
     warning("NaN(s) produced.");
-    return NumericVector(n, R_NaN);
+
+    return m;
   }
 
   bool has_nan = false;
-  NumericVector m(n);
 
   for (int i = 0; i < n; i++)
   {
     if (t[i] == 0.0)
     {
-      m[i] = R_NaN;
+      m[i] = NA_REAL;
       has_nan = true;
     }
     else
@@ -387,26 +430,25 @@ NumericVector MGTriC(
 
   if (has_nan)
   {
-    warning("NaN(s) produced.");
+    cpp11::warning("NaN(s) produced.");
   }
 
   return m;
 }
 
-// [[Rcpp::export]]
-NumericVector MGTriC2(
-    NumericVector t, NumericVector min, NumericVector max, NumericVector mode)
+[[cpp11::register]]
+doubles mgtri_cpp2(doubles t, doubles min, doubles max, doubles mode)
 {
   int n = t.size();
   bool has_nan = false;
-  NumericVector m(n);
+  writable::doubles m(n);
 
   for (int i = 0; i < n; i++)
   {
     if (t[i] == 0.0 ||
         min[i] >= max[i] || mode[i] >= max[i] || min[i] >= mode[i])
     {
-      m[i] = R_NaN;
+      m[i] = NA_REAL;
       has_nan = true;
     }
     else
@@ -419,189 +461,204 @@ NumericVector MGTriC2(
 
   if (has_nan)
   {
-    warning("NaN(s) produced.");
+    cpp11::warning("NaN(s) produced.");
   }
 
   return m;
 }
 
-// [[Rcpp::export]]
-ComplexVector CTriC(NumericVector t, double min, double max, double mode)
-{
-  int n = t.size();
+// NOTE: Will be implemented when cpp11 has complex vector class
+// [[cpp11::register]]
+// ComplexVector ctri_cpp(NumericVector t, double min, double max, double mode)
+// {
+//   int n = t.size();
+//
+//   if (min >= max || mode >= max || min >= mode)
+//   {
+//     warning("NaN(s) produced.");
+//     return ComplexVector(n, complex<double>(R_NaN, 0.0));
+//   }
+//
+//   bool has_nan = false;
+//   complex<double> x(0.0, 1.0);
+//   ComplexVector c(n);
+//   Rcomplex rc;
+//
+//   for (int i = 0; i < n; i++)
+//   {
+//     if (t[i] == 0.0)
+//     {
+//       rc.r = R_NaN;
+//       rc.i = 0.0;
+//       c[i] = rc;
+//       has_nan = true;
+//     }
+//     else
+//     {
+//       complex<double> cc = -2.0 * ((max - mode) * exp(x * min * t[i]) - (max - min) * exp(x * mode * t[i]) + (mode - min) * exp(x * max * t[i])) /
+//         ((max - min) * (mode - min) * (max - mode) * pow(t[i], 2));
+//       rc.r = cc.real();
+//       rc.i = cc.imag();
+//       c[i] = rc;
+//     }
+//   }
+//
+//   if (has_nan)
+//   {
+//     warning("NaN(s) produced.");
+//   }
+//
+//   return c;
+// }
 
-  if (min >= max || mode >= max || min >= mode)
-  {
-    warning("NaN(s) produced.");
-    return ComplexVector(n, complex<double>(R_NaN, 0.0));
-  }
+// NOTE: Will be implemented when cpp11 has complex vector class
+// [[cpp11::register]]
+// ComplexVector ctri_cpp2(
+//     NumericVector t, NumericVector min, NumericVector max, NumericVector mode)
+// {
+//   int n = t.size();
+//   bool has_nan = false;
+//   complex<double> x(0.0, 1.0);
+//   ComplexVector c(n);
+//   Rcomplex rc;
+//
+//   for (int i = 0; i < n; i++)
+//   {
+//     if (t[i] == 0.0 || min[i] >= max[i] || mode[i] >= max[i] ||
+//         min[i] >= mode[i])
+//     {
+//       rc.r = R_NaN;
+//       rc.i = 0.0;
+//       c[i] = rc;
+//       has_nan = true;
+//     }
+//     else
+//     {
+//       complex<double> cc = -2.0 * ((max[i] - mode[i]) * exp(x * min[i] * t[i]) - (max[i] - min[i]) * exp(x * mode[i] * t[i]) + (mode[i] - min[i]) * exp(x * max[i] * t[i])) /
+//         ((max[i] - min[i]) * (mode[i] - min[i]) * (max[i] - mode[i]) *
+//           pow(t[i], 2));
+//       rc.r = cc.real();
+//       rc.i = cc.imag();
+//       c[i] = rc;
+//     }
+//   }
+//
+//   if (has_nan)
+//   {
+//     warning("NaN(s) produced.");
+//   }
+//
+//   return c;
+// }
 
-  bool has_nan = false;
-  complex<double> x(0.0, 1.0);
-  ComplexVector c(n);
-  Rcomplex rc;
-
-  for (int i = 0; i < n; i++)
-  {
-    if (t[i] == 0.0)
-    {
-      rc.r = R_NaN;
-      rc.i = 0.0;
-      c[i] = rc;
-      has_nan = true;
-    }
-    else
-    {
-      complex<double> cc = -2.0 * ((max - mode) * exp(x * min * t[i]) - (max - min) * exp(x * mode * t[i]) + (mode - min) * exp(x * max * t[i])) /
-        ((max - min) * (mode - min) * (max - mode) * pow(t[i], 2));
-      rc.r = cc.real();
-      rc.i = cc.imag();
-      c[i] = rc;
-    }
-  }
-
-  if (has_nan)
-  {
-    warning("NaN(s) produced.");
-  }
-
-  return c;
-}
-
-// [[Rcpp::export]]
-ComplexVector CTriC2(
-    NumericVector t, NumericVector min, NumericVector max, NumericVector mode)
-{
-  int n = t.size();
-  bool has_nan = false;
-  complex<double> x(0.0, 1.0);
-  ComplexVector c(n);
-  Rcomplex rc;
-
-  for (int i = 0; i < n; i++)
-  {
-    if (t[i] == 0.0 || min[i] >= max[i] || mode[i] >= max[i] ||
-        min[i] >= mode[i])
-    {
-      rc.r = R_NaN;
-      rc.i = 0.0;
-      c[i] = rc;
-      has_nan = true;
-    }
-    else
-    {
-      complex<double> cc = -2.0 * ((max[i] - mode[i]) * exp(x * min[i] * t[i]) - (max[i] - min[i]) * exp(x * mode[i] * t[i]) + (mode[i] - min[i]) * exp(x * max[i] * t[i])) /
-        ((max[i] - min[i]) * (mode[i] - min[i]) * (max[i] - mode[i]) *
-          pow(t[i], 2));
-      rc.r = cc.real();
-      rc.i = cc.imag();
-      c[i] = rc;
-    }
-  }
-
-  if (has_nan)
-  {
-    warning("NaN(s) produced.");
-  }
-
-  return c;
-}
-
-// [[Rcpp::export]]
-NumericVector ESTriC(
-    NumericVector p, double min, double max, double mode, bool lower_tail,
-    bool log_p)
+[[cpp11::register]]
+doubles estri_cpp(
+    doubles p, double min, double max, double mode, bool lower_tail, bool log_p)
 {
   int n = p.size();
+  writable::doubles es(n);
 
   if (min >= max || mode > max || min > mode)
   {
-    warning("NaN(s) produced.");
-    return NumericVector(n, R_NaN);
+    for (int i = 0; i < n; i++)
+    {
+      es[i] = NA_REAL;
+    }
+
+    cpp11::warning("NaN(s) produced.");
+
+    return es;
   }
 
   bool has_nan = false;
-  NumericVector es(n);
 
   for (int i = 0; i < n; i++)
   {
     if (log_p)
     {
-      p[i] = exp(p[i]);
+      es[i] = std::exp(p[i]);
+    }
+    else
+    {
+      es[i] = p[i];
     }
 
     if (!lower_tail)
     {
-      p[i] = 1.0 - p[i];
+      es[i] = 1.0 - es[i];
     }
 
-    if (p[i] == 0.0 || p[i] < 0.0 || p[i] > 1.0)
+    if (es[i] == 0.0 || es[i] < 0.0 || es[i] > 1.0)
     {
-      es[i] = R_NaN;
+      es[i] = NA_REAL;
       has_nan = true;
     }
-    else if (p[i] < (mode - min) / (max - min))
+    else if (es[i] < (mode - min) / (max - min))
     {
-      es[i] = ((p[i] * min) + (2.0 / 3.0) * sqrt((max - min) * (mode - min)) *
-        pow(p[i], 1.5)) /
-          p[i];
+      es[i] = ((es[i] * min) + (2.0 / 3.0) * sqrt((max - min) * (mode - min)) *
+        pow(es[i], 1.5)) /
+          es[i];
     }
-    else // if (p[i] >= (mode - min) / (max - min))
+    else // if (es[i] >= (mode - min) / (max - min))
     {
       double b = (mode - min) / (max - min);
-      es[i] = ((b * min) + (2.0 / 3.0) * sqrt((max - min) * (mode - min)) * pow(b, 1.5) + (((p[i] * max) + (2.0 / 3.0) * sqrt((max - min) * (max - mode)) * pow((1.0 - p[i]), 1.5)) - ((b * max) + (2.0 / 3.0) * sqrt((max - min) * (max - mode)) * pow((1.0 - b), 1.5)))) / p[i];
+      es[i] = ((b * min) + (2.0 / 3.0) * sqrt((max - min) * (mode - min)) * pow(b, 1.5) + (((es[i] * max) + (2.0 / 3.0) * sqrt((max - min) * (max - mode)) * pow((1.0 - es[i]), 1.5)) - ((b * max) + (2.0 / 3.0) * sqrt((max - min) * (max - mode)) * pow((1.0 - b), 1.5)))) / es[i];
     }
   }
 
   if (has_nan)
   {
-    warning("NaN(s) produced.");
+    cpp11::warning("NaN(s) produced.");
   }
 
   return es;
 }
 
-// [[Rcpp::export]]
-NumericVector ESTriC2(
-    NumericVector p, NumericVector min, NumericVector max, NumericVector mode,
-    bool lower_tail, bool log_p)
+[[cpp11::register]]
+doubles estri_cpp2(
+    doubles p, doubles min, doubles max, doubles mode, bool lower_tail,
+    bool log_p)
 {
   int n = p.size();
   bool has_nan = false;
-  NumericVector es(n);
+  writable::doubles es(n);
 
   for (int i = 0; i < n; i++)
   {
     if (log_p)
     {
-      p[i] = exp(p[i]);
+      es[i] = std::exp(p[i]);
+    }
+    else
+    {
+      es[i] = p[i];
     }
 
     if (!lower_tail)
     {
-      p[i] = 1.0 - p[i];
+      es[i] = 1.0 - es[i];
     }
 
     if (min[i] >= max[i] || mode[i] > max[i] || min[i] > mode[i] ||
-        p[i] <= 0.0 || p[i] > 1.0)
+        es[i] <= 0.0 || es[i] > 1.0)
     {
-      es[i] = R_NaN;
+      es[i] = NA_REAL;
       has_nan = true;
     }
-    else if (p[i] < (mode[i] - min[i]) / (max[i] - min[i]))
+    else if (es[i] < (mode[i] - min[i]) / (max[i] - min[i]))
     {
-      es[i] = ((p[i] * min[i]) + (2.0 / 3.0) * sqrt((max[i] - min[i]) * (mode[i] - min[i])) * pow(p[i], 1.5)) / p[i];
+      es[i] = ((es[i] * min[i]) + (2.0 / 3.0) * sqrt((max[i] - min[i]) * (mode[i] - min[i])) * pow(es[i], 1.5)) / es[i];
     }
-    else // if (p[i] >= (mode - min) / (max - min))
+    else // if (es[i] >= (mode - min) / (max - min))
     {
       double b = (mode[i] - min[i]) / (max[i] - min[i]);
-      es[i] = ((b * min[i]) + (2.0 / 3.0) * sqrt((max[i] - min[i]) * (mode[i] - min[i])) * pow(b, 1.5) + (((p[i] * max[i]) + (2.0 / 3.0) * sqrt((max[i] - min[i]) * (max[i] - mode[i])) * pow((1.0 - p[i]), 1.5)) - ((b * max[i]) + (2.0 / 3.0) * sqrt((max[i] - min[i]) * (max[i] - mode[i])) * pow((1.0 - b), 1.5)))) / p[i];
+      es[i] = ((b * min[i]) + (2.0 / 3.0) * sqrt((max[i] - min[i]) * (mode[i] - min[i])) * pow(b, 1.5) + (((es[i] * max[i]) + (2.0 / 3.0) * sqrt((max[i] - min[i]) * (max[i] - mode[i])) * pow((1.0 - es[i]), 1.5)) - ((b * max[i]) + (2.0 / 3.0) * sqrt((max[i] - min[i]) * (max[i] - mode[i])) * pow((1.0 - b), 1.5)))) / es[i];
     }
   }
 
   if (has_nan)
   {
-    warning("NaN(s) produced.");
+    cpp11::warning("NaN(s) produced.");
   }
 
   return es;

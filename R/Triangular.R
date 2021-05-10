@@ -4,11 +4,12 @@
 #'
 #' @description These functions provide information about the triangular
 #'  distribution on the interval from \code{min} to \code{max} with mode equal
-#'  to \code{mode}. \code{ctri} gives the characteristic function, \code{dtri}
-#'  gives the density function, \code{estri} gives the expected shortfall,
-#'  \code{mgtri} gives the moment generating function, \code{ptri} gives the
-#'  distribution function, \code{qtri} gives the quantile function, and
-#'  \code{rtri} gives the random variate generator.
+#'  to \code{mode}.
+# \code{ctri} gives the characteristic function,
+#'  \code{dtri} gives the density function, \code{estri} gives the expected
+#'  shortfall, \code{mgtri} gives the moment generating function, \code{ptri}
+#'  gives the distribution function, \code{qtri} gives the quantile function,
+#'  and \code{rtri} gives the random variate generator.
 #'
 #' @param x,q Vector of quantiles.
 #' @param p Vector of probabilities.
@@ -44,7 +45,7 @@
 #'  the default arguments.
 #'
 #' @return
-#'  \code{ctri} gives the characteristic function,
+# \code{ctri} gives the characteristic function,
 #'  \code{dtri} gives the density function,
 #'  \code{estri} gives the expected shortfall,
 #'  \code{mgtri} gives the moment generating function,
@@ -53,10 +54,11 @@
 #'  \code{rtri} gives the random variate generator.
 #'
 #'  The numerical arguments other than \code{n} with values of size one are
-#'  recycled to the length of \code{t} for \code{ctri} and \code{mgtri}, the
-#'  length of \code{x} for \code{dtri}, the length of \code{p} for \code{estri}
-#'  and \code{qtri}, the length of \code{q} for \code{ptri}, and \code{n} for
-#'  \code{rtri}. This determines the length of the result.
+#'  recycled to the length of \code{t} for
+# \code{ctri} and
+#'  \code{mgtri}, the length of \code{x} for \code{dtri}, the length of \code{p}
+#'  for \code{estri} and \code{qtri}, the length of \code{q} for \code{ptri},
+#'  and \code{n} for \code{rtri}. This determines the length of the result.
 #'
 #'  The logical arguments \code{log}, \code{lower_tail}, and \code{log_p} must
 #'  be of length one each.
@@ -71,9 +73,8 @@
 #'
 #'  \link{Distributions} for other standard distributions.
 #'
-#' @useDynLib triangulr
+#' @useDynLib triangulr, .registration = TRUE
 #'
-#' @importFrom Rcpp sourceCpp
 #' @importFrom rlang cnd_signal
 #' @importFrom vctrs vec_recycle_common
 #'
@@ -147,9 +148,9 @@
 #' t <- c(1, 2, 3)
 #' mgtri(t)
 #'
-#' # Characteristic function
-#' t <- c(1, 2, 3)
-#' ctri(t)
+# Characteristic function
+# t <- c(1, 2, 3)
+# ctri(t)
 #'
 #' # Expected Shortfall
 #' p <- c(0.1, 0.5, 1)
@@ -157,7 +158,6 @@
 #'
 NULL
 
-#' Probability Density Function
 #' @rdname Triangular
 #' @export
 dtri <- function(x,
@@ -170,24 +170,22 @@ dtri <- function(x,
     cnd_signal(tri_error_numeric("x", x, min, max, mode))
   }
 
-  if (!is.logical(log) || length(log) > 1L) {
+  if (!is.logical(log) || length(log) > 1) {
     cnd_signal(tri_error_logical(log))
   }
 
-  if (length(min) == 1L &&
-      length(max) == 1L && length(mode) == 1L) {
-    DTriC(x, min, max, mode, log)
+  if (length(min) == 1 && length(max) == 1 && length(mode) == 1) {
+    dtri_cpp(x, min, max, mode, log)
   } else {
     tryCatch({
       params <- vec_recycle_common(min, max, mode, .size = length(x))
     }, error = function(c) {
       cnd_signal(tri_error_recycle("x", x, min, max, mode))
     })
-    DTriC2(x, params[[1L]], params[[2L]], params[[3L]], log)
+    dtri_cpp2(x, params[[1]], params[[2]], params[[3]], log)
   }
 }
 
-#' Cumulative Distribution Function
 #' @rdname Triangular
 #' @export
 ptri <- function(q,
@@ -201,26 +199,23 @@ ptri <- function(q,
     cnd_signal(tri_error_numeric("q", q, min, max, mode))
   }
 
-  if (!is.logical(lower_tail) ||
-      length(lower_tail) > 1L || !is.logical(log_p)
-      || length(log_p) > 1L) {
+  if (!is.logical(lower_tail) || length(lower_tail) > 1 ||
+      !is.logical(log_p) || length(log_p) > 1) {
     cnd_signal(tri_error_logical2(lower_tail, log_p))
   }
 
-  if (length(min) == 1L &&
-      length(max) == 1L && length(mode) == 1L) {
-    PTriC(q, min, max, mode, lower_tail, log_p)
+  if (length(min) == 1 && length(max) == 1 && length(mode) == 1) {
+    ptri_cpp(q, min, max, mode, lower_tail, log_p)
   } else {
     tryCatch({
       params <- vec_recycle_common(min, max, mode, .size = length(q))
     }, error = function(c) {
       cnd_signal(tri_error_recycle("q", q, min, max, mode))
     })
-    PTriC2(q, params[[1L]], params[[2L]], params[[3L]], lower_tail, log_p)
+    ptri_cpp2(q, params[[1]], params[[2]], params[[3]], lower_tail, log_p)
   }
 }
 
-#' Quantile Function
 #' @rdname Triangular
 #' @export
 qtri <- function(p,
@@ -234,26 +229,23 @@ qtri <- function(p,
     cnd_signal(tri_error_numeric("p", p, min, max, mode))
   }
 
-  if (!is.logical(lower_tail) ||
-      length(lower_tail) > 1L || !is.logical(log_p)
-      || length(log_p) > 1L) {
+  if (!is.logical(lower_tail) || length(lower_tail) > 1 ||
+      !is.logical(log_p) || length(log_p) > 1) {
     cnd_signal(tri_error_logical2(lower_tail, log_p))
   }
 
-  if (length(min) == 1L &&
-      length(max) == 1L && length(mode) == 1L) {
-    QTriC(p, min, max, mode, lower_tail, log_p)
+  if (length(min) == 1 && length(max) == 1 && length(mode) == 1) {
+    qtri_cpp(p, min, max, mode, lower_tail, log_p)
   } else {
     tryCatch({
       params <- vec_recycle_common(min, max, mode, .size = length(p))
     }, error = function(c) {
       cnd_signal(tri_error_recycle("p", p, min, max, mode))
     })
-    QTriC2(p, params[[1L]], params[[2L]], params[[3L]], lower_tail, log_p)
+    qtri_cpp2(p, params[[1]], params[[2]], params[[3]], lower_tail, log_p)
   }
 }
 
-#' Random Variate Generator
 #' @rdname Triangular
 #' @export
 rtri <- function(n,
@@ -265,13 +257,12 @@ rtri <- function(n,
     cnd_signal(tri_error_numeric("n", n, min, max, mode))
   }
 
-  if (length(n) != 1L || n < 1L) {
+  if (length(n) != 1 || n < 1) {
     cnd_signal(tri_error_n(n))
   }
 
-  if (length(min) == 1L &&
-      length(max) == 1L && length(mode) == 1L) {
-    RTriC(n, min, max, mode)
+  if (length(min) == 1 && length(max) == 1 && length(mode) == 1) {
+    rtri_cpp(n, min, max, mode)
   } else {
     n <- as.integer(n)
     tryCatch({
@@ -279,11 +270,10 @@ rtri <- function(n,
     }, error = function(c) {
       cnd_signal(tri_error_recycle("n", n, min, max, mode, value = TRUE))
     })
-    RTriC2(n, params[[1L]], params[[2L]], params[[3L]])
+    rtri_cpp2(n, params[[1]], params[[2]], params[[3]])
   }
 }
 
-#' Moment Generating Function
 #' @rdname Triangular
 #' @export
 mgtri <- function(t,
@@ -295,45 +285,40 @@ mgtri <- function(t,
     cnd_signal(tri_error_numeric("t", t, min, max, mode))
   }
 
-  if (length(min) == 1L &&
-      length(max) == 1L && length(mode) == 1L) {
-    MGTriC(t, min, max, mode)
+  if (length(min) == 1 && length(max) == 1 && length(mode) == 1) {
+    mgtri_cpp(t, min, max, mode)
   } else {
     tryCatch({
       params <- vec_recycle_common(min, max, mode, .size = length(t))
     }, error = function(c) {
       cnd_signal(tri_error_recycle("t", t, min, max, mode))
     })
-    MGTriC2(t, params[[1L]], params[[2L]], params[[3L]])
+    mgtri_cpp2(t, params[[1]], params[[2]], params[[3]])
   }
 }
 
-#' Characteristic Function
-#' @rdname Triangular
-#' @export
-ctri <- function(t,
-                 min = 0,
-                 max = 1,
-                 mode = 0.5) {
-  if (!is.numeric(t) || !is.numeric(min) || !is.numeric(max) ||
-      !is.numeric(mode)) {
-    cnd_signal(tri_error_numeric("t", t, min, max, mode))
-  }
+# NOTE: Will be implemented when cpp11 has complex vector class
+# ctri <- function(t,
+#                  min = 0,
+#                  max = 1,
+#                  mode = 0.5) {
+#   if (!is.numeric(t) || !is.numeric(min) || !is.numeric(max) ||
+#       !is.numeric(mode)) {
+#     cnd_signal(tri_error_numeric("t", t, min, max, mode))
+#   }
+#
+#   if (length(min) == 1 && length(max) == 1 && length(mode) == 1) {
+#     ctri_cpp(t, min, max, mode)
+#   } else {
+#     tryCatch({
+#       params <- vec_recycle_common(min, max, mode, .size = length(t))
+#     }, error = function(c) {
+#       cnd_signal(tri_error_recycle("t", t, min, max, mode))
+#     })
+#     ctri_cpp2(t, params[[1]], params[[2]], params[[3]])
+#   }
+# }
 
-  if (length(min) == 1L &&
-      length(max) == 1L && length(mode) == 1L) {
-    CTriC(t, min, max, mode)
-  } else {
-    tryCatch({
-      params <- vec_recycle_common(min, max, mode, .size = length(t))
-    }, error = function(c) {
-      cnd_signal(tri_error_recycle("t", t, min, max, mode))
-    })
-    CTriC2(t, params[[1L]], params[[2L]], params[[3L]])
-  }
-}
-
-#' Expected Shortfall
 #' @rdname Triangular
 #' @export
 estri <-
@@ -349,20 +334,18 @@ estri <-
     }
 
     if (!is.logical(lower_tail) ||
-        length(lower_tail) > 1L || !is.logical(log_p)
-        || length(log_p) > 1L) {
+        length(lower_tail) > 1 || !is.logical(log_p) || length(log_p) > 1) {
       cnd_signal(tri_error_logical2(lower_tail, log_p))
     }
 
-    if (length(min) == 1L &&
-        length(max) == 1L && length(mode) == 1L) {
-      ESTriC(p, min, max, mode, lower_tail, log_p)
+    if (length(min) == 1 && length(max) == 1 && length(mode) == 1) {
+      estri_cpp(p, min, max, mode, lower_tail, log_p)
     } else {
       tryCatch({
         params <- vec_recycle_common(min, max, mode, .size = length(p))
       }, error = function(c) {
         cnd_signal(tri_error_recycle("p", p, min, max, mode))
       })
-      ESTriC2(p, params[[1L]], params[[2L]], params[[3L]], lower_tail, log_p)
+      estri_cpp2(p, params[[1]], params[[2]], params[[3]], lower_tail, log_p)
     }
   }
