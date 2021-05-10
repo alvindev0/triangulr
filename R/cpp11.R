@@ -15,3 +15,35 @@ ptri_cpp <- function(q, min, max, mode, lower_tail, log_p) {
 ptri_cpp2 <- function(q, min, max, mode, lower_tail, log_p) {
   .Call(`_triangulr_ptri_cpp2`, q, min, max, mode, lower_tail, log_p)
 }
+
+qtri_cpp <- function(p, min, max, mode, lower_tail, log_p) {
+  .Call(`_triangulr_qtri_cpp`, p, min, max, mode, lower_tail, log_p)
+}
+
+qtri_cpp2 <- function(p, min, max, mode, lower_tail, log_p) {
+  .Call(`_triangulr_qtri_cpp2`, p, min, max, mode, lower_tail, log_p)
+}
+
+rtri_cpp <- function(n, min, max, mode) {
+  .Call(`_triangulr_rtri_cpp`, n, min, max, mode)
+}
+
+rtri_cpp2 <- function(n, min, max, mode) {
+  .Call(`_triangulr_rtri_cpp2`, n, min, max, mode)
+}
+
+mgtri_cpp <- function(t, min, max, mode) {
+  .Call(`_triangulr_mgtri_cpp`, t, min, max, mode)
+}
+
+mgtri_cpp2 <- function(t, min, max, mode) {
+  .Call(`_triangulr_mgtri_cpp2`, t, min, max, mode)
+}
+
+estri_cpp <- function(p, min, max, mode, lower_tail, log_p) {
+  .Call(`_triangulr_estri_cpp`, p, min, max, mode, lower_tail, log_p)
+}
+
+estri_cpp2 <- function(p, min, max, mode, lower_tail, log_p) {
+  .Call(`_triangulr_estri_cpp2`, p, min, max, mode, lower_tail, log_p)
+}

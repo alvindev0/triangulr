@@ -94,24 +94,24 @@
 #' # min, max, and mode with lengths equal to the length of x
 #' n <- 3
 #' set.seed(1)
-#' #r <- rtri(n,
-#' #         min = c(0, 0, 0),
-#' #         max = c(1, 1, 1),
-#' #         mode = c(0.5, 0.5, 0.5))
+#' r <- rtri(n,
+#'           min = c(0, 0, 0),
+#'           max = c(1, 1, 1),
+#'           mode = c(0.5, 0.5, 0.5))
 #' # min and max will be recycled to the length of n
-#' #set.seed(1)
-#' #rec_r <- rtri(n,
-#' #             min = 0,
-#' #             max = 1,
-#' #             mode = c(0.5, 0.5, 0.5))
-#' #all.equal(r, rec_r)
+#' set.seed(1)
+#' rec_r <- rtri(n,
+#'               min = 0,
+#'               max = 1,
+#'               mode = c(0.5, 0.5, 0.5))
+#' all.equal(r, rec_r)
 #'
-#' #r <- rtri(
-#' #  n,
-#' #  min = 0,
-#' #  max = 1,
-#' #  mode = 0.5
-#' #)
+#' r <- rtri(
+#'   n,
+#'   min = 0,
+#'   max = 1,
+#'   mode = 0.5
+#' )
 #'
 #' # Log quantiles
 #' x <- c(0, 0.5, 1)
@@ -120,39 +120,39 @@
 #' all.equal(log(d), log_d)
 #'
 #' # Upper tail probabilities
-#' #q <- c(0, 0.5, 1)
-#' #upper_p <- ptri(q, lower_tail = FALSE)
-#' #p <- ptri(q, lower_tail = TRUE)
-#' #all.equal(upper_p, 1 - p)
+#' q <- c(0, 0.5, 1)
+#' upper_p <- ptri(q, lower_tail = FALSE)
+#' p <- ptri(q, lower_tail = TRUE)
+#' all.equal(upper_p, 1 - p)
 #'
 #' # Log probabilities
-#' #q <- c(0, 0.5, 1)
-#' #log_p <- ptri(q, log_p = TRUE)
-#' #p <- ptri(q, log_p = FALSE)
-#' #all.equal(upper_p, 1 - p)
+#' q <- c(0, 0.5, 1)
+#' log_p <- ptri(q, log_p = TRUE)
+#' p <- ptri(q, log_p = FALSE)
+#' all.equal(upper_p, 1 - p)
 #'
 #' # The quantile function
 #' p <- c(0, 0.5, 1)
-#' #upper_q <- ptri(1 - p, lower_tail = FALSE)
-#' #q <- ptri(p, lower_tail = TRUE)
-#' #all.equal(upper_q, q)
+#' upper_q <- ptri(1 - p, lower_tail = FALSE)
+#' q <- ptri(p, lower_tail = TRUE)
+#' all.equal(upper_q, q)
 #'
 #' p <- c(0, 0.5, 1)
-#' #log_q <- qtri(log(p), log_p = TRUE)
-#' #q <- qtri(p, log_p = FALSE)
-#' #all.equal(log_q, q)
+#' log_q <- qtri(log(p), log_p = TRUE)
+#' q <- qtri(p, log_p = FALSE)
+#' all.equal(log_q, q)
 #'
 #' # Moment generating function
-#' #t <- c(1, 2, 3)
-#' #mgtri(t)
+#' t <- c(1, 2, 3)
+#' mgtri(t)
 #'
 #' # Characteristic function
-#' #t <- c(1, 2, 3)
+#' t <- c(1, 2, 3)
 #' #ctri(t)
 #'
 #' # Expected Shortfall
-#' #p <- c(0.1, 0.5, 1)
-#' #estri(p)
+#' p <- c(0.1, 0.5, 1)
+#' estri(p)
 #'
 NULL
 
@@ -227,23 +227,21 @@ qtri <- function(p,
     cnd_signal(tri_error_numeric("p", p, min, max, mode))
   }
 
-  if (!is.logical(lower_tail) ||
-      length(lower_tail) > 1L || !is.logical(log_p)
-      || length(log_p) > 1L) {
+  if (!is.logical(lower_tail) || length(lower_tail) > 1 ||
+      !is.logical(log_p) || length(log_p) > 1) {
     cnd_signal(tri_error_logical2(lower_tail, log_p))
   }
 
-  # if (length(min) == 1L &&
-  #     length(max) == 1L && length(mode) == 1L) {
-  #   QTriC(p, min, max, mode, lower_tail, log_p)
-  # } else {
-  #   tryCatch({
-  #     params <- vec_recycle_common(min, max, mode, .size = length(p))
-  #   }, error = function(c) {
-  #     cnd_signal(tri_error_recycle("p", p, min, max, mode))
-  #   })
-  #   QTriC2(p, params[[1L]], params[[2L]], params[[3L]], lower_tail, log_p)
-  # }
+  if (length(min) == 1 && length(max) == 1 && length(mode) == 1) {
+    qtri_cpp(p, min, max, mode, lower_tail, log_p)
+  } else {
+    tryCatch({
+      params <- vec_recycle_common(min, max, mode, .size = length(p))
+    }, error = function(c) {
+      cnd_signal(tri_error_recycle("p", p, min, max, mode))
+    })
+    qtri_cpp2(p, params[[1]], params[[2]], params[[3]], lower_tail, log_p)
+  }
 }
 
 #' @rdname Triangular
@@ -257,22 +255,21 @@ rtri <- function(n,
     cnd_signal(tri_error_numeric("n", n, min, max, mode))
   }
 
-  if (length(n) != 1L || n < 1L) {
+  if (length(n) != 1 || n < 1) {
     cnd_signal(tri_error_n(n))
   }
 
-  # if (length(min) == 1L &&
-  #     length(max) == 1L && length(mode) == 1L) {
-  #   RTriC(n, min, max, mode)
-  # } else {
-  #   n <- as.integer(n)
-  #   tryCatch({
-  #     params <- vec_recycle_common(min, max, mode, .size = n)
-  #   }, error = function(c) {
-  #     cnd_signal(tri_error_recycle("n", n, min, max, mode, value = TRUE))
-  #   })
-  #   RTriC2(n, params[[1L]], params[[2L]], params[[3L]])
-  # }
+  if (length(min) == 1 && length(max) == 1 && length(mode) == 1) {
+    rtri_cpp(n, min, max, mode)
+  } else {
+    n <- as.integer(n)
+    tryCatch({
+      params <- vec_recycle_common(min, max, mode, .size = n)
+    }, error = function(c) {
+      cnd_signal(tri_error_recycle("n", n, min, max, mode, value = TRUE))
+    })
+    rtri_cpp2(n, params[[1]], params[[2]], params[[3]])
+  }
 }
 
 #' @rdname Triangular
@@ -286,17 +283,16 @@ mgtri <- function(t,
     cnd_signal(tri_error_numeric("t", t, min, max, mode))
   }
 
-  # if (length(min) == 1L &&
-  #     length(max) == 1L && length(mode) == 1L) {
-  #   MGTriC(t, min, max, mode)
-  # } else {
-  #   tryCatch({
-  #     params <- vec_recycle_common(min, max, mode, .size = length(t))
-  #   }, error = function(c) {
-  #     cnd_signal(tri_error_recycle("t", t, min, max, mode))
-  #   })
-  #   MGTriC2(t, params[[1L]], params[[2L]], params[[3L]])
-  # }
+  if (length(min) == 1 && length(max) == 1 && length(mode) == 1) {
+    mgtri_cpp(t, min, max, mode)
+  } else {
+    tryCatch({
+      params <- vec_recycle_common(min, max, mode, .size = length(t))
+    }, error = function(c) {
+      cnd_signal(tri_error_recycle("t", t, min, max, mode))
+    })
+    mgtri_cpp2(t, params[[1]], params[[2]], params[[3]])
+  }
 }
 
 #' @rdname Triangular
@@ -310,16 +306,15 @@ ctri <- function(t,
     cnd_signal(tri_error_numeric("t", t, min, max, mode))
   }
 
-  # if (length(min) == 1L &&
-  #     length(max) == 1L && length(mode) == 1L) {
-  #   CTriC(t, min, max, mode)
+  # if (length(min) == 1 && length(max) == 1 && length(mode) == 1) {
+  #   ctri_cpp(t, min, max, mode)
   # } else {
   #   tryCatch({
   #     params <- vec_recycle_common(min, max, mode, .size = length(t))
   #   }, error = function(c) {
   #     cnd_signal(tri_error_recycle("t", t, min, max, mode))
   #   })
-  #   CTriC2(t, params[[1L]], params[[2L]], params[[3L]])
+  #   ctri_cpp2(t, params[[1]], params[[2]], params[[3]])
   # }
 }
 
@@ -338,20 +333,18 @@ estri <-
     }
 
     if (!is.logical(lower_tail) ||
-        length(lower_tail) > 1L || !is.logical(log_p)
-        || length(log_p) > 1L) {
+        length(lower_tail) > 1 || !is.logical(log_p) || length(log_p) > 1) {
       cnd_signal(tri_error_logical2(lower_tail, log_p))
     }
 
-    # if (length(min) == 1L &&
-    #     length(max) == 1L && length(mode) == 1L) {
-    #   ESTriC(p, min, max, mode, lower_tail, log_p)
-    # } else {
-    #   tryCatch({
-    #     params <- vec_recycle_common(min, max, mode, .size = length(p))
-    #   }, error = function(c) {
-    #     cnd_signal(tri_error_recycle("p", p, min, max, mode))
-    #   })
-    #   ESTriC2(p, params[[1L]], params[[2L]], params[[3L]], lower_tail, log_p)
-    # }
+    if (length(min) == 1 && length(max) == 1 && length(mode) == 1) {
+      estri_cpp(p, min, max, mode, lower_tail, log_p)
+    } else {
+      tryCatch({
+        params <- vec_recycle_common(min, max, mode, .size = length(p))
+      }, error = function(c) {
+        cnd_signal(tri_error_recycle("p", p, min, max, mode))
+      })
+      estri_cpp2(p, params[[1]], params[[2]], params[[3]], lower_tail, log_p)
+    }
   }

@@ -118,24 +118,24 @@ all.equal(d, rec_d)
 # min, max, and mode with lengths equal to the length of x
 n <- 3
 set.seed(1)
-#r <- rtri(n,
-#         min = c(0, 0, 0),
-#         max = c(1, 1, 1),
-#         mode = c(0.5, 0.5, 0.5))
+r <- rtri(n,
+          min = c(0, 0, 0),
+          max = c(1, 1, 1),
+          mode = c(0.5, 0.5, 0.5))
 # min and max will be recycled to the length of n
-#set.seed(1)
-#rec_r <- rtri(n,
-#             min = 0,
-#             max = 1,
-#             mode = c(0.5, 0.5, 0.5))
-#all.equal(r, rec_r)
+set.seed(1)
+rec_r <- rtri(n,
+              min = 0,
+              max = 1,
+              mode = c(0.5, 0.5, 0.5))
+all.equal(r, rec_r)
 
-#r <- rtri(
-#  n,
-#  min = 0,
-#  max = 1,
-#  mode = 0.5
-#)
+r <- rtri(
+  n,
+  min = 0,
+  max = 1,
+  mode = 0.5
+)
 
 # Log quantiles
 x <- c(0, 0.5, 1)
@@ -144,39 +144,39 @@ d <- dtri(x, log = FALSE)
 all.equal(log(d), log_d)
 
 # Upper tail probabilities
-#q <- c(0, 0.5, 1)
-#upper_p <- ptri(q, lower_tail = FALSE)
-#p <- ptri(q, lower_tail = TRUE)
-#all.equal(upper_p, 1 - p)
+q <- c(0, 0.5, 1)
+upper_p <- ptri(q, lower_tail = FALSE)
+p <- ptri(q, lower_tail = TRUE)
+all.equal(upper_p, 1 - p)
 
 # Log probabilities
-#q <- c(0, 0.5, 1)
-#log_p <- ptri(q, log_p = TRUE)
-#p <- ptri(q, log_p = FALSE)
-#all.equal(upper_p, 1 - p)
+q <- c(0, 0.5, 1)
+log_p <- ptri(q, log_p = TRUE)
+p <- ptri(q, log_p = FALSE)
+all.equal(upper_p, 1 - p)
 
 # The quantile function
 p <- c(0, 0.5, 1)
-#upper_q <- ptri(1 - p, lower_tail = FALSE)
-#q <- ptri(p, lower_tail = TRUE)
-#all.equal(upper_q, q)
+upper_q <- ptri(1 - p, lower_tail = FALSE)
+q <- ptri(p, lower_tail = TRUE)
+all.equal(upper_q, q)
 
 p <- c(0, 0.5, 1)
-#log_q <- qtri(log(p), log_p = TRUE)
-#q <- qtri(p, log_p = FALSE)
-#all.equal(log_q, q)
+log_q <- qtri(log(p), log_p = TRUE)
+q <- qtri(p, log_p = FALSE)
+all.equal(log_q, q)
 
 # Moment generating function
-#t <- c(1, 2, 3)
-#mgtri(t)
+t <- c(1, 2, 3)
+mgtri(t)
 
 # Characteristic function
-#t <- c(1, 2, 3)
+t <- c(1, 2, 3)
 #ctri(t)
 
 # Expected Shortfall
-#p <- c(0.1, 0.5, 1)
-#estri(p)
+p <- c(0.1, 0.5, 1)
+estri(p)
 
 }
 \seealso{
