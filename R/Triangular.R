@@ -4,11 +4,12 @@
 #'
 #' @description These functions provide information about the triangular
 #'  distribution on the interval from \code{min} to \code{max} with mode equal
-#'  to \code{mode}. \code{ctri} gives the characteristic function, \code{dtri}
-#'  gives the density function, \code{estri} gives the expected shortfall,
-#'  \code{mgtri} gives the moment generating function, \code{ptri} gives the
-#'  distribution function, \code{qtri} gives the quantile function, and
-#'  \code{rtri} gives the random variate generator.
+#'  to \code{mode}.
+# \code{ctri} gives the characteristic function,
+#'  \code{dtri} gives the density function, \code{estri} gives the expected
+#'  shortfall, \code{mgtri} gives the moment generating function, \code{ptri}
+#'  gives the distribution function, \code{qtri} gives the quantile function,
+#'  and \code{rtri} gives the random variate generator.
 #'
 #' @param x,q Vector of quantiles.
 #' @param p Vector of probabilities.
@@ -44,7 +45,7 @@
 #'  the default arguments.
 #'
 #' @return
-#'  \code{ctri} gives the characteristic function,
+# \code{ctri} gives the characteristic function,
 #'  \code{dtri} gives the density function,
 #'  \code{estri} gives the expected shortfall,
 #'  \code{mgtri} gives the moment generating function,
@@ -53,10 +54,11 @@
 #'  \code{rtri} gives the random variate generator.
 #'
 #'  The numerical arguments other than \code{n} with values of size one are
-#'  recycled to the length of \code{t} for \code{ctri} and \code{mgtri}, the
-#'  length of \code{x} for \code{dtri}, the length of \code{p} for \code{estri}
-#'  and \code{qtri}, the length of \code{q} for \code{ptri}, and \code{n} for
-#'  \code{rtri}. This determines the length of the result.
+#'  recycled to the length of \code{t} for
+# \code{ctri} and
+#'  \code{mgtri}, the length of \code{x} for \code{dtri}, the length of \code{p}
+#'  for \code{estri} and \code{qtri}, the length of \code{q} for \code{ptri},
+#'  and \code{n} for \code{rtri}. This determines the length of the result.
 #'
 #'  The logical arguments \code{log}, \code{lower_tail}, and \code{log_p} must
 #'  be of length one each.
@@ -146,9 +148,9 @@
 #' t <- c(1, 2, 3)
 #' mgtri(t)
 #'
-#' # Characteristic function
-#' t <- c(1, 2, 3)
-#' #ctri(t)
+# Characteristic function
+# t <- c(1, 2, 3)
+# ctri(t)
 #'
 #' # Expected Shortfall
 #' p <- c(0.1, 0.5, 1)
@@ -295,28 +297,27 @@ mgtri <- function(t,
   }
 }
 
-#' @rdname Triangular
-#' @export
-ctri <- function(t,
-                 min = 0,
-                 max = 1,
-                 mode = 0.5) {
-  if (!is.numeric(t) || !is.numeric(min) || !is.numeric(max) ||
-      !is.numeric(mode)) {
-    cnd_signal(tri_error_numeric("t", t, min, max, mode))
-  }
-
-  # if (length(min) == 1 && length(max) == 1 && length(mode) == 1) {
-  #   ctri_cpp(t, min, max, mode)
-  # } else {
-  #   tryCatch({
-  #     params <- vec_recycle_common(min, max, mode, .size = length(t))
-  #   }, error = function(c) {
-  #     cnd_signal(tri_error_recycle("t", t, min, max, mode))
-  #   })
-  #   ctri_cpp2(t, params[[1]], params[[2]], params[[3]])
-  # }
-}
+# NOTE: Will be implemented when cpp11 has complex vector class
+# ctri <- function(t,
+#                  min = 0,
+#                  max = 1,
+#                  mode = 0.5) {
+#   if (!is.numeric(t) || !is.numeric(min) || !is.numeric(max) ||
+#       !is.numeric(mode)) {
+#     cnd_signal(tri_error_numeric("t", t, min, max, mode))
+#   }
+#
+#   if (length(min) == 1 && length(max) == 1 && length(mode) == 1) {
+#     ctri_cpp(t, min, max, mode)
+#   } else {
+#     tryCatch({
+#       params <- vec_recycle_common(min, max, mode, .size = length(t))
+#     }, error = function(c) {
+#       cnd_signal(tri_error_recycle("t", t, min, max, mode))
+#     })
+#     ctri_cpp2(t, params[[1]], params[[2]], params[[3]])
+#   }
+# }
 
 #' @rdname Triangular
 #' @export

@@ -86,13 +86,13 @@ mgtri_test <- function(t, a, b, c) {
   2 * numer / denom
 }
 
-ctri_test <- function(t, a, b, c) {
-  n <- (b - c) * exp(1i * a * t) -
-    (b - a) * exp(1i * c * t) +
-    (c - a) * exp(1i * b * t)
-  d <- (b - a) * (c - a) * (b - c) * t^2
-  -2 * n / d
-}
+# ctri_test <- function(t, a, b, c) {
+#   n <- (b - c) * exp(1i * a * t) -
+#     (b - a) * exp(1i * c * t) +
+#     (c - a) * exp(1i * b * t)
+#   d <- (b - a) * (c - a) * (b - c) * t^2
+#   -2 * n / d
+# }
 
 # This function approximates the integral value
 estri_test <- function(p, min, max, mode) {
@@ -801,8 +801,8 @@ test_that("Error, illegal recycling", {
   expect_error(mgtri(seq(0.1, 1, 0.1), min = 0, max = 1, mode = c(0.5, 0.6)))
 })
 
-# ################################################################################
-# ## Test cases for the characteristic function
+################################################################################
+## Test cases for the characteristic function
 
 # test_that("scalar t, scalar params, symmetric", {
 #   c <- ctri(0.5, min = 0, max = 1, mode = 0.5)

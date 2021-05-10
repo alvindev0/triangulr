@@ -467,8 +467,9 @@ doubles mgtri_cpp2(doubles t, doubles min, doubles max, doubles mode)
   return m;
 }
 
+// NOTE: Will be implemented when cpp11 has complex vector class
 // [[cpp11::register]]
-// ComplexVector CTriC(NumericVector t, double min, double max, double mode)
+// ComplexVector ctri_cpp(NumericVector t, double min, double max, double mode)
 // {
 //   int n = t.size();
 //
@@ -510,8 +511,9 @@ doubles mgtri_cpp2(doubles t, doubles min, doubles max, doubles mode)
 //   return c;
 // }
 
-// // [[Rcpp::export]]
-// ComplexVector CTriC2(
+// NOTE: Will be implemented when cpp11 has complex vector class
+// [[cpp11::register]]
+// ComplexVector ctri_cpp2(
 //     NumericVector t, NumericVector min, NumericVector max, NumericVector mode)
 // {
 //   int n = t.size();
