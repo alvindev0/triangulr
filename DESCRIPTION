@@ -1,11 +1,11 @@
 Package: triangulr
 Title: High-Performance Triangular Distribution Functions
-Version: 1.1.0
+Version: 1.1.0.9000
 Authors@R: 
     person(given = "Alvin",
            family = "Nursalim",
            role = c("aut", "cre"),
-           email = "alvin.nursalim@outlook.com")
+           email = "irkaalv@gmail.com")
 Description: A collection of high-performance functions for the triangular
     distribution that consists of the probability density function, cumulative
     distribution function, quantile function, random variate generator, moment
@@ -28,21 +28,14 @@ RoxygenNote: 7.1.1
 Collate: 
     'RcppExports.R'
     'Triangular.R'
-    'ctri.R'
-    'dtri.R'
     'error.R'
-    'estri.R'
-    'mgtri.R'
-    'ptri.R'
-    'qtri.R'
-    'rtri.R'
 LinkingTo: 
     Rcpp,
     dqrng
 Imports: 
-    Rcpp (>= 1.0.5),
-    rlang (>= 0.4.8),
-    vctrs (>= 0.3.5),
+    Rcpp (>= 1.0.6),
+    rlang (>= 0.4.11),
+    vctrs (>= 0.3.8),
     dqrng (>= 0.2.1)
 Suggests: 
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.2)

@@ -161,3 +161,214 @@
 #' estri(p)
 #'
 NULL
+
+#' Probability Density Function
+#' @rdname Triangular
+#' @export
+dtri <- function(x,
+                 min = 0,
+                 max = 1,
+                 mode = 0.5,
+                 log = FALSE) {
+  if (!is.numeric(x) || !is.numeric(min) || !is.numeric(max) ||
+      !is.numeric(mode)) {
+    cnd_signal(tri_error_numeric("x", x, min, max, mode))
+  }
+
+  if (!is.logical(log) || length(log) > 1L) {
+    cnd_signal(tri_error_logical(log))
+  }
+
+  if (length(min) == 1L &&
+      length(max) == 1L && length(mode) == 1L) {
+    DTriC(x, min, max, mode, log)
+  } else {
+    tryCatch({
+      params <- vec_recycle_common(min, max, mode, .size = length(x))
+    }, error = function(c) {
+      cnd_signal(tri_error_recycle("x", x, min, max, mode))
+    })
+    DTriC2(x, params[[1L]], params[[2L]], params[[3L]], log)
+  }
+}
+
+#' Cumulative Distribution Function
+#' @rdname Triangular
+#' @export
+ptri <- function(q,
+                 min = 0,
+                 max = 1,
+                 mode = 0.5,
+                 lower_tail = TRUE,
+                 log_p = FALSE) {
+  if (!is.numeric(q) || !is.numeric(min) || !is.numeric(max) ||
+      !is.numeric(mode)) {
+    cnd_signal(tri_error_numeric("q", q, min, max, mode))
+  }
+
+  if (!is.logical(lower_tail) ||
+      length(lower_tail) > 1L || !is.logical(log_p)
+      || length(log_p) > 1L) {
+    cnd_signal(tri_error_logical2(lower_tail, log_p))
+  }
+
+  if (length(min) == 1L &&
+      length(max) == 1L && length(mode) == 1L) {
+    PTriC(q, min, max, mode, lower_tail, log_p)
+  } else {
+    tryCatch({
+      params <- vec_recycle_common(min, max, mode, .size = length(q))
+    }, error = function(c) {
+      cnd_signal(tri_error_recycle("q", q, min, max, mode))
+    })
+    PTriC2(q, params[[1L]], params[[2L]], params[[3L]], lower_tail, log_p)
+  }
+}
+
+#' Quantile Function
+#' @rdname Triangular
+#' @export
+qtri <- function(p,
+                 min = 0,
+                 max = 1,
+                 mode = 0.5,
+                 lower_tail = TRUE,
+                 log_p = FALSE) {
+  if (!is.numeric(p) || !is.numeric(min) || !is.numeric(max) ||
+      !is.numeric(mode)) {
+    cnd_signal(tri_error_numeric("p", p, min, max, mode))
+  }
+
+  if (!is.logical(lower_tail) ||
+      length(lower_tail) > 1L || !is.logical(log_p)
+      || length(log_p) > 1L) {
+    cnd_signal(tri_error_logical2(lower_tail, log_p))
+  }
+
+  if (length(min) == 1L &&
+      length(max) == 1L && length(mode) == 1L) {
+    QTriC(p, min, max, mode, lower_tail, log_p)
+  } else {
+    tryCatch({
+      params <- vec_recycle_common(min, max, mode, .size = length(p))
+    }, error = function(c) {
+      cnd_signal(tri_error_recycle("p", p, min, max, mode))
+    })
+    QTriC2(p, params[[1L]], params[[2L]], params[[3L]], lower_tail, log_p)
+  }
+}
+
+#' Random Variate Generator
+#' @rdname Triangular
+#' @export
+rtri <- function(n,
+                 min = 0,
+                 max = 1,
+                 mode = 0.5,
+                 dqrng = FALSE) {
+  if (!is.numeric(n) || !is.numeric(min) || !is.numeric(max) ||
+      !is.numeric(mode)) {
+    cnd_signal(tri_error_numeric("n", n, min, max, mode))
+  }
+
+  if (length(n) != 1L || n < 1L) {
+    cnd_signal(tri_error_n(n))
+  }
+
+  if (length(min) == 1L &&
+      length(max) == 1L && length(mode) == 1L) {
+    RTriC(n, min, max, mode, dqrng)
+  } else {
+    n <- as.integer(n)
+    tryCatch({
+      params <- vec_recycle_common(min, max, mode, .size = n)
+    }, error = function(c) {
+      cnd_signal(tri_error_recycle("n", n, min, max, mode, value = TRUE))
+    })
+    RTriC2(n, params[[1L]], params[[2L]], params[[3L]], dqrng)
+  }
+}
+
+#' Moment Generating Function
+#' @rdname Triangular
+#' @export
+mgtri <- function(t,
+                  min = 0,
+                  max = 1,
+                  mode = 0.5) {
+  if (!is.numeric(t) || !is.numeric(min) || !is.numeric(max) ||
+      !is.numeric(mode)) {
+    cnd_signal(tri_error_numeric("t", t, min, max, mode))
+  }
+
+  if (length(min) == 1L &&
+      length(max) == 1L && length(mode) == 1L) {
+    MGTriC(t, min, max, mode)
+  } else {
+    tryCatch({
+      params <- vec_recycle_common(min, max, mode, .size = length(t))
+    }, error = function(c) {
+      cnd_signal(tri_error_recycle("t", t, min, max, mode))
+    })
+    MGTriC2(t, params[[1L]], params[[2L]], params[[3L]])
+  }
+}
+
+#' Characteristic Function
+#' @rdname Triangular
+#' @export
+ctri <- function(t,
+                 min = 0,
+                 max = 1,
+                 mode = 0.5) {
+  if (!is.numeric(t) || !is.numeric(min) || !is.numeric(max) ||
+      !is.numeric(mode)) {
+    cnd_signal(tri_error_numeric("t", t, min, max, mode))
+  }
+
+  if (length(min) == 1L &&
+      length(max) == 1L && length(mode) == 1L) {
+    CTriC(t, min, max, mode)
+  } else {
+    tryCatch({
+      params <- vec_recycle_common(min, max, mode, .size = length(t))
+    }, error = function(c) {
+      cnd_signal(tri_error_recycle("t", t, min, max, mode))
+    })
+    CTriC2(t, params[[1L]], params[[2L]], params[[3L]])
+  }
+}
+
+#' Expected Shortfall
+#' @rdname Triangular
+#' @export
+estri <-
+  function(p,
+           min = 0,
+           max = 1,
+           mode = 0.5,
+           lower_tail = TRUE,
+           log_p = FALSE) {
+    if (!is.numeric(p) || !is.numeric(min) || !is.numeric(max) ||
+        !is.numeric(mode)) {
+      cnd_signal(tri_error_numeric("p", p, min, max, mode))
+    }
+
+    if (!is.logical(lower_tail) ||
+        length(lower_tail) > 1L || !is.logical(log_p)
+        || length(log_p) > 1L) {
+      cnd_signal(tri_error_logical2(lower_tail, log_p))
+    }
+
+    if (length(min) == 1L &&
+        length(max) == 1L && length(mode) == 1L) {
+      ESTriC(p, min, max, mode, lower_tail, log_p)
+    } else {
+      tryCatch({
+        params <- vec_recycle_common(min, max, mode, .size = length(p))
+      }, error = function(c) {
+        cnd_signal(tri_error_recycle("p", p, min, max, mode))
+      })
+      ESTriC2(p, params[[1L]], params[[2L]], params[[3L]], lower_tail, log_p)
+    }
+  }
