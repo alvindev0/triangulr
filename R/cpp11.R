@@ -7,3 +7,11 @@ dtri_cpp <- function(x, min, max, mode, log) {
 dtri_cpp2 <- function(x, min, max, mode, log) {
   .Call(`_triangulr_dtri_cpp2`, x, min, max, mode, log)
 }
+
+ptri_cpp <- function(q, min, max, mode, lower_tail, log_p) {
+  .Call(`_triangulr_ptri_cpp`, q, min, max, mode, lower_tail, log_p)
+}
+
+ptri_cpp2 <- function(q, min, max, mode, lower_tail, log_p) {
+  .Call(`_triangulr_ptri_cpp2`, q, min, max, mode, lower_tail, log_p)
+}

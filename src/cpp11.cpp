@@ -18,15 +18,33 @@ extern "C" SEXP _triangulr_dtri_cpp2(SEXP x, SEXP min, SEXP max, SEXP mode, SEXP
     return cpp11::as_sexp(dtri_cpp2(cpp11::as_cpp<cpp11::decay_t<doubles>>(x), cpp11::as_cpp<cpp11::decay_t<doubles>>(min), cpp11::as_cpp<cpp11::decay_t<doubles>>(max), cpp11::as_cpp<cpp11::decay_t<doubles>>(mode), cpp11::as_cpp<cpp11::decay_t<bool>>(log)));
   END_CPP11
 }
+// Triangular.cpp
+doubles ptri_cpp(doubles q, double min, double max, double mode, bool lower_tail, bool log_p);
+extern "C" SEXP _triangulr_ptri_cpp(SEXP q, SEXP min, SEXP max, SEXP mode, SEXP lower_tail, SEXP log_p) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(ptri_cpp(cpp11::as_cpp<cpp11::decay_t<doubles>>(q), cpp11::as_cpp<cpp11::decay_t<double>>(min), cpp11::as_cpp<cpp11::decay_t<double>>(max), cpp11::as_cpp<cpp11::decay_t<double>>(mode), cpp11::as_cpp<cpp11::decay_t<bool>>(lower_tail), cpp11::as_cpp<cpp11::decay_t<bool>>(log_p)));
+  END_CPP11
+}
+// Triangular.cpp
+doubles ptri_cpp2(doubles q, doubles min, doubles max, doubles mode, bool lower_tail, bool log_p);
+extern "C" SEXP _triangulr_ptri_cpp2(SEXP q, SEXP min, SEXP max, SEXP mode, SEXP lower_tail, SEXP log_p) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(ptri_cpp2(cpp11::as_cpp<cpp11::decay_t<doubles>>(q), cpp11::as_cpp<cpp11::decay_t<doubles>>(min), cpp11::as_cpp<cpp11::decay_t<doubles>>(max), cpp11::as_cpp<cpp11::decay_t<doubles>>(mode), cpp11::as_cpp<cpp11::decay_t<bool>>(lower_tail), cpp11::as_cpp<cpp11::decay_t<bool>>(log_p)));
+  END_CPP11
+}
 
 extern "C" {
 /* .Call calls */
 extern SEXP _triangulr_dtri_cpp(SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP _triangulr_dtri_cpp2(SEXP, SEXP, SEXP, SEXP, SEXP);
+extern SEXP _triangulr_ptri_cpp(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+extern SEXP _triangulr_ptri_cpp2(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
     {"_triangulr_dtri_cpp",  (DL_FUNC) &_triangulr_dtri_cpp,  5},
     {"_triangulr_dtri_cpp2", (DL_FUNC) &_triangulr_dtri_cpp2, 5},
+    {"_triangulr_ptri_cpp",  (DL_FUNC) &_triangulr_ptri_cpp,  6},
+    {"_triangulr_ptri_cpp2", (DL_FUNC) &_triangulr_ptri_cpp2, 6},
     {NULL, NULL, 0}
 };
 }

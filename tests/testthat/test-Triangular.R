@@ -242,171 +242,171 @@ test_that("Error, illegal recycling", {
   expect_error(dtri(seq(0.1, 1, 0.1), min = 0, max = 1, mode = c(0.5, 0.6)))
 })
 
-# ################################################################################
-# ## Test cases for the cumulative distribution function
+################################################################################
+## Test cases for the cumulative distribution function
 
-# test_that("scalar q, scalar params, symmetric", {
-#   p <- ptri(0.5, min = 0, max = 1, mode = 0.5)
-#   p_test <- ptri_test(0.5, 0, 1, 0.5)
-#   expect_equal(p, p_test)
-# })
+test_that("scalar q, scalar params, symmetric", {
+  p <- ptri(0.5, min = 0, max = 1, mode = 0.5)
+  p_test <- ptri_test(0.5, 0, 1, 0.5)
+  expect_equal(p, p_test)
+})
 
-# test_that("scalar q, scalar params, non-symmetric", {
-#   p <- ptri(0.5, min = 0, max = 1, mode = 0.8)
-#   p_test <- ptri_test(0.5, 0, 1, 0.8)
-#   expect_equal(p, p_test)
-# })
+test_that("scalar q, scalar params, non-symmetric", {
+  p <- ptri(0.5, min = 0, max = 1, mode = 0.8)
+  p_test <- ptri_test(0.5, 0, 1, 0.8)
+  expect_equal(p, p_test)
+})
 
-# test_that("scalar q, scalar params, non-symmetric, upper_tail", {
-#   p <- ptri(0.4, min = 0, max = 1, mode = 0.8, lower_tail = FALSE)
-#   p_test <- ptri_test(0.4, 0, 1, 0.8)
-#   expect_equal(1 - p, p_test)
-# })
+test_that("scalar q, scalar params, non-symmetric, upper_tail", {
+  p <- ptri(0.4, min = 0, max = 1, mode = 0.8, lower_tail = FALSE)
+  p_test <- ptri_test(0.4, 0, 1, 0.8)
+  expect_equal(1 - p, p_test)
+})
 
-# test_that("scalar q, scalar params, non-symmetric, log_p", {
-#   p <- ptri(0.5, min = 0, max = 1, mode = 0.8, log_p = TRUE)
-#   p_test <- ptri_test(0.5, 0, 1, 0.8)
-#   expect_equal(exp(p), p_test)
-# })
+test_that("scalar q, scalar params, non-symmetric, log_p", {
+  p <- ptri(0.5, min = 0, max = 1, mode = 0.8, log_p = TRUE)
+  p_test <- ptri_test(0.5, 0, 1, 0.8)
+  expect_equal(exp(p), p_test)
+})
 
-# test_that("scalar q, scalar params, non-symmetric, upper_tail, log_p", {
-#   p <- ptri(0.4, min = 0, max = 1, mode = 0.8, lower_tail = FALSE, log_p = TRUE)
-#   p_test <- ptri_test(0.4, 0, 1, 0.8)
-#   expect_equal(1 - exp(p), p_test)
-# })
+test_that("scalar q, scalar params, non-symmetric, upper_tail, log_p", {
+  p <- ptri(0.4, min = 0, max = 1, mode = 0.8, lower_tail = FALSE, log_p = TRUE)
+  p_test <- ptri_test(0.4, 0, 1, 0.8)
+  expect_equal(1 - exp(p), p_test)
+})
 
-# test_that("vector q, scalar params, symmetric", {
-#   p <- ptri(c(0.1, 0.6, 0.9), min = 0, max = 1, mode = 0.5)
-#   p_test <- ptri_test(c(0.1, 0.6, 0.9), 0, 1, 0.5)
-#   expect_equal(p, p_test)
-# })
+test_that("vector q, scalar params, symmetric", {
+  p <- ptri(c(0.1, 0.6, 0.9), min = 0, max = 1, mode = 0.5)
+  p_test <- ptri_test(c(0.1, 0.6, 0.9), 0, 1, 0.5)
+  expect_equal(p, p_test)
+})
 
-# test_that("vector q, scalar params, non-symmetric", {
-#   p <- ptri(c(0.1, 0.6, 0.9), min = 0, max = 1, mode = 0.8)
-#   p_test <- ptri_test(c(0.1, 0.6, 0.9), 0, 1, 0.8)
-#   expect_equal(p, p_test)
-# })
+test_that("vector q, scalar params, non-symmetric", {
+  p <- ptri(c(0.1, 0.6, 0.9), min = 0, max = 1, mode = 0.8)
+  p_test <- ptri_test(c(0.1, 0.6, 0.9), 0, 1, 0.8)
+  expect_equal(p, p_test)
+})
 
-# test_that("vector q, scalar params, non-symmetric, log_p", {
-#   p <- ptri(c(0.1, 0.6, 0.9), min = 0, max = 1, mode = 0.8, log_p = TRUE)
-#   p_test <- ptri_test(c(0.1, 0.6, 0.9), 0, 1, 0.8)
-#   expect_equal(exp(p), p_test)
-# })
+test_that("vector q, scalar params, non-symmetric, log_p", {
+  p <- ptri(c(0.1, 0.6, 0.9), min = 0, max = 1, mode = 0.8, log_p = TRUE)
+  p_test <- ptri_test(c(0.1, 0.6, 0.9), 0, 1, 0.8)
+  expect_equal(exp(p), p_test)
+})
 
-# test_that("vector q, vector params, symmetric", {
-#   p <- ptri(c(0.1, 0.6, 0.9), min = c(0, 0, 0), max = 2, mode = 1)
-#   p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(0, 0, 0), 2, 1)
-#   expect_equal(p, p_test)
-# })
+test_that("vector q, vector params, symmetric", {
+  p <- ptri(c(0.1, 0.6, 0.9), min = c(0, 0, 0), max = 2, mode = 1)
+  p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(0, 0, 0), 2, 1)
+  expect_equal(p, p_test)
+})
 
-# test_that("vector q, vector params, non-symmetric", {
-#   p <- ptri(c(0.1, 0.6, 0.9), min = c(-0.1, 0, 0.1), max = 3, mode = 2)
-#   p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(-0.1, 0, 0.1), 3, 2)
-#   expect_equal(p, p_test)
-# })
+test_that("vector q, vector params, non-symmetric", {
+  p <- ptri(c(0.1, 0.6, 0.9), min = c(-0.1, 0, 0.1), max = 3, mode = 2)
+  p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(-0.1, 0, 0.1), 3, 2)
+  expect_equal(p, p_test)
+})
 
-# test_that("vector q, vector params, upper_tail", {
-#   p <- ptri(c(0.1, 0.6, 0.9), min = c(0, 0.01, 0.02), max = 1, mode = 0.8,
-#             lower_tail = FALSE)
-#   p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(0, 0.01, 0.02), 1, 0.8)
-#   expect_equal(1 - p, p_test)
-# })
+test_that("vector q, vector params, upper_tail", {
+  p <- ptri(c(0.1, 0.6, 0.9), min = c(0, 0.01, 0.02), max = 1, mode = 0.8,
+            lower_tail = FALSE)
+  p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(0, 0.01, 0.02), 1, 0.8)
+  expect_equal(1 - p, p_test)
+})
 
-# test_that("vector q, vector params, log_p", {
-#   p <- ptri(c(0.1, 0.6, 0.9), min = c(0, 0.01, 0.02), max = 1, mode = 0.8,
-#             log_p = TRUE)
-#   p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(0, 0.01, 0.02), 1, 0.8)
-#   expect_equal(exp(p), p_test)
-# })
+test_that("vector q, vector params, log_p", {
+  p <- ptri(c(0.1, 0.6, 0.9), min = c(0, 0.01, 0.02), max = 1, mode = 0.8,
+            log_p = TRUE)
+  p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(0, 0.01, 0.02), 1, 0.8)
+  expect_equal(exp(p), p_test)
+})
 
-# test_that("vector q, vector params, upper_tail, log_p", {
-#   p <- ptri(c(0.1, 0.6, 0.9), min = c(0, 0.01, 0.02), max = 1, mode = 0.8, lower_tail = FALSE, log_p = TRUE)
-#   p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(0, 0.01, 0.02), 1, 0.8)
-#   expect_equal(1 - exp(p), p_test)
-# })
+test_that("vector q, vector params, upper_tail, log_p", {
+  p <- ptri(c(0.1, 0.6, 0.9), min = c(0, 0.01, 0.02), max = 1, mode = 0.8, lower_tail = FALSE, log_p = TRUE)
+  p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(0, 0.01, 0.02), 1, 0.8)
+  expect_equal(1 - exp(p), p_test)
+})
 
-# test_that("Mode at bound, min == mode", {
-#   q <- c(0.1, 0.6, 0.9)
-#   p <- ptri(q, min = 0, max = 1, mode = 0)
-#   p_test <- ptri_test(c(0.1, 0.6, 0.9), 0, 1, 0)
-#   expect_equal(p, p_test)
-#   p <- ptri(q, min = c(0, 0, 0), max = 1, mode = 0)
-#   p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(0, 0, 0), 1, 0)
-#   expect_equal(p, p_test)
-# })
+test_that("Mode at bound, min == mode", {
+  q <- c(0.1, 0.6, 0.9)
+  p <- ptri(q, min = 0, max = 1, mode = 0)
+  p_test <- ptri_test(c(0.1, 0.6, 0.9), 0, 1, 0)
+  expect_equal(p, p_test)
+  p <- ptri(q, min = c(0, 0, 0), max = 1, mode = 0)
+  p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(0, 0, 0), 1, 0)
+  expect_equal(p, p_test)
+})
 
-# test_that("Mode at bound, max == mode", {
-#   p <- ptri(c(0.1, 0.6, 0.9), min = 0, max = 1, mode = 1)
-#   p_test <- ptri_test(c(0.1, 0.6, 0.9), 0, 1, 1)
-#   expect_equal(p, p_test)
-#   p <- ptri(c(0.1, 0.6, 0.9), min = c(0, 0, 0), max = 1, mode = 1)
-#   p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(0, 0, 0), 1, 1)
-#   expect_equal(p, p_test)
-# })
+test_that("Mode at bound, max == mode", {
+  p <- ptri(c(0.1, 0.6, 0.9), min = 0, max = 1, mode = 1)
+  p_test <- ptri_test(c(0.1, 0.6, 0.9), 0, 1, 1)
+  expect_equal(p, p_test)
+  p <- ptri(c(0.1, 0.6, 0.9), min = c(0, 0, 0), max = 1, mode = 1)
+  p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(0, 0, 0), 1, 1)
+  expect_equal(p, p_test)
+})
 
-# test_that("Zeros produced, q < min", {
-#   p <- ptri(c(0.1, 0.6, 0.9), min = 0.4, max = 1.4, mode = 0.9)
-#   p_test <- ptri_test(c(0.1, 0.6, 0.9), 0.4, 1.4, 0.9)
-#   expect_equal(p, p_test)
-#   p <- ptri(c(0.1, 0.6, 0.9), min = c(0.4, 0.4, 0.4), max = 1.4, mode = 0.9)
-#   p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(0.4, 0.4, 0.4), 1.4, 0.9)
-#   expect_equal(p, p_test)
-# })
+test_that("Zeros produced, q < min", {
+  p <- ptri(c(0.1, 0.6, 0.9), min = 0.4, max = 1.4, mode = 0.9)
+  p_test <- ptri_test(c(0.1, 0.6, 0.9), 0.4, 1.4, 0.9)
+  expect_equal(p, p_test)
+  p <- ptri(c(0.1, 0.6, 0.9), min = c(0.4, 0.4, 0.4), max = 1.4, mode = 0.9)
+  p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(0.4, 0.4, 0.4), 1.4, 0.9)
+  expect_equal(p, p_test)
+})
 
-# test_that("Ones produced, q > max", {
-#   p <- ptri(c(0.1, 0.6, 0.9), min = -0.5, max = 0.5, mode = 0)
-#   p_test <- ptri_test(c(0.1, 0.6, 0.9), -0.5, 0.5, 0)
-#   expect_equal(p, p_test)
-#   p <- ptri(c(0.1, 0.6, 0.9), min = c(-0.5, -0.5, -0.5), max = 0.5, mode = 0)
-#   p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(-0.5, -0.5, -0.5), 0.5, 0)
-#   expect_equal(p, p_test)
-# })
+test_that("Ones produced, q > max", {
+  p <- ptri(c(0.1, 0.6, 0.9), min = -0.5, max = 0.5, mode = 0)
+  p_test <- ptri_test(c(0.1, 0.6, 0.9), -0.5, 0.5, 0)
+  expect_equal(p, p_test)
+  p <- ptri(c(0.1, 0.6, 0.9), min = c(-0.5, -0.5, -0.5), max = 0.5, mode = 0)
+  p_test <- ptri_vec_test(c(0.1, 0.6, 0.9), c(-0.5, -0.5, -0.5), 0.5, 0)
+  expect_equal(p, p_test)
+})
 
-# test_that("NaN produced, mode < min", {
-#   p <- expect_warning(ptri(1, min = 0, max = 2, mode = -1))
-#   expect_equal(p, NaN)
-#   p <- expect_warning(ptri(c(1, 2, 3), min = c(-1, 0, 1), max = 3, mode = -1))
-#   expect_equal(p, c(0.75, NaN, NaN))
-# })
+test_that("NaN produced, mode < min", {
+  p <- expect_warning(ptri(1, min = 0, max = 2, mode = -1))
+  expect_equal(p, NaN)
+  p <- expect_warning(ptri(c(1, 2, 3), min = c(-1, 0, 1), max = 3, mode = -1))
+  expect_equal(p, c(0.75, NaN, NaN))
+})
 
-# test_that("NaN produced, min == mode == max", {
-#   p <- expect_warning(ptri(3, min = 3, max = 3, mode = 3))
-#   expect_equal(p, NaN)
-#   p <- expect_warning(ptri(c(1, 2, 3), min = c(0, 1, 3), max = 3, mode = 3))
-#   expect_equal(round(p, 7), c(0.1111111, 0.25, NaN))
-# })
+test_that("NaN produced, min == mode == max", {
+  p <- expect_warning(ptri(3, min = 3, max = 3, mode = 3))
+  expect_equal(p, NaN)
+  p <- expect_warning(ptri(c(1, 2, 3), min = c(0, 1, 3), max = 3, mode = 3))
+  expect_equal(round(p, 7), c(0.1111111, 0.25, NaN))
+})
 
-# test_that("NaN produced, min > max", {
-#   p <- expect_warning(ptri(1, min = 0, max = -1, mode = 1))
-#   expect_equal(p, NaN)
-#   p <- expect_warning(ptri(c(1, 2, 3), min = c(1, 2, 3), max = 2.5, mode = 2))
-#   expect_equal(p, c(0, 0, NaN))
-# })
+test_that("NaN produced, min > max", {
+  p <- expect_warning(ptri(1, min = 0, max = -1, mode = 1))
+  expect_equal(p, NaN)
+  p <- expect_warning(ptri(c(1, 2, 3), min = c(1, 2, 3), max = 2.5, mode = 2))
+  expect_equal(p, c(0, 0, NaN))
+})
 
-# test_that("Error, NULL arguments", {
-#   expect_error(ptri(q = NULL))
-#   expect_error(ptri(q = 1, min = NULL))
-#   expect_error(ptri(q = 1, max = NULL))
-#   expect_error(ptri(q = 1, mode = NULL))
-# })
+test_that("Error, NULL arguments", {
+  expect_error(ptri(q = NULL))
+  expect_error(ptri(q = 1, min = NULL))
+  expect_error(ptri(q = 1, max = NULL))
+  expect_error(ptri(q = 1, mode = NULL))
+})
 
-# test_that("Error, Non-numeric arguments", {
-#   expect_error(ptri(q = "1"))
-#   expect_error(ptri(q = 1, min = "0"))
-#   expect_error(ptri(q = 1, max = "1"))
-#   expect_error(ptri(q = 1, mode = "0.5"))
-# })
+test_that("Error, Non-numeric arguments", {
+  expect_error(ptri(q = "1"))
+  expect_error(ptri(q = 1, min = "0"))
+  expect_error(ptri(q = 1, max = "1"))
+  expect_error(ptri(q = 1, mode = "0.5"))
+})
 
-# test_that("Error, Non-logical argument", {
-#   expect_error(ptri(q = 1, lower_tail = "TRUE"))
-#   expect_error(ptri(q = 1, log_p = "FALSE"))
-# })
+test_that("Error, Non-logical argument", {
+  expect_error(ptri(q = 1, lower_tail = "TRUE"))
+  expect_error(ptri(q = 1, log_p = "FALSE"))
+})
 
-# test_that("Error, illegal recycling", {
-#   expect_error(ptri(seq(0.1, 1, 0.1), min = 0, max = c(1, 2), mode = 0.5))
-#   expect_error(ptri(seq(0.1, 1, 0.1), min = c(0, 0.1), max = 1, mode = 0.5))
-#   expect_error(ptri(seq(0.1, 1, 0.1), min = 0, max = 1, mode = c(0.5, 0.6)))
-# })
+test_that("Error, illegal recycling", {
+  expect_error(ptri(seq(0.1, 1, 0.1), min = 0, max = c(1, 2), mode = 0.5))
+  expect_error(ptri(seq(0.1, 1, 0.1), min = c(0, 0.1), max = 1, mode = 0.5))
+  expect_error(ptri(seq(0.1, 1, 0.1), min = 0, max = 1, mode = c(0.5, 0.6)))
+})
 
 # ################################################################################
 # ## Test cases for the quantile function
@@ -716,8 +716,8 @@ test_that("Error, illegal recycling", {
 # })
 
 # test_that("vector t, vector params, non-symmetric", {
-#   mg <- mgtri(c(1, 2, 3), min = c(0, 1, 2), max = 8:10, mode = 7:9)
-#   mg_test <- mgtri_test(c(1, 2, 3), c(0, 1, 2), 8:10, 7:9)
+#   mg <- mgtri(c(1, 2, 3), min = c(0, 1, 2), max = c(8, 9, 10), mode = c(7, 8, 9))
+#   mg_test <- mgtri_test(c(1, 2, 3), c(0, 1, 2), c(8, 9, 10), c(7, 8, 9))
 #   expect_equal(mg, mg_test)
 # })
 
@@ -746,8 +746,8 @@ test_that("Error, illegal recycling", {
 #   mg <- expect_warning(mgtri(c(1, 2, 3), min = 0, max = 1, mode = 0))
 #   mg_test <- mgtri_test(c(1, 2, 3), 0, 1, 0)
 #   expect_equal(mg, mg_test)
-#   mg <- expect_warning(mgtri(c(1, 2, 3), min = c(0, 1, 2), max = 3:5, mode = 2))
-#   mg_test <- mgtri_test(c(1, 2, 3), c(0, 1, 2), 3:5, 2)
+#   mg <- expect_warning(mgtri(c(1, 2, 3), min = c(0, 1, 2), max = c(3, 4, 5), mode = 2))
+#   mg_test <- mgtri_test(c(1, 2, 3), c(0, 1, 2), c(3, 4, 5), 2)
 #   expect_equal(mg, mg_test)
 # })
 
@@ -755,8 +755,8 @@ test_that("Error, illegal recycling", {
 #   mg <- expect_warning(mgtri(c(1, 2, 3), min = 0, max = 1, mode = 1))
 #   mg_test <- mgtri_test(c(1, 2, 3), 0, 1, 1)
 #   expect_equal(mg, mg_test)
-#   mg <- expect_warning(mgtri(c(1, 2, 3), min = c(0, 1, 2), max = 3:5, mode = 3))
-#   mg_test <- mgtri_test(c(1, 2, 3), c(0, 1, 2), 3:5, 3)
+#   mg <- expect_warning(mgtri(c(1, 2, 3), min = c(0, 1, 2), max = c(3, 4, 5), mode = 3))
+#   mg_test <- mgtri_test(c(1, 2, 3), c(0, 1, 2), c(3, 4, 5), 3)
 #   expect_equal(mg, mg_test)
 # })
 
@@ -835,8 +835,8 @@ test_that("Error, illegal recycling", {
 # })
 
 # test_that("vector t, vector params, non-symmetric", {
-#   c <- ctri(c(1, 2, 3), min = c(0, 1, 2), max = 8:10, mode = 7:9)
-#   c_test <- ctri_test(c(1, 2, 3), c(0, 1, 2), 8:10, 7:9)
+#   c <- ctri(c(1, 2, 3), min = c(0, 1, 2), max = c(8, 9, 10), mode = c(7, 8, 9))
+#   c_test <- ctri_test(c(1, 2, 3), c(0, 1, 2), c(8, 9, 10), c(7, 8, 9))
 #   expect_equal(c, c_test)
 # })
 
@@ -865,8 +865,8 @@ test_that("Error, illegal recycling", {
 #   c <- expect_warning(ctri(c(1, 2, 3), min = 0, max = 1, mode = 0))
 #   c_test <- ctri_test(c(1, 2, 3), 0, 1, 0)
 #   expect_equal(c, c_test)
-#   c <- expect_warning(ctri(c(1, 2, 3), min = c(0, 1, 2), max = 3:5, mode = 2))
-#   c_test <- ctri_test(c(1, 2, 3), c(0, 1, 2), 3:5, 2)
+#   c <- expect_warning(ctri(c(1, 2, 3), min = c(0, 1, 2), max = c(3, 4, 5), mode = 2))
+#   c_test <- ctri_test(c(1, 2, 3), c(0, 1, 2), c(3, 4, 5), 2)
 #   expect_equal(c, c_test)
 # })
 
@@ -874,8 +874,8 @@ test_that("Error, illegal recycling", {
 #   c <- expect_warning(ctri(c(1, 2, 3), min = 0, max = 1, mode = 1))
 #   c_test <- ctri_test(c(1, 2, 3), 0, 1, 1)
 #   expect_equal(c, c_test)
-#   c <- expect_warning(ctri(c(1, 2, 3), min = c(0, 1, 2), max = 3:5, mode = 3))
-#   c_test <- ctri_test(c(1, 2, 3), c(0, 1, 2), 3:5, 3)
+#   c <- expect_warning(ctri(c(1, 2, 3), min = c(0, 1, 2), max = c(3, 4, 5), mode = 3))
+#   c_test <- ctri_test(c(1, 2, 3), c(0, 1, 2), c(3, 4, 5), 3)
 #   expect_equal(c, c_test)
 # })
 
@@ -980,15 +980,15 @@ test_that("Error, illegal recycling", {
 # })
 
 # test_that("vector p, vector params, non-symmetric", {
-#   es <- estri(c(0.1, 0.6, 0.9), min = c(0, 1, 2), max = 5:7, mode = 4:6)
-#   es_test <- estri_test(c(0.1, 0.6, 0.9), c(0, 1, 2), 5:7, 4:6)
+#   es <- estri(c(0.1, 0.6, 0.9), min = c(0, 1, 2), max = c(5, 6, 7), mode = c(4, 5, 6))
+#   es_test <- estri_test(c(0.1, 0.6, 0.9), c(0, 1, 2), c(5, 6, 7), c(4, 5, 6))
 #   expect_equal2(es, es_test)
 # })
 
 # test_that("vector p, vector params, non-symmetric, upper_tail, log_p", {
-#   es <- estri(log(c(0.1, 0.6, 0.9)), min = c(0, 1, 2), max = 5:7, mode = 4:6,
+#   es <- estri(log(c(0.1, 0.6, 0.9)), min = c(0, 1, 2), max = c(5, 6, 7), mode = c(4, 5, 6),
 #               lower_tail = FALSE, log_p = TRUE)
-#   es_test <- estri_test(1 - c(0.1, 0.6, 0.9), c(0, 1, 2), 5:7, 4:6)
+#   es_test <- estri_test(1 - c(0.1, 0.6, 0.9), c(0, 1, 2), c(5, 6, 7), c(4, 5, 6))
 #   expect_equal2(es, es_test)
 # })
 
@@ -999,8 +999,8 @@ test_that("Error, illegal recycling", {
 # })
 
 # test_that("vector p, vector params recycled, non-symmetric", {
-#   es <- estri(c(0.1, 0.6, 0.9), min = c(1, 2, 3), max = 6:8, mode = 5:7)
-#   es_test <- estri_test(c(0.1, 0.6, 0.9), c(1, 2, 3), 6:8, 5:7)
+#   es <- estri(c(0.1, 0.6, 0.9), min = c(1, 2, 3), max = c(6, 7, 8), mode = c(5, 6, 7))
+#   es_test <- estri_test(c(0.1, 0.6, 0.9), c(1, 2, 3), c(6, 7, 8), c(5, 6, 7))
 #   expect_equal2(es, es_test)
 # })
 
