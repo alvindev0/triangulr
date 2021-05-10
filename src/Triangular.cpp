@@ -1,12 +1,10 @@
 #include <Rcpp.h>
-#include <dqrng.h>
 
 using Rcpp::clone;
 using Rcpp::ComplexVector;
 using Rcpp::NumericVector;
 using Rcpp::runif;
 using Rcpp::warning;
-using dqrng::dqrunif;
 using std::complex;
 
 // [[Rcpp::export]]
@@ -298,7 +296,7 @@ NumericVector QTriC2(
 }
 
 // [[Rcpp::export]]
-NumericVector RTriC(int n, double min, double max, double mode, bool dqrng)
+NumericVector RTriC(int n, double min, double max, double mode)
 {
   if (min >= max || mode > max || min > mode)
   {
@@ -306,7 +304,7 @@ NumericVector RTriC(int n, double min, double max, double mode, bool dqrng)
     return NumericVector(n, R_NaN);
   }
 
-  NumericVector r = dqrng ? dqrunif(n) : runif(n);
+  NumericVector r = runif(n);
   double int_len = max - min;
 
   for (int i = 0; i < n; i++)
@@ -326,9 +324,9 @@ NumericVector RTriC(int n, double min, double max, double mode, bool dqrng)
 
 // [[Rcpp::export]]
 NumericVector RTriC2(
-    int n, NumericVector min, NumericVector max, NumericVector mode, bool dqrng)
+    int n, NumericVector min, NumericVector max, NumericVector mode)
 {
-  NumericVector r = dqrng ? dqrunif(n) : runif(n);
+  NumericVector r = runif(n);
   bool has_nan = false;
 
   for (int i = 0; i < n; i++)

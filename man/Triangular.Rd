@@ -17,7 +17,7 @@ ptri(q, min = 0, max = 1, mode = 0.5, lower_tail = TRUE, log_p = FALSE)
 
 qtri(p, min = 0, max = 1, mode = 0.5, lower_tail = TRUE, log_p = FALSE)
 
-rtri(n, min = 0, max = 1, mode = 0.5, dqrng = FALSE)
+rtri(n, min = 0, max = 1, mode = 0.5)
 
 mgtri(t, min = 0, max = 1, mode = 0.5)
 
@@ -46,10 +46,6 @@ are \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.}
 \item{p}{Vector of probabilities.}
 
 \item{n}{Number of observations. Must have length of one.}
-
-\item{dqrng}{Logical; if \code{FALSE} (default), \code{\link{runif}} will be
-used to generate random numbers instead of \code{\link{dqrunif}} from the
-\code{\link{dqrng}} package.}
 
 \item{t}{Vector of dummy variables.}
 }
@@ -134,13 +130,11 @@ rec_r <- rtri(n,
               mode = c(0.5, 0.5, 0.5))
 all.equal(r, rec_r)
 
-dqrng::dqset.seed(1)
 r <- rtri(
   n,
   min = 0,
   max = 1,
-  mode = 0.5,
-  dqrng = TRUE
+  mode = 0.5
 )
 
 # Log quantiles

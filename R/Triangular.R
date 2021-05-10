@@ -24,9 +24,6 @@
 #'  \code{log(p)}.
 #' @param lower_tail Logical; if \code{TRUE} (default), probabilities \code{p}
 #'  are \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.
-#' @param dqrng Logical; if \code{FALSE} (default), \code{\link{runif}} will be
-#'  used to generate random numbers instead of \code{\link{dqrunif}} from the
-#'  \code{\link{dqrng}} package.
 #'
 #' @details
 #'  If \code{min}, \code{max}, or \code{mode} are not specified they assume the
@@ -110,13 +107,11 @@
 #'               mode = c(0.5, 0.5, 0.5))
 #' all.equal(r, rec_r)
 #'
-#' dqrng::dqset.seed(1)
 #' r <- rtri(
 #'   n,
 #'   min = 0,
 #'   max = 1,
-#'   mode = 0.5,
-#'   dqrng = TRUE
+#'   mode = 0.5
 #' )
 #'
 #' # Log quantiles
@@ -264,8 +259,7 @@ qtri <- function(p,
 rtri <- function(n,
                  min = 0,
                  max = 1,
-                 mode = 0.5,
-                 dqrng = FALSE) {
+                 mode = 0.5) {
   if (!is.numeric(n) || !is.numeric(min) || !is.numeric(max) ||
       !is.numeric(mode)) {
     cnd_signal(tri_error_numeric("n", n, min, max, mode))
@@ -277,7 +271,7 @@ rtri <- function(n,
 
   if (length(min) == 1L &&
       length(max) == 1L && length(mode) == 1L) {
-    RTriC(n, min, max, mode, dqrng)
+    RTriC(n, min, max, mode)
   } else {
     n <- as.integer(n)
     tryCatch({
@@ -285,7 +279,7 @@ rtri <- function(n,
     }, error = function(c) {
       cnd_signal(tri_error_recycle("n", n, min, max, mode, value = TRUE))
     })
-    RTriC2(n, params[[1L]], params[[2L]], params[[3L]], dqrng)
+    RTriC2(n, params[[1L]], params[[2L]], params[[3L]])
   }
 }
 

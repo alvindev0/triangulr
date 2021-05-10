@@ -1,6 +1,6 @@
 # `triangulr` 1.1.0.9000
 
-
+- Removed dqrng dependency.
 
 # `triangulr` 1.1.0
 

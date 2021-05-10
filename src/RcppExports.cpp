@@ -100,8 +100,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // RTriC
-NumericVector RTriC(int n, double min, double max, double mode, bool dqrng);
-RcppExport SEXP _triangulr_RTriC(SEXP nSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP modeSEXP, SEXP dqrngSEXP) {
+NumericVector RTriC(int n, double min, double max, double mode);
+RcppExport SEXP _triangulr_RTriC(SEXP nSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP modeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -109,14 +109,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type min(minSEXP);
     Rcpp::traits::input_parameter< double >::type max(maxSEXP);
     Rcpp::traits::input_parameter< double >::type mode(modeSEXP);
-    Rcpp::traits::input_parameter< bool >::type dqrng(dqrngSEXP);
-    rcpp_result_gen = Rcpp::wrap(RTriC(n, min, max, mode, dqrng));
+    rcpp_result_gen = Rcpp::wrap(RTriC(n, min, max, mode));
     return rcpp_result_gen;
 END_RCPP
 }
 // RTriC2
-NumericVector RTriC2(int n, NumericVector min, NumericVector max, NumericVector mode, bool dqrng);
-RcppExport SEXP _triangulr_RTriC2(SEXP nSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP modeSEXP, SEXP dqrngSEXP) {
+NumericVector RTriC2(int n, NumericVector min, NumericVector max, NumericVector mode);
+RcppExport SEXP _triangulr_RTriC2(SEXP nSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP modeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -124,8 +123,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type min(minSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type max(maxSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type mode(modeSEXP);
-    Rcpp::traits::input_parameter< bool >::type dqrng(dqrngSEXP);
-    rcpp_result_gen = Rcpp::wrap(RTriC2(n, min, max, mode, dqrng));
+    rcpp_result_gen = Rcpp::wrap(RTriC2(n, min, max, mode));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -225,8 +223,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_triangulr_PTriC2", (DL_FUNC) &_triangulr_PTriC2, 6},
     {"_triangulr_QTriC", (DL_FUNC) &_triangulr_QTriC, 6},
     {"_triangulr_QTriC2", (DL_FUNC) &_triangulr_QTriC2, 6},
-    {"_triangulr_RTriC", (DL_FUNC) &_triangulr_RTriC, 5},
-    {"_triangulr_RTriC2", (DL_FUNC) &_triangulr_RTriC2, 5},
+    {"_triangulr_RTriC", (DL_FUNC) &_triangulr_RTriC, 4},
+    {"_triangulr_RTriC2", (DL_FUNC) &_triangulr_RTriC2, 4},
     {"_triangulr_MGTriC", (DL_FUNC) &_triangulr_MGTriC, 4},
     {"_triangulr_MGTriC2", (DL_FUNC) &_triangulr_MGTriC2, 4},
     {"_triangulr_CTriC", (DL_FUNC) &_triangulr_CTriC, 4},
