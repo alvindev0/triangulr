@@ -16,21 +16,18 @@ Description: A collection of high-performance functions for the triangular
 License: MIT + file LICENSE
 URL: https://github.com/irkaal/triangulr/ https://irkaal.github.io/triangulr/
 BugReports: https://github.com/irkaal/triangulr/issues
-Depends:
-    R (>= 3.3)
+Depends: R (>= 3.3)
 Encoding: UTF-8
 ByteCompile: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-Collate: 
-    'RcppExports.R'
-    'Triangular.R'
+Collate:
+    'cpp11.R'
     'error.R'
-LinkingTo: 
-    Rcpp
-Imports: 
-    Rcpp (>= 1.0.6),
+    'Triangular.R'
+LinkingTo: cpp11
+SystemRequirements: C++11
+Imports:
     rlang (>= 0.4.11),
     vctrs (>= 0.3.8)
-Suggests: 
-    testthat (>= 3.0.2)
+Suggests: testthat (>= 3.0.2)
