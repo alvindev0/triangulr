@@ -8,12 +8,8 @@ ptri_cpp <- function(q, min, max, mode, is_lower_tail, is_log_p, is_scalar) {
   .Call(`_triangulr_ptri_cpp`, q, min, max, mode, is_lower_tail, is_log_p, is_scalar)
 }
 
-qtri_cpp <- function(p, min, max, mode, lower_tail, log_p) {
-  .Call(`_triangulr_qtri_cpp`, p, min, max, mode, lower_tail, log_p)
-}
-
-qtri_cpp2 <- function(p, min, max, mode, lower_tail, log_p) {
-  .Call(`_triangulr_qtri_cpp2`, p, min, max, mode, lower_tail, log_p)
+qtri_cpp <- function(p, min, max, mode, is_lower_tail, is_log_p, is_scalar) {
+  .Call(`_triangulr_qtri_cpp`, p, min, max, mode, is_lower_tail, is_log_p, is_scalar)
 }
 
 rtri_cpp <- function(n, min, max, mode) {

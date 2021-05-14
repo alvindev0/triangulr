@@ -158,116 +158,77 @@ doubles ptri_cpp(
   return p;
 }
 
-[[cpp11::register]]
-doubles qtri_cpp(
-    doubles p, double min, double max, double mode, bool lower_tail, bool log_p)
+double qtri_cpp_internal(
+    double p, double min, double max, double mode, bool is_lower_tail,
+    bool is_log_p, bool &has_nan)
 {
-  int n = p.size();
-  writable::doubles q(n);
-
-  if (min >= max || mode > max || min > mode)
-  {
-    for (int i = 0; i < n; i++)
-    {
-      q[i] = NA_REAL;
-    }
-
-    cpp11::warning("NaN(s) produced.");
-
-    return q;
-  }
-
-  bool has_nan = false;
   double int_len = max - min;
+  double q = is_log_p ? exp(p) : p;
 
-  for (int i = 0; i < n; i++)
+  if (!is_lower_tail) q = 1.0 - q;
+
+  if (q < 0.0 || q > 1.0)
   {
-    // TODO: This is inefficient
-    if (log_p)
-    {
-      q[i] = std::exp(p[i]);
-    }
-    else
-    {
-      q[i] = p[i];
-    }
-
-    // TODO: This is inefficient
-    if (!lower_tail)
-    {
-      q[i] = 1.0 - q[i];
-    }
-
-    if (q[i] < 0.0 || q[i] > 1.0)
-    {
-      q[i] = NA_REAL;
-      has_nan = true;
-    }
-    else if (q[i] < (mode - min) / int_len)
-    {
-      q[i] = min + sqrt(q[i] * int_len * (mode - min));
-    }
-    else // if (q[i] >= (mode - min) / int_len)
-    {
-      q[i] = max - sqrt((1.0 - q[i]) * int_len * (max - mode));
-    }
+    has_nan = true;
+    return NA_REAL;
   }
-
-  if (has_nan)
+  else if (q < (mode - min) / int_len)
   {
-    cpp11::warning("NaN(s) produced.");
+    return min + sqrt(q * int_len * (mode - min));
   }
-
-  return q;
+  else // if (q >= (mode - min) / int_len)
+  {
+    return max - sqrt((1.0 - q) * int_len * (max - mode));
+  }
 }
 
 [[cpp11::register]]
-doubles qtri_cpp2(
-    doubles p, doubles min, doubles max, doubles mode, bool lower_tail,
-    bool log_p)
+doubles qtri_cpp(
+    doubles p, doubles min, doubles max, doubles mode, bool is_lower_tail,
+    bool is_log_p, bool is_scalar)
 {
   int n = p.size();
   writable::doubles q(n);
   bool has_nan = false;
 
-  for (int i = 0; i < n; i++)
+  if (is_scalar)
   {
-    // TODO: This is inefficient
-    if (log_p)
+    if (min[0] >= max[0] || mode[0] > max[0] || min[0] > mode[0])
     {
-      q[i] = std::exp(p[i]);
-    }
-    else
-    {
-      q[i] = p[i];
+      for (int i = 0; i < n; i++)
+      {
+        q[i] = NA_REAL;
+      }
+
+      warning("NaN(s) produced.");
+
+      return q;
     }
 
-    // TODO: This is inefficient
-    if (!lower_tail)
+    for (int i = 0; i < n; i++)
     {
-      q[i] = 1.0 - q[i];
+      q[i] = qtri_cpp_internal(
+        p[i], min[0], max[0], mode[0], is_lower_tail, is_log_p, has_nan);
     }
-
-    if (min[i] >= max[i] || mode[i] > max[i] || min[i] > mode[i] ||
-        q[i] < 0.0 || q[i] > 1.0)
+  }
+  else
+  {
+    for (int i = 0; i < n; i++)
     {
-      q[i] = NA_REAL;
-      has_nan = true;
-    }
-    else if (q[i] < (mode[i] - min[i]) / (max[i] - min[i]))
-    {
-      q[i] = min[i] + sqrt(q[i] * (max[i] - min[i]) * (mode[i] - min[i]));
-    }
-    else // if (q[i] >= (mode[i] - min[i]) / (max[i] - min[i]))
-    {
-      q[i] = max[i] - sqrt((1.0 - q[i]) * (max[i] - min[i]) * (max[i] - mode[i]));
+      if (min[i] >= max[i] || mode[i] > max[i] || min[i] > mode[i])
+      {
+        q[i] = NA_REAL;
+        has_nan = true;
+      }
+      else
+      {
+        q[i] = qtri_cpp_internal(
+          p[i], min[i], max[i], mode[i], is_lower_tail, is_log_p, has_nan);
+      }
     }
   }
 
-  if (has_nan)
-  {
-    cpp11::warning("NaN(s) produced.");
-  }
+  if (has_nan) warning("NaN(s) produced.");
 
   return q;
 }
