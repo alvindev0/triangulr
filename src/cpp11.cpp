@@ -5,17 +5,10 @@
 #include "cpp11/declarations.hpp"
 
 // Triangular.cpp
-doubles dtri_cpp(doubles x, double min, double max, double mode, bool log);
-extern "C" SEXP _triangulr_dtri_cpp(SEXP x, SEXP min, SEXP max, SEXP mode, SEXP log) {
+doubles dtri_cpp(doubles x, doubles min, doubles max, doubles mode, bool is_log, bool is_scalar);
+extern "C" SEXP _triangulr_dtri_cpp(SEXP x, SEXP min, SEXP max, SEXP mode, SEXP is_log, SEXP is_scalar) {
   BEGIN_CPP11
-    return cpp11::as_sexp(dtri_cpp(cpp11::as_cpp<cpp11::decay_t<doubles>>(x), cpp11::as_cpp<cpp11::decay_t<double>>(min), cpp11::as_cpp<cpp11::decay_t<double>>(max), cpp11::as_cpp<cpp11::decay_t<double>>(mode), cpp11::as_cpp<cpp11::decay_t<bool>>(log)));
-  END_CPP11
-}
-// Triangular.cpp
-doubles dtri_cpp2(doubles x, doubles min, doubles max, doubles mode, bool log);
-extern "C" SEXP _triangulr_dtri_cpp2(SEXP x, SEXP min, SEXP max, SEXP mode, SEXP log) {
-  BEGIN_CPP11
-    return cpp11::as_sexp(dtri_cpp2(cpp11::as_cpp<cpp11::decay_t<doubles>>(x), cpp11::as_cpp<cpp11::decay_t<doubles>>(min), cpp11::as_cpp<cpp11::decay_t<doubles>>(max), cpp11::as_cpp<cpp11::decay_t<doubles>>(mode), cpp11::as_cpp<cpp11::decay_t<bool>>(log)));
+    return cpp11::as_sexp(dtri_cpp(cpp11::as_cpp<cpp11::decay_t<doubles>>(x), cpp11::as_cpp<cpp11::decay_t<doubles>>(min), cpp11::as_cpp<cpp11::decay_t<doubles>>(max), cpp11::as_cpp<cpp11::decay_t<doubles>>(mode), cpp11::as_cpp<cpp11::decay_t<bool>>(is_log), cpp11::as_cpp<cpp11::decay_t<bool>>(is_scalar)));
   END_CPP11
 }
 // Triangular.cpp
@@ -91,8 +84,7 @@ extern "C" SEXP _triangulr_estri_cpp2(SEXP p, SEXP min, SEXP max, SEXP mode, SEX
 
 extern "C" {
 /* .Call calls */
-extern SEXP _triangulr_dtri_cpp(SEXP, SEXP, SEXP, SEXP, SEXP);
-extern SEXP _triangulr_dtri_cpp2(SEXP, SEXP, SEXP, SEXP, SEXP);
+extern SEXP _triangulr_dtri_cpp(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP _triangulr_estri_cpp(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP _triangulr_estri_cpp2(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP _triangulr_mgtri_cpp(SEXP, SEXP, SEXP, SEXP);
@@ -105,8 +97,7 @@ extern SEXP _triangulr_rtri_cpp(SEXP, SEXP, SEXP, SEXP);
 extern SEXP _triangulr_rtri_cpp2(SEXP, SEXP, SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_triangulr_dtri_cpp",   (DL_FUNC) &_triangulr_dtri_cpp,   5},
-    {"_triangulr_dtri_cpp2",  (DL_FUNC) &_triangulr_dtri_cpp2,  5},
+    {"_triangulr_dtri_cpp",   (DL_FUNC) &_triangulr_dtri_cpp,   6},
     {"_triangulr_estri_cpp",  (DL_FUNC) &_triangulr_estri_cpp,  6},
     {"_triangulr_estri_cpp2", (DL_FUNC) &_triangulr_estri_cpp2, 6},
     {"_triangulr_mgtri_cpp",  (DL_FUNC) &_triangulr_mgtri_cpp,  4},

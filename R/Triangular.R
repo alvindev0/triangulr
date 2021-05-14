@@ -165,24 +165,23 @@ dtri <- function(x,
                  max = 1,
                  mode = 0.5,
                  log = FALSE) {
-  if (!is.numeric(x) || !is.numeric(min) || !is.numeric(max) ||
-      !is.numeric(mode)) {
+  if (!is_numeric(x, min, max, mode)) {
     cnd_signal(tri_error_numeric("x", x, min, max, mode))
   }
 
-  if (!is.logical(log) || length(log) > 1) {
+  if (!is_scalar_logical(log)) {
     cnd_signal(tri_error_logical(log))
   }
 
-  if (length(min) == 1 && length(max) == 1 && length(mode) == 1) {
-    dtri_cpp(x, min, max, mode, log)
+  if (is_scalar(min, max, mode)) {
+    dtri_cpp(x, min, max, mode, log, TRUE)
   } else {
     tryCatch({
       params <- vec_recycle_common(min, max, mode, .size = length(x))
     }, error = function(c) {
       cnd_signal(tri_error_recycle("x", x, min, max, mode))
     })
-    dtri_cpp2(x, params[[1]], params[[2]], params[[3]], log)
+    dtri_cpp(x, params[[1]], params[[2]], params[[3]], log, FALSE)
   }
 }
 
@@ -194,17 +193,15 @@ ptri <- function(q,
                  mode = 0.5,
                  lower_tail = TRUE,
                  log_p = FALSE) {
-  if (!is.numeric(q) || !is.numeric(min) || !is.numeric(max) ||
-      !is.numeric(mode)) {
+  if (!is_numeric(q, min, max, mode)) {
     cnd_signal(tri_error_numeric("q", q, min, max, mode))
   }
 
-  if (!is.logical(lower_tail) || length(lower_tail) > 1 ||
-      !is.logical(log_p) || length(log_p) > 1) {
+  if (!is_scalar_logical(lower_tail, log_p)) {
     cnd_signal(tri_error_logical2(lower_tail, log_p))
   }
 
-  if (length(min) == 1 && length(max) == 1 && length(mode) == 1) {
+  if (is_scalar(min, max, mode)) {
     ptri_cpp(q, min, max, mode, lower_tail, log_p)
   } else {
     tryCatch({
@@ -224,17 +221,15 @@ qtri <- function(p,
                  mode = 0.5,
                  lower_tail = TRUE,
                  log_p = FALSE) {
-  if (!is.numeric(p) || !is.numeric(min) || !is.numeric(max) ||
-      !is.numeric(mode)) {
+  if (!is_numeric(p, min, max, mode)) {
     cnd_signal(tri_error_numeric("p", p, min, max, mode))
   }
 
-  if (!is.logical(lower_tail) || length(lower_tail) > 1 ||
-      !is.logical(log_p) || length(log_p) > 1) {
+  if (!is_scalar_logical(lower_tail, log_p)) {
     cnd_signal(tri_error_logical2(lower_tail, log_p))
   }
 
-  if (length(min) == 1 && length(max) == 1 && length(mode) == 1) {
+  if (is_scalar(min, max, mode)) {
     qtri_cpp(p, min, max, mode, lower_tail, log_p)
   } else {
     tryCatch({
@@ -252,8 +247,7 @@ rtri <- function(n,
                  min = 0,
                  max = 1,
                  mode = 0.5) {
-  if (!is.numeric(n) || !is.numeric(min) || !is.numeric(max) ||
-      !is.numeric(mode)) {
+  if (!is_numeric(n, min, max, mode)) {
     cnd_signal(tri_error_numeric("n", n, min, max, mode))
   }
 
@@ -261,7 +255,7 @@ rtri <- function(n,
     cnd_signal(tri_error_n(n))
   }
 
-  if (length(min) == 1 && length(max) == 1 && length(mode) == 1) {
+  if (is_scalar(min, max, mode)) {
     rtri_cpp(n, min, max, mode)
   } else {
     n <- as.integer(n)
@@ -280,12 +274,11 @@ mgtri <- function(t,
                   min = 0,
                   max = 1,
                   mode = 0.5) {
-  if (!is.numeric(t) || !is.numeric(min) || !is.numeric(max) ||
-      !is.numeric(mode)) {
+  if (!is_numeric(t, min, max, mode)) {
     cnd_signal(tri_error_numeric("t", t, min, max, mode))
   }
 
-  if (length(min) == 1 && length(max) == 1 && length(mode) == 1) {
+  if (is_scalar(min, max, mode)) {
     mgtri_cpp(t, min, max, mode)
   } else {
     tryCatch({
@@ -302,12 +295,11 @@ mgtri <- function(t,
 #                  min = 0,
 #                  max = 1,
 #                  mode = 0.5) {
-#   if (!is.numeric(t) || !is.numeric(min) || !is.numeric(max) ||
-#       !is.numeric(mode)) {
+#   if (!is_numeric(t, min, max, mode)) {
 #     cnd_signal(tri_error_numeric("t", t, min, max, mode))
 #   }
 #
-#   if (length(min) == 1 && length(max) == 1 && length(mode) == 1) {
+#   if (is_scalar(min, max, mode)) {
 #     ctri_cpp(t, min, max, mode)
 #   } else {
 #     tryCatch({
@@ -328,17 +320,15 @@ estri <-
            mode = 0.5,
            lower_tail = TRUE,
            log_p = FALSE) {
-    if (!is.numeric(p) || !is.numeric(min) || !is.numeric(max) ||
-        !is.numeric(mode)) {
+    if (!is_numeric(p, min, max, mode)) {
       cnd_signal(tri_error_numeric("p", p, min, max, mode))
     }
 
-    if (!is.logical(lower_tail) ||
-        length(lower_tail) > 1 || !is.logical(log_p) || length(log_p) > 1) {
+    if (!is_scalar_logical(lower_tail, log_p)) {
       cnd_signal(tri_error_logical2(lower_tail, log_p))
     }
 
-    if (length(min) == 1 && length(max) == 1 && length(mode) == 1) {
+    if (is_scalar(min, max, mode)) {
       estri_cpp(p, min, max, mode, lower_tail, log_p)
     } else {
       tryCatch({
