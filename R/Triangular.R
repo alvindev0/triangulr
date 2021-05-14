@@ -279,14 +279,14 @@ mgtri <- function(t,
   }
 
   if (is_scalar(min, max, mode)) {
-    mgtri_cpp(t, min, max, mode)
+    mgtri_cpp(t, min, max, mode, TRUE)
   } else {
     tryCatch({
       params <- vec_recycle_common(min, max, mode, .size = length(t))
     }, error = function(c) {
       cnd_signal(tri_error_recycle("t", t, min, max, mode))
     })
-    mgtri_cpp2(t, params[[1]], params[[2]], params[[3]])
+    mgtri_cpp(t, params[[1]], params[[2]], params[[3]], FALSE)
   }
 }
 

@@ -299,152 +299,71 @@ doubles rtri_cpp(int n, doubles min, doubles max, doubles mode, bool is_scalar)
   return r;
 }
 
-doubles rtri_cpp_old(int n, double min, double max, double mode)
+double mgtri_cpp_internal(
+    double t, double min, double max, double mode, bool &has_nan)
 {
-  writable::doubles r(n);
+  if (t == 0.0)
+  {
+    has_nan = true;
+    return NA_REAL;
+  }
 
-  if (min >= max || mode > max || min > mode)
+  return 2.0 * ((max - mode) * exp(min * t) -
+                (max - min) * exp(mode * t) +
+                (mode - min) * exp(max * t)) /
+                  ((max - min) * (mode - min) * (max - mode) * pow(t, 2));
+}
+
+[[cpp11::register]]
+doubles mgtri_cpp(
+    doubles t, doubles min, doubles max, doubles mode, bool is_scalar)
+{
+  int n = t.size();
+  writable::doubles mg(n);
+  bool has_nan = false;
+
+  if (is_scalar)
+  {
+    if (min[0] >= max[0] || mode[0] >= max[0] || min[0] >= mode[0])
+    {
+      for (int i = 0; i < n; i++)
+      {
+        mg[i] = NA_REAL;
+      }
+
+      warning("NaN(s) produced.");
+
+      return mg;
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+      mg[i] = mgtri_cpp_internal(t[i], min[0], max[0], mode[0], has_nan);
+    }
+  }
+  else
   {
     for (int i = 0; i < n; i++)
     {
-      r[i] = NA_REAL;
-    }
-
-    cpp11::warning("NaN(s) produced.");
-
-    return r;
-  }
-
-  double int_len = max - min;
-
-  for (int i = 0; i < n; i++)
-  {
-    r[i] = unif_rand();
-
-    if (r[i] < (mode - min) / int_len)
-    {
-      r[i] = min + sqrt(r[i] * int_len * (mode - min));
-    }
-    else // if (r[i] >= (mode - min) / int_len)
-    {
-      r[i] = max - sqrt((1.0 - r[i]) * int_len * (max - mode));
-    }
-  }
-
-  return r;
-}
-
-doubles rtri_cpp2_old(int n, doubles min, doubles max, doubles mode)
-{
-  writable::doubles r(n);
-  bool has_nan = false;
-
-  for (int i = 0; i < n; i++)
-  {
-    if (min[i] >= max[i] || mode[i] > max[i] || min[i] > mode[i])
-    {
-      r[i] = NA_REAL;
-      has_nan = true;
-    }
-    else
-    {
-      r[i] = unif_rand();
-
-      if (r[i] < (mode[i] - min[i]) / (max[i] - min[i]))
+      if (min[i] >= max[i] || mode[i] >= max[i] || min[i] >= mode[i])
       {
-        r[i] = min[i] + sqrt(r[i] * (max[i] - min[i]) * (mode[i] - min[i]));
+        mg[i] = NA_REAL;
+        has_nan = true;
       }
-      else // if (r[i] >= (mode[i] - min[i]) / (max[i] - min[i]))
+      else
       {
-        r[i] = max[i] - sqrt((1.0 - r[i]) * (max[i] - min[i]) *
-          (max[i] - mode[i]));
+        mg[i] = mgtri_cpp_internal(t[i], min[i], max[i], mode[i], has_nan);
       }
     }
   }
 
-  if (has_nan)
-  {
-    cpp11::warning("NaN(s) produced.");
-  }
+  if (has_nan) warning("NaN(s) produced.");
 
-  return r;
-}
-
-[[cpp11::register]]
-doubles mgtri_cpp(doubles t, double min, double max, double mode)
-{
-  int n = t.size();
-  writable::doubles m(n);
-
-  if (min >= max || mode >= max || min >= mode)
-  {
-    for (int i = 0; i < n; i++)
-    {
-      m[i] = NA_REAL;
-    }
-
-    warning("NaN(s) produced.");
-
-    return m;
-  }
-
-  bool has_nan = false;
-
-  for (int i = 0; i < n; i++)
-  {
-    if (t[i] == 0.0)
-    {
-      m[i] = NA_REAL;
-      has_nan = true;
-    }
-    else
-    {
-      m[i] = 2.0 * ((max - mode) * exp(min * t[i]) - (max - min) * exp(mode * t[i]) + (mode - min) * exp(max * t[i])) /
-        ((max - min) * (mode - min) * (max - mode) *
-          pow(t[i], 2));
-    }
-  }
-
-  if (has_nan)
-  {
-    cpp11::warning("NaN(s) produced.");
-  }
-
-  return m;
-}
-
-[[cpp11::register]]
-doubles mgtri_cpp2(doubles t, doubles min, doubles max, doubles mode)
-{
-  int n = t.size();
-  bool has_nan = false;
-  writable::doubles m(n);
-
-  for (int i = 0; i < n; i++)
-  {
-    if (t[i] == 0.0 ||
-        min[i] >= max[i] || mode[i] >= max[i] || min[i] >= mode[i])
-    {
-      m[i] = NA_REAL;
-      has_nan = true;
-    }
-    else
-    {
-      m[i] = 2.0 * ((max[i] - mode[i]) * exp(min[i] * t[i]) - (max[i] - min[i]) * exp(mode[i] * t[i]) + (mode[i] - min[i]) * exp(max[i] * t[i])) /
-        ((max[i] - min[i]) * (mode[i] - min[i]) * (max[i] - mode[i]) *
-          pow(t[i], 2));
-    }
-  }
-
-  if (has_nan)
-  {
-    cpp11::warning("NaN(s) produced.");
-  }
-
-  return m;
+  return mg;
 }
 
 // NOTE: Will be implemented when cpp11 has complex vector class
+//
 // ComplexVector ctri_cpp(NumericVector t, double min, double max, double mode)
 // {
 //   int n = t.size();

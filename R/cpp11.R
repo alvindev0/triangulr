@@ -16,12 +16,8 @@ rtri_cpp <- function(n, min, max, mode, is_scalar) {
   .Call(`_triangulr_rtri_cpp`, n, min, max, mode, is_scalar)
 }
 
-mgtri_cpp <- function(t, min, max, mode) {
-  .Call(`_triangulr_mgtri_cpp`, t, min, max, mode)
-}
-
-mgtri_cpp2 <- function(t, min, max, mode) {
-  .Call(`_triangulr_mgtri_cpp2`, t, min, max, mode)
+mgtri_cpp <- function(t, min, max, mode, is_scalar) {
+  .Call(`_triangulr_mgtri_cpp`, t, min, max, mode, is_scalar)
 }
 
 estri_cpp <- function(p, min, max, mode, lower_tail, log_p) {
