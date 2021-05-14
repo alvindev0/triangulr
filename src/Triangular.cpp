@@ -160,9 +160,8 @@ doubles ptri_cpp(
 
 double qtri_cpp_internal(
     double p, double min, double max, double mode, bool is_lower_tail,
-    bool is_log_p, bool &has_nan)
+    bool is_log_p, double int_len, bool &has_nan)
 {
-  double int_len = max - min;
   double q = is_log_p ? exp(p) : p;
 
   if (!is_lower_tail) q = 1.0 - q;
@@ -205,10 +204,13 @@ doubles qtri_cpp(
       return q;
     }
 
+    double int_len = max[0] - min[0];
+
     for (int i = 0; i < n; i++)
     {
       q[i] = qtri_cpp_internal(
-        p[i], min[0], max[0], mode[0], is_lower_tail, is_log_p, has_nan);
+        p[i], min[0], max[0], mode[0], is_lower_tail, is_log_p, int_len,
+        has_nan);
     }
   }
   else
@@ -223,7 +225,8 @@ doubles qtri_cpp(
       else
       {
         q[i] = qtri_cpp_internal(
-          p[i], min[i], max[i], mode[i], is_lower_tail, is_log_p, has_nan);
+          p[i], min[i], max[i], mode[i], is_lower_tail, is_log_p,
+          max[i] - min[i], has_nan);
       }
     }
   }
