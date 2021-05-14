@@ -12,12 +12,8 @@ qtri_cpp <- function(p, min, max, mode, is_lower_tail, is_log_p, is_scalar) {
   .Call(`_triangulr_qtri_cpp`, p, min, max, mode, is_lower_tail, is_log_p, is_scalar)
 }
 
-rtri_cpp <- function(n, min, max, mode) {
-  .Call(`_triangulr_rtri_cpp`, n, min, max, mode)
-}
-
-rtri_cpp2 <- function(n, min, max, mode) {
-  .Call(`_triangulr_rtri_cpp2`, n, min, max, mode)
+rtri_cpp <- function(n, min, max, mode, is_scalar) {
+  .Call(`_triangulr_rtri_cpp`, n, min, max, mode, is_scalar)
 }
 
 mgtri_cpp <- function(t, min, max, mode) {

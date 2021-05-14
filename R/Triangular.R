@@ -256,7 +256,7 @@ rtri <- function(n,
   }
 
   if (is_scalar(min, max, mode)) {
-    rtri_cpp(n, min, max, mode)
+    rtri_cpp(n, min, max, mode, TRUE)
   } else {
     n <- as.integer(n)
     tryCatch({
@@ -264,7 +264,7 @@ rtri <- function(n,
     }, error = function(c) {
       cnd_signal(tri_error_recycle("n", n, min, max, mode, value = TRUE))
     })
-    rtri_cpp2(n, params[[1]], params[[2]], params[[3]])
+    rtri_cpp(n, params[[1]], params[[2]], params[[3]], FALSE)
   }
 }
 

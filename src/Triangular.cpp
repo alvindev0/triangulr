@@ -233,8 +233,70 @@ doubles qtri_cpp(
   return q;
 }
 
+double rtri_cpp_internal(double min, double max, double mode, double int_len)
+{
+  double r = unif_rand();
+
+  if (r < (mode - min) / int_len)
+  {
+    return min + sqrt(r * int_len * (mode - min));
+  }
+  else // if (r >= (mode - min) / int_len)
+  {
+    return max - sqrt((1.0 - r) * int_len * (max - mode));
+  }
+}
+
 [[cpp11::register]]
-doubles rtri_cpp(int n, double min, double max, double mode)
+doubles rtri_cpp(int n, doubles min, doubles max, doubles mode, bool is_scalar)
+{
+  writable::doubles r(n);
+
+  if (is_scalar)
+  {
+    if (min[0] >= max[0] || mode[0] > max[0] || min[0] > mode[0])
+    {
+      for (int i = 0; i < n; i++)
+      {
+        r[i] = NA_REAL;
+      }
+
+      warning("NaN(s) produced.");
+
+      return r;
+    }
+
+    double int_len = max[0] - min[0];
+
+    for (int i = 0; i < n; i++)
+    {
+      r[i] = rtri_cpp_internal(min[0], max[0], mode[0], int_len);
+    }
+  }
+  else
+  {
+    bool has_nan = false;
+
+    for (int i = 0; i < n; i++)
+    {
+      if (min[i] >= max[i] || mode[i] > max[i] || min[i] > mode[i])
+      {
+        r[i] = NA_REAL;
+        has_nan = true;
+      }
+      else
+      {
+        r[i] = rtri_cpp_internal(min[i], max[i], mode[i], max[i] - min[i]);
+      }
+    }
+
+    if (has_nan) warning("NaN(s) produced.");
+  }
+
+  return r;
+}
+
+doubles rtri_cpp_old(int n, double min, double max, double mode)
 {
   writable::doubles r(n);
 
@@ -269,8 +331,7 @@ doubles rtri_cpp(int n, double min, double max, double mode)
   return r;
 }
 
-[[cpp11::register]]
-doubles rtri_cpp2(int n, doubles min, doubles max, doubles mode)
+doubles rtri_cpp2_old(int n, doubles min, doubles max, doubles mode)
 {
   writable::doubles r(n);
   bool has_nan = false;
