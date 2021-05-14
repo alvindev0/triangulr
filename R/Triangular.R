@@ -4,12 +4,10 @@
 #'
 #' @description These functions provide information about the triangular
 #'  distribution on the interval from \code{min} to \code{max} with mode equal
-#'  to \code{mode}.
-# \code{ctri} gives the characteristic function,
-#'  \code{dtri} gives the density function, \code{estri} gives the expected
-#'  shortfall, \code{mgtri} gives the moment generating function, \code{ptri}
-#'  gives the distribution function, \code{qtri} gives the quantile function,
-#'  and \code{rtri} gives the random variate generator.
+#'  to \code{mode}. \code{dtri} gives the density function, \code{estri} gives
+#'  the expected shortfall, \code{mgtri} gives the moment generating function,
+#'  \code{ptri} gives the distribution function, \code{qtri} gives the quantile
+#'  function, and \code{rtri} gives the random variate generator.
 #'
 #' @param x,q Vector of quantiles.
 #' @param p Vector of probabilities.
@@ -45,7 +43,6 @@
 #'  the default arguments.
 #'
 #' @return
-# \code{ctri} gives the characteristic function,
 #'  \code{dtri} gives the density function,
 #'  \code{estri} gives the expected shortfall,
 #'  \code{mgtri} gives the moment generating function,
@@ -54,11 +51,10 @@
 #'  \code{rtri} gives the random variate generator.
 #'
 #'  The numerical arguments other than \code{n} with values of size one are
-#'  recycled to the length of \code{t} for
-# \code{ctri} and
-#'  \code{mgtri}, the length of \code{x} for \code{dtri}, the length of \code{p}
-#'  for \code{estri} and \code{qtri}, the length of \code{q} for \code{ptri},
-#'  and \code{n} for \code{rtri}. This determines the length of the result.
+#'  recycled to the length of \code{t} for \code{mgtri}, the length of \code{x}
+#'  for \code{dtri}, the length of \code{p} for \code{estri} and \code{qtri},
+#'  the length of \code{q} for \code{ptri}, and \code{n} for \code{rtri}. This
+#'  determines the length of the result.
 #'
 #'  The logical arguments \code{log}, \code{lower_tail}, and \code{log_p} must
 #'  be of length one each.
@@ -108,13 +104,6 @@
 #'               mode = c(0.5, 0.5, 0.5))
 #' all.equal(r, rec_r)
 #'
-#' r <- rtri(
-#'   n,
-#'   min = 0,
-#'   max = 1,
-#'   mode = 0.5
-#' )
-#'
 #' # Log quantiles
 #' x <- c(0, 0.5, 1)
 #' log_d <- dtri(x, log = TRUE)
@@ -138,7 +127,6 @@
 #' upper_q <- ptri(1 - p, lower_tail = FALSE)
 #' q <- ptri(p, lower_tail = TRUE)
 #' all.equal(upper_q, q)
-#'
 #' p <- c(0, 0.5, 1)
 #' log_q <- qtri(log(p), log_p = TRUE)
 #' q <- qtri(p, log_p = FALSE)
@@ -147,10 +135,6 @@
 #' # Moment generating function
 #' t <- c(1, 2, 3)
 #' mgtri(t)
-#'
-# Characteristic function
-# t <- c(1, 2, 3)
-# ctri(t)
 #'
 #' # Expected Shortfall
 #' p <- c(0.1, 0.5, 1)
@@ -165,24 +149,13 @@ dtri <- function(x,
                  max = 1,
                  mode = 0.5,
                  log = FALSE) {
-  if (!is_numeric(x, min, max, mode)) {
-    cnd_signal(tri_error_numeric("x", x, min, max, mode))
+  check_numeric(x, min, max, mode)
+  check_scalar_lgl(log)
+  is_scalar_params <- is_scalar(min, max, mode)
+  if (!is_scalar_params) {
+    try_recycle(x, min, max, mode)
   }
-
-  if (!is_scalar_logical(log)) {
-    cnd_signal(tri_error_logical(log))
-  }
-
-  if (is_scalar(min, max, mode)) {
-    dtri_cpp(x, min, max, mode, log, TRUE)
-  } else {
-    tryCatch({
-      params <- vec_recycle_common(min, max, mode, .size = length(x))
-    }, error = function(c) {
-      cnd_signal(tri_error_recycle("x", x, min, max, mode))
-    })
-    dtri_cpp(x, params[[1]], params[[2]], params[[3]], log, FALSE)
-  }
+  dtri_cpp(x, min, max, mode, log, is_scalar_params)
 }
 
 #' @rdname Triangular
@@ -193,24 +166,13 @@ ptri <- function(q,
                  mode = 0.5,
                  lower_tail = TRUE,
                  log_p = FALSE) {
-  if (!is_numeric(q, min, max, mode)) {
-    cnd_signal(tri_error_numeric("q", q, min, max, mode))
+  check_numeric(q, min, max, mode)
+  check_scalar_lgl(lower_tail, log_p)
+  is_scalar_params <- is_scalar(min, max, mode)
+  if (!is_scalar_params) {
+    try_recycle(q, min, max, mode)
   }
-
-  if (!is_scalar_logical(lower_tail, log_p)) {
-    cnd_signal(tri_error_logical2(lower_tail, log_p))
-  }
-
-  if (is_scalar(min, max, mode)) {
-    ptri_cpp(q, min, max, mode, lower_tail, log_p, TRUE)
-  } else {
-    tryCatch({
-      params <- vec_recycle_common(min, max, mode, .size = length(q))
-    }, error = function(c) {
-      cnd_signal(tri_error_recycle("q", q, min, max, mode))
-    })
-    ptri_cpp(q, params[[1]], params[[2]], params[[3]], lower_tail, log_p, FALSE)
-  }
+  ptri_cpp(q, min, max, mode, lower_tail, log_p, is_scalar_params)
 }
 
 #' @rdname Triangular
@@ -221,24 +183,13 @@ qtri <- function(p,
                  mode = 0.5,
                  lower_tail = TRUE,
                  log_p = FALSE) {
-  if (!is_numeric(p, min, max, mode)) {
-    cnd_signal(tri_error_numeric("p", p, min, max, mode))
+  check_numeric(p, min, max, mode)
+  check_scalar_lgl(lower_tail, log_p)
+  is_scalar_params <- is_scalar(min, max, mode)
+  if (!is_scalar_params) {
+    try_recycle(p, min, max, mode)
   }
-
-  if (!is_scalar_logical(lower_tail, log_p)) {
-    cnd_signal(tri_error_logical2(lower_tail, log_p))
-  }
-
-  if (is_scalar(min, max, mode)) {
-    qtri_cpp(p, min, max, mode, lower_tail, log_p, TRUE)
-  } else {
-    tryCatch({
-      params <- vec_recycle_common(min, max, mode, .size = length(p))
-    }, error = function(c) {
-      cnd_signal(tri_error_recycle("p", p, min, max, mode))
-    })
-    qtri_cpp(p, params[[1]], params[[2]], params[[3]], lower_tail, log_p, FALSE)
-  }
+  qtri_cpp(p, min, max, mode, lower_tail, log_p, is_scalar_params)
 }
 
 #' @rdname Triangular
@@ -247,25 +198,16 @@ rtri <- function(n,
                  min = 0,
                  max = 1,
                  mode = 0.5) {
-  if (!is_numeric(n, min, max, mode)) {
-    cnd_signal(tri_error_numeric("n", n, min, max, mode))
-  }
-
+  check_numeric(n, min, max, mode)
   if (length(n) != 1 || n < 1) {
     cnd_signal(tri_error_n(n))
   }
-
-  if (is_scalar(min, max, mode)) {
-    rtri_cpp(n, min, max, mode, TRUE)
-  } else {
-    n <- as.integer(n)
-    tryCatch({
-      params <- vec_recycle_common(min, max, mode, .size = n)
-    }, error = function(c) {
-      cnd_signal(tri_error_recycle("n", n, min, max, mode, value = TRUE))
-    })
-    rtri_cpp(n, params[[1]], params[[2]], params[[3]], FALSE)
+  n <- as.integer(n)
+  is_scalar_params <- is_scalar(min, max, mode)
+  if (!is_scalar_params) {
+    try_recycle(n, min, max, mode, .f = c)
   }
+  rtri_cpp(n, min, max, mode, is_scalar_params)
 }
 
 #' @rdname Triangular
@@ -274,42 +216,13 @@ mgtri <- function(t,
                   min = 0,
                   max = 1,
                   mode = 0.5) {
-  if (!is_numeric(t, min, max, mode)) {
-    cnd_signal(tri_error_numeric("t", t, min, max, mode))
+  check_numeric(t, min, max, mode)
+  is_scalar_params <- is_scalar(min, max, mode)
+  if (!is_scalar_params) {
+    try_recycle(t, min, max, mode)
   }
-
-  if (is_scalar(min, max, mode)) {
-    mgtri_cpp(t, min, max, mode, TRUE)
-  } else {
-    tryCatch({
-      params <- vec_recycle_common(min, max, mode, .size = length(t))
-    }, error = function(c) {
-      cnd_signal(tri_error_recycle("t", t, min, max, mode))
-    })
-    mgtri_cpp(t, params[[1]], params[[2]], params[[3]], FALSE)
-  }
+  mgtri_cpp(t, min, max, mode, is_scalar_params)
 }
-
-# NOTE: Will be implemented when cpp11 has complex vector class
-# ctri <- function(t,
-#                  min = 0,
-#                  max = 1,
-#                  mode = 0.5) {
-#   if (!is_numeric(t, min, max, mode)) {
-#     cnd_signal(tri_error_numeric("t", t, min, max, mode))
-#   }
-#
-#   if (is_scalar(min, max, mode)) {
-#     ctri_cpp(t, min, max, mode)
-#   } else {
-#     tryCatch({
-#       params <- vec_recycle_common(min, max, mode, .size = length(t))
-#     }, error = function(c) {
-#       cnd_signal(tri_error_recycle("t", t, min, max, mode))
-#     })
-#     ctri_cpp2(t, params[[1]], params[[2]], params[[3]])
-#   }
-# }
 
 #' @rdname Triangular
 #' @export
@@ -319,23 +232,11 @@ estri <- function(p,
                   mode = 0.5,
                   lower_tail = TRUE,
                   log_p = FALSE) {
-  if (!is_numeric(p, min, max, mode)) {
-    cnd_signal(tri_error_numeric("p", p, min, max, mode))
+  check_numeric(p, min, max, mode)
+  check_scalar_lgl(lower_tail, log_p)
+  is_scalar_params <- is_scalar(min, max, mode)
+  if (!is_scalar_params) {
+    try_recycle(p, min, max, mode)
   }
-
-  if (!is_scalar_logical(lower_tail, log_p)) {
-    cnd_signal(tri_error_logical2(lower_tail, log_p))
-  }
-
-  if (is_scalar(min, max, mode)) {
-    estri_cpp(p, min, max, mode, lower_tail, log_p, TRUE)
-  } else {
-    tryCatch({
-      params <- vec_recycle_common(min, max, mode, .size = length(p))
-    }, error = function(c) {
-      cnd_signal(tri_error_recycle("p", p, min, max, mode))
-    })
-    estri_cpp(p, params[[1]], params[[2]], params[[3]], lower_tail, log_p,
-              FALSE)
-  }
+  estri_cpp(p, min, max, mode, lower_tail, log_p, is_scalar_params)
 }

@@ -1,4 +1,5 @@
-tri_error_numeric <- function(f_nm, f, min, max, mode) {
+tri_error_numeric <- function(f, min, max, mode) {
+  f_nm <- deparse(substitute(f))
   title <- paste0("Arguments ",
                   f_nm,
                   ", min, max, and mode must have numeric values.")
@@ -32,25 +33,25 @@ tri_error_logical2 <- function(lower_tail, log_p) {
   tri_error(msg)
 }
 
-tri_error_recycle <-
-  function(f_nm, f, min, max, mode, value = FALSE) {
-    title <- paste0("Arguments ",
-                    f_nm,
-                    ", min, max, and mode must have compatible sizes.")
-    msg <- tri_error_bullets(
-      title,
-      if (value) {
-        tri_error_bullet("Value", c, f, f_nm)
-      } else {
-        tri_error_bullet("Size", length, f, f_nm)
-      },
-      tri_error_bullet("Size", length, min, "min"),
-      tri_error_bullet("Size", length, max, "max"),
-      tri_error_bullet("Size", length, mode, "mode"),
-      i = "Only min, max, and mode values of size one are recycled."
-    )
-    tri_error(msg)
-  }
+tri_error_recycle <- function(f, min, max, mode, value = FALSE) {
+  f_nm <- deparse(substitute(f))
+  title <- paste0("Arguments ",
+                  f_nm,
+                  ", min, max, and mode must have compatible sizes.")
+  msg <- tri_error_bullets(
+    title,
+    if (value) {
+      tri_error_bullet("Value", c, f, f_nm)
+    } else {
+      tri_error_bullet("Size", length, f, f_nm)
+    },
+    tri_error_bullet("Size", length, min, "min"),
+    tri_error_bullet("Size", length, max, "max"),
+    tri_error_bullet("Size", length, mode, "mode"),
+    i = "Only min, max, and mode values of size one are recycled."
+  )
+  tri_error(msg)
+}
 
 tri_error_n <- function(n) {
   msg <- tri_error_bullets(

@@ -1,6 +1,8 @@
 # `triangulr` 1.1.0.9000
 
+- Replaced Rcpp dependency in favor of cpp11.
 - Removed dqrng dependency.
+- Refactored distribution functions.
 
 # `triangulr` 1.1.0
 

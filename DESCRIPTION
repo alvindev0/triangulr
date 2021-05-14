@@ -1,18 +1,15 @@
 Package: triangulr
 Title: High-Performance Triangular Distribution Functions
 Version: 1.1.0.9000
-Authors@R: 
-    person(given = "Alvin",
-           family = "Nursalim",
-           role = c("aut", "cre"),
-           email = "irkaalv@gmail.com")
+Authors@R: person(given = "Alvin", family = "Nursalim", role = c("aut", "cre"),
+                  email = "irkaalv@gmail.com")
 Description: A collection of high-performance functions for the triangular
     distribution that consists of the probability density function, cumulative
     distribution function, quantile function, random variate generator, moment
     generating function, characteristic function, and expected shortfall
     function. References: Samuel Kotz, Johan Ren Van Dorp (2004)
-    <doi:10.1142/5720> and Acerbi, Carlo and
-    Tasche, Dirk. (2002) <doi:10.1111/1468-0300.00091>.
+    <doi:10.1142/5720> and Acerbi, Carlo and Tasche, Dirk. (2002)
+    <doi:10.1111/1468-0300.00091>.
 License: MIT + file LICENSE
 URL: https://github.com/irkaal/triangulr/ https://irkaal.github.io/triangulr/
 BugReports: https://github.com/irkaal/triangulr/issues
@@ -21,13 +18,8 @@ Encoding: UTF-8
 ByteCompile: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-Collate:
-    'cpp11.R'
-    'error.R'
-    'Triangular.R'
+Collate: 'check.R' 'cpp11.R' 'error.R' 'Triangular.R'
 LinkingTo: cpp11
 SystemRequirements: C++11
-Imports:
-    rlang (>= 0.4.11),
-    vctrs (>= 0.3.8)
+Imports: rlang (>= 0.4.11), vctrs (>= 0.3.8)
 Suggests: testthat (>= 3.0.2)
