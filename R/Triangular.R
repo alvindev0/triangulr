@@ -202,14 +202,14 @@ ptri <- function(q,
   }
 
   if (is_scalar(min, max, mode)) {
-    ptri_cpp(q, min, max, mode, lower_tail, log_p)
+    ptri_cpp(q, min, max, mode, lower_tail, log_p, TRUE)
   } else {
     tryCatch({
       params <- vec_recycle_common(min, max, mode, .size = length(q))
     }, error = function(c) {
       cnd_signal(tri_error_recycle("q", q, min, max, mode))
     })
-    ptri_cpp2(q, params[[1]], params[[2]], params[[3]], lower_tail, log_p)
+    ptri_cpp(q, params[[1]], params[[2]], params[[3]], lower_tail, log_p, FALSE)
   }
 }
 

@@ -78,110 +78,81 @@ doubles dtri_cpp(
   return d;
 }
 
-[[cpp11::register]]
-doubles ptri_cpp(
-    doubles q, double min, double max, double mode, bool lower_tail, bool log_p)
+double ptri_cpp_internal(
+    double q, double min, double max, double mode, bool is_lower_tail,
+    bool is_log_p)
 {
-  int n = q.size();
-  writable::doubles p(n);
+  double p;
 
-  if (min >= max || mode > max || min > mode)
+  if (q <= min)
   {
-    for (int i = 0; i < n; i++)
-    {
-      p[i] = NA_REAL;
-    }
-
-    cpp11::warning("NaN(s) produced.");
-
-    return p;
+    p = 0.0;
+  }
+  else if (min < q && q <= mode)
+  {
+    p = pow((q - min), 2) / ((max - min) * (mode - min));
+  }
+  else if (mode < q && q < max)
+  {
+    p = 1.0 - pow((max - q), 2) / ((max - min) * (max - mode));
+  }
+  else // if (max <= q)
+  {
+    p = 1.0;
   }
 
-  for (int i = 0; i < n; i++)
-  {
-    if (q[i] <= min)
-    {
-      p[i] = 0.0;
-    }
-    else if (min < q[i] && q[i] <= mode)
-    {
-      p[i] = pow((q[i] - min), 2) / ((max - min) * (mode - min));
-    }
-    else if (mode < q[i] && q[i] < max)
-    {
-      p[i] = 1.0 - pow((max - q[i]), 2) / ((max - min) * (max - mode));
-    }
-    else // if (max <= q[i])
-    {
-      p[i] = 1.0;
-    }
+  if (!is_lower_tail) p = 1.0 - p;
 
-    // TODO: This is inefficient
-    if (!lower_tail)
-    {
-      p[i] = 1.0 - p[i];
-    }
-
-    // TODO: This is inefficient
-    if (log_p)
-    {
-      p[i] = std::log(p[i]);
-    }
-  }
-
-  return p;
+  return is_log_p ? log(p) : p;
 }
 
 [[cpp11::register]]
-doubles ptri_cpp2(
-    doubles q, doubles min, doubles max, doubles mode, bool lower_tail,
-    bool log_p)
+doubles ptri_cpp(
+    doubles q, doubles min, doubles max, doubles mode, bool is_lower_tail,
+    bool is_log_p, bool is_scalar)
 {
   int n = q.size();
-  bool has_nan = false;
   writable::doubles p(n);
 
-  for (int i = 0; i < n; i++)
+  if (is_scalar)
   {
-    if (min[i] >= max[i] || mode[i] > max[i] || min[i] > mode[i])
+    if (min[0] >= max[0] || mode[0] > max[0] || min[0] > mode[0])
     {
-      p[i] = NA_REAL;
-      has_nan = true;
-    }
-    else if (q[i] <= min[i])
-    {
-      p[i] = 0.0;
-    }
-    else if (min[i] < q[i] && q[i] <= mode[i])
-    {
-      p[i] = pow((q[i] - min[i]), 2) / ((max[i] - min[i]) * (mode[i] - min[i]));
-    }
-    else if (mode[i] < q[i] && q[i] < max[i])
-    {
-      p[i] = 1.0 - pow((max[i] - q[i]), 2) /
-        ((max[i] - min[i]) * (max[i] - mode[i]));
-    }
-    else // if (max[i] <= q[i])
-    {
-      p[i] = 1.0;
+      for (int i = 0; i < n; i++)
+      {
+        p[i] = NA_REAL;
+      }
+
+      warning("NaN(s) produced.");
+
+      return p;
     }
 
-    // TODO: This is inefficient
-    if (!lower_tail)
+    for (int i = 0; i < n; i++)
     {
-      p[i] = 1.0 - p[i];
-    }
-
-    // TODO: This is inefficient
-    if (log_p)
-    {
-      p[i] = std::log(p[i]);
+      p[i] = ptri_cpp_internal(
+        q[i], min[0], max[0], mode[0], is_lower_tail, is_log_p);
     }
   }
-
-  if (has_nan)
+  else
   {
-    cpp11::warning("NaN(s) produced.");
+    bool has_nan = false;
+
+    for (int i = 0; i < n; i++)
+    {
+      if (min[i] >= max[i] || mode[i] > max[i] || min[i] > mode[i])
+      {
+        p[i] = NA_REAL;
+        has_nan = true;
+      }
+      else
+      {
+        p[i] = ptri_cpp_internal(
+          q[i], min[i], max[i], mode[i], is_lower_tail, is_log_p);
+      }
+    }
+
+    if (has_nan) warning("NaN(s) produced.");
   }
 
   return p;
@@ -449,7 +420,6 @@ doubles mgtri_cpp2(doubles t, doubles min, doubles max, doubles mode)
 }
 
 // NOTE: Will be implemented when cpp11 has complex vector class
-// [[cpp11::register]]
 // ComplexVector ctri_cpp(NumericVector t, double min, double max, double mode)
 // {
 //   int n = t.size();
@@ -491,9 +461,7 @@ doubles mgtri_cpp2(doubles t, doubles min, doubles max, doubles mode)
 //
 //   return c;
 // }
-
-// NOTE: Will be implemented when cpp11 has complex vector class
-// [[cpp11::register]]
+//
 // ComplexVector ctri_cpp2(
 //     NumericVector t, NumericVector min, NumericVector max, NumericVector mode)
 // {
