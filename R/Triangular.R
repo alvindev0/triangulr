@@ -313,29 +313,29 @@ mgtri <- function(t,
 
 #' @rdname Triangular
 #' @export
-estri <-
-  function(p,
-           min = 0,
-           max = 1,
-           mode = 0.5,
-           lower_tail = TRUE,
-           log_p = FALSE) {
-    if (!is_numeric(p, min, max, mode)) {
-      cnd_signal(tri_error_numeric("p", p, min, max, mode))
-    }
-
-    if (!is_scalar_logical(lower_tail, log_p)) {
-      cnd_signal(tri_error_logical2(lower_tail, log_p))
-    }
-
-    if (is_scalar(min, max, mode)) {
-      estri_cpp(p, min, max, mode, lower_tail, log_p)
-    } else {
-      tryCatch({
-        params <- vec_recycle_common(min, max, mode, .size = length(p))
-      }, error = function(c) {
-        cnd_signal(tri_error_recycle("p", p, min, max, mode))
-      })
-      estri_cpp2(p, params[[1]], params[[2]], params[[3]], lower_tail, log_p)
-    }
+estri <- function(p,
+                  min = 0,
+                  max = 1,
+                  mode = 0.5,
+                  lower_tail = TRUE,
+                  log_p = FALSE) {
+  if (!is_numeric(p, min, max, mode)) {
+    cnd_signal(tri_error_numeric("p", p, min, max, mode))
   }
+
+  if (!is_scalar_logical(lower_tail, log_p)) {
+    cnd_signal(tri_error_logical2(lower_tail, log_p))
+  }
+
+  if (is_scalar(min, max, mode)) {
+    estri_cpp(p, min, max, mode, lower_tail, log_p, TRUE)
+  } else {
+    tryCatch({
+      params <- vec_recycle_common(min, max, mode, .size = length(p))
+    }, error = function(c) {
+      cnd_signal(tri_error_recycle("p", p, min, max, mode))
+    })
+    estri_cpp(p, params[[1]], params[[2]], params[[3]], lower_tail, log_p,
+              FALSE)
+  }
+}

@@ -444,115 +444,81 @@ doubles mgtri_cpp(
 //   return c;
 // }
 
-[[cpp11::register]]
-doubles estri_cpp(
-    doubles p, double min, double max, double mode, bool lower_tail, bool log_p)
+double estri_cpp_internal(
+    double p, double min, double max, double mode, bool is_lower_tail,
+    bool is_log_p, bool &has_nan)
 {
-  int n = p.size();
-  writable::doubles es(n);
+  double es = is_log_p ? exp(p) : p;
 
-  if (min >= max || mode > max || min > mode)
+  if (!is_lower_tail) es = 1.0 - es;
+
+  if (es <= 0.0 || es > 1.0)
   {
-    for (int i = 0; i < n; i++)
-    {
-      es[i] = NA_REAL;
-    }
-
-    cpp11::warning("NaN(s) produced.");
-
-    return es;
+    has_nan = true;
+    return NA_REAL;
+  }
+  else if (es < (mode - min) / (max - min))
+  {
+    return ((es * min) +
+            (2.0 / 3.0) * sqrt((max - min) * (mode - min)) * pow(es, 1.5)) /
+              es;
   }
 
-  bool has_nan = false;
+  double b = (mode - min) / (max - min);
 
-  for (int i = 0; i < n; i++)
-  {
-    if (log_p)
-    {
-      es[i] = std::exp(p[i]);
-    }
-    else
-    {
-      es[i] = p[i];
-    }
-
-    if (!lower_tail)
-    {
-      es[i] = 1.0 - es[i];
-    }
-
-    if (es[i] == 0.0 || es[i] < 0.0 || es[i] > 1.0)
-    {
-      es[i] = NA_REAL;
-      has_nan = true;
-    }
-    else if (es[i] < (mode - min) / (max - min))
-    {
-      es[i] = ((es[i] * min) + (2.0 / 3.0) * sqrt((max - min) * (mode - min)) *
-        pow(es[i], 1.5)) /
-          es[i];
-    }
-    else // if (es[i] >= (mode - min) / (max - min))
-    {
-      double b = (mode - min) / (max - min);
-      es[i] = ((b * min) + (2.0 / 3.0) * sqrt((max - min) * (mode - min)) * pow(b, 1.5) + (((es[i] * max) + (2.0 / 3.0) * sqrt((max - min) * (max - mode)) * pow((1.0 - es[i]), 1.5)) - ((b * max) + (2.0 / 3.0) * sqrt((max - min) * (max - mode)) * pow((1.0 - b), 1.5)))) / es[i];
-    }
-  }
-
-  if (has_nan)
-  {
-    cpp11::warning("NaN(s) produced.");
-  }
-
-  return es;
+  return ((b * min) +
+          (2.0 / 3.0) * sqrt((max - min) * (mode - min)) * pow(b, 1.5) +
+          (((es * max) + (2.0 / 3.0) * sqrt((max - min) * (max - mode)) * pow((1.0 - es), 1.5)) - ((b * max) + (2.0 / 3.0) * sqrt((max - min) * (max - mode)) * pow((1.0 - b), 1.5)))) /
+            es;
 }
 
 [[cpp11::register]]
-doubles estri_cpp2(
-    doubles p, doubles min, doubles max, doubles mode, bool lower_tail,
-    bool log_p)
+doubles estri_cpp(
+    doubles p, doubles min, doubles max, doubles mode, bool is_lower_tail,
+    bool is_log_p, bool is_scalar)
 {
   int n = p.size();
-  bool has_nan = false;
   writable::doubles es(n);
+  bool has_nan = false;
 
-  for (int i = 0; i < n; i++)
+  if (is_scalar)
   {
-    if (log_p)
+    if (min[0] >= max[0] || mode[0] > max[0] || min[0] > mode[0])
     {
-      es[i] = std::exp(p[i]);
-    }
-    else
-    {
-      es[i] = p[i];
+      for (int i = 0; i < n; i++)
+      {
+        es[i] = NA_REAL;
+      }
+
+      warning("NaN(s) produced.");
+
+      return es;
     }
 
-    if (!lower_tail)
+    for (int i = 0; i < n; i++)
     {
-      es[i] = 1.0 - es[i];
+      es[i] = estri_cpp_internal(
+        p[i], min[0], max[0], mode[0], is_lower_tail, is_log_p, has_nan);
     }
-
-    if (min[i] >= max[i] || mode[i] > max[i] || min[i] > mode[i] ||
-        es[i] <= 0.0 || es[i] > 1.0)
+  }
+  else
+  {
+    for (int i = 0; i < n; i++)
     {
-      es[i] = NA_REAL;
-      has_nan = true;
-    }
-    else if (es[i] < (mode[i] - min[i]) / (max[i] - min[i]))
-    {
-      es[i] = ((es[i] * min[i]) + (2.0 / 3.0) * sqrt((max[i] - min[i]) * (mode[i] - min[i])) * pow(es[i], 1.5)) / es[i];
-    }
-    else // if (es[i] >= (mode - min) / (max - min))
-    {
-      double b = (mode[i] - min[i]) / (max[i] - min[i]);
-      es[i] = ((b * min[i]) + (2.0 / 3.0) * sqrt((max[i] - min[i]) * (mode[i] - min[i])) * pow(b, 1.5) + (((es[i] * max[i]) + (2.0 / 3.0) * sqrt((max[i] - min[i]) * (max[i] - mode[i])) * pow((1.0 - es[i]), 1.5)) - ((b * max[i]) + (2.0 / 3.0) * sqrt((max[i] - min[i]) * (max[i] - mode[i])) * pow((1.0 - b), 1.5)))) / es[i];
+      if (min[i] >= max[i] || mode[i] > max[i] || min[i] > mode[i])
+      {
+        es[i] = NA_REAL;
+        has_nan = true;
+      }
+      else
+      {
+        es[i] = estri_cpp_internal(
+          p[i], min[i], max[i], mode[i], is_lower_tail, is_log_p, has_nan);
+      }
     }
   }
 
-  if (has_nan)
-  {
-    cpp11::warning("NaN(s) produced.");
-  }
+  if (has_nan) warning("NaN(s) produced.");
 
   return es;
 }

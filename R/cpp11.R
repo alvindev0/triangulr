@@ -20,10 +20,6 @@ mgtri_cpp <- function(t, min, max, mode, is_scalar) {
   .Call(`_triangulr_mgtri_cpp`, t, min, max, mode, is_scalar)
 }
 
-estri_cpp <- function(p, min, max, mode, lower_tail, log_p) {
-  .Call(`_triangulr_estri_cpp`, p, min, max, mode, lower_tail, log_p)
-}
-
-estri_cpp2 <- function(p, min, max, mode, lower_tail, log_p) {
-  .Call(`_triangulr_estri_cpp2`, p, min, max, mode, lower_tail, log_p)
+estri_cpp <- function(p, min, max, mode, is_lower_tail, is_log_p, is_scalar) {
+  .Call(`_triangulr_estri_cpp`, p, min, max, mode, is_lower_tail, is_log_p, is_scalar)
 }
