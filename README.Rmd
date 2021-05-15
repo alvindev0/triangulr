@@ -114,15 +114,6 @@ rtri(n,
      min = c(0, 0, 0),
      max = 1,
      mode = 0.5)
-
-dqrng::dqset.seed(1)
-rtri(
-  n,
-  min = c(0, 0, 0),
-  max = 1,
-  mode = 0.5,
-  dqrng = TRUE
-)
 ```
 
 Using the moment generating function, [`mgtri()`](https://irkaal.github.io/triangulr/reference/Triangular.html).
@@ -139,22 +130,6 @@ mgtri(t,
       min = c(0, 0, 0),
       max = 1,
       mode = 0.5)
-```
-
-Using the characteristic function, [`ctri()`](https://irkaal.github.io/triangulr/reference/Triangular.html).
-
-```{r example_ctri}
-t <- c(1, 2, 3)
-
-ctri(t,
-     min = 0,
-     max = 1,
-     mode = 0.5)
-
-ctri(t,
-     min = c(0, 0, 0),
-     max = 1,
-     mode = 0.5)
 ```
 
 Using the expected shortfall function, [`estri()`](https://irkaal.github.io/triangulr/reference/Triangular.html).
