@@ -49,11 +49,10 @@
 <meta property="og:title" content="The Triangular Distribution — Triangular" />
 <meta property="og:description" content="These functions provide information about the triangular
 distribution on the interval from min to max with mode equal
-to mode. ctri gives the characteristic function, dtri
-gives the density function, estri gives the expected shortfall,
-mgtri gives the moment generating function, ptri gives the
-distribution function, qtri gives the quantile function, and
-rtri gives the random variate generator." />
+to mode. dtri gives the density function, estri gives
+the expected shortfall, mgtri gives the moment generating function,
+ptri gives the distribution function, qtri gives the quantile
+function, and rtri gives the random variate generator." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -86,7 +85,7 @@ rtri gives the random variate generator." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">triangulr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
       </span>
     </div>
 
@@ -94,7 +93,7 @@ rtri gives the random variate generator." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -108,7 +107,7 @@ rtri gives the random variate generator." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/irkaal/triangulr/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -126,40 +125,37 @@ rtri gives the random variate generator." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>The Triangular Distribution</h1>
-    <small class="dont-index">Source: <a href='https://github.com/irkaal/triangulr/blob/master/R/Triangular.R'><code>R/Triangular.R</code></a>, <a href='https://github.com/irkaal/triangulr/blob/master/R/ctri.R'><code>R/ctri.R</code></a>, <a href='https://github.com/irkaal/triangulr/blob/master/R/dtri.R'><code>R/dtri.R</code></a>, and 5 more</small>
+    <small class="dont-index">Source: <a href='https://github.com/irkaal/triangulr/blob/master/R/Triangular.R'><code>R/Triangular.R</code></a></small>
     <div class="hidden name"><code>Triangular.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>These functions provide information about the triangular
 distribution on the interval from <code>min</code> to <code>max</code> with mode equal
-to <code>mode</code>. <code>ctri</code> gives the characteristic function, <code>dtri</code>
-gives the density function, <code>estri</code> gives the expected shortfall,
-<code>mgtri</code> gives the moment generating function, <code>ptri</code> gives the
-distribution function, <code>qtri</code> gives the quantile function, and
-<code>rtri</code> gives the random variate generator.</p>
+to <code>mode</code>. <code>dtri</code> gives the density function, <code>estri</code> gives
+the expected shortfall, <code>mgtri</code> gives the moment generating function,
+<code>ptri</code> gives the distribution function, <code>qtri</code> gives the quantile
+function, and <code>rtri</code> gives the random variate generator.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ctri</span><span class='op'>(</span><span class='va'>t</span>, min <span class='op'>=</span> <span class='fl'>0</span>, max <span class='op'>=</span> <span class='fl'>1</span>, mode <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>
-
-<span class='fu'>dtri</span><span class='op'>(</span><span class='va'>x</span>, min <span class='op'>=</span> <span class='fl'>0</span>, max <span class='op'>=</span> <span class='fl'>1</span>, mode <span class='op'>=</span> <span class='fl'>0.5</span>, log <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-
-<span class='fu'>estri</span><span class='op'>(</span><span class='va'>p</span>, min <span class='op'>=</span> <span class='fl'>0</span>, max <span class='op'>=</span> <span class='fl'>1</span>, mode <span class='op'>=</span> <span class='fl'>0.5</span>, lower_tail <span class='op'>=</span> <span class='cn'>TRUE</span>, log_p <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-
-<span class='fu'>mgtri</span><span class='op'>(</span><span class='va'>t</span>, min <span class='op'>=</span> <span class='fl'>0</span>, max <span class='op'>=</span> <span class='fl'>1</span>, mode <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>dtri</span><span class='op'>(</span><span class='va'>x</span>, min <span class='op'>=</span> <span class='fl'>0</span>, max <span class='op'>=</span> <span class='fl'>1</span>, mode <span class='op'>=</span> <span class='fl'>0.5</span>, log <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
 <span class='fu'>ptri</span><span class='op'>(</span><span class='va'>q</span>, min <span class='op'>=</span> <span class='fl'>0</span>, max <span class='op'>=</span> <span class='fl'>1</span>, mode <span class='op'>=</span> <span class='fl'>0.5</span>, lower_tail <span class='op'>=</span> <span class='cn'>TRUE</span>, log_p <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
 <span class='fu'>qtri</span><span class='op'>(</span><span class='va'>p</span>, min <span class='op'>=</span> <span class='fl'>0</span>, max <span class='op'>=</span> <span class='fl'>1</span>, mode <span class='op'>=</span> <span class='fl'>0.5</span>, lower_tail <span class='op'>=</span> <span class='cn'>TRUE</span>, log_p <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>rtri</span><span class='op'>(</span><span class='va'>n</span>, min <span class='op'>=</span> <span class='fl'>0</span>, max <span class='op'>=</span> <span class='fl'>1</span>, mode <span class='op'>=</span> <span class='fl'>0.5</span>, dqrng <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+<span class='fu'>rtri</span><span class='op'>(</span><span class='va'>n</span>, min <span class='op'>=</span> <span class='fl'>0</span>, max <span class='op'>=</span> <span class='fl'>1</span>, mode <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>
+
+<span class='fu'>mgtri</span><span class='op'>(</span><span class='va'>t</span>, min <span class='op'>=</span> <span class='fl'>0</span>, max <span class='op'>=</span> <span class='fl'>1</span>, mode <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>
+
+<span class='fu'>estri</span><span class='op'>(</span><span class='va'>p</span>, min <span class='op'>=</span> <span class='fl'>0</span>, max <span class='op'>=</span> <span class='fl'>1</span>, mode <span class='op'>=</span> <span class='fl'>0.5</span>, lower_tail <span class='op'>=</span> <span class='cn'>TRUE</span>, log_p <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>t</th>
-      <td><p>Vector of dummy variables.</p></td>
+      <th>x, q</th>
+      <td><p>Vector of quantiles.</p></td>
     </tr>
     <tr>
       <th>min</th>
@@ -177,17 +173,9 @@ distribution function, <code>qtri</code> gives the quantile function, and
 <code>min</code> and <code>mode</code> \(\le\) <code>max</code>.</p></td>
     </tr>
     <tr>
-      <th>x, q</th>
-      <td><p>Vector of quantiles.</p></td>
-    </tr>
-    <tr>
       <th>log, log_p</th>
       <td><p>Logical; if <code>TRUE</code>, probabilities <code>p</code> are given as
 <code><a href='https://rdrr.io/r/base/Log.html'>log(p)</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>p</th>
-      <td><p>Vector of probabilities.</p></td>
     </tr>
     <tr>
       <th>lower_tail</th>
@@ -195,31 +183,32 @@ distribution function, <code>qtri</code> gives the quantile function, and
 are \(P[X \le x]\), otherwise, \(P[X &gt; x]\).</p></td>
     </tr>
     <tr>
+      <th>p</th>
+      <td><p>Vector of probabilities.</p></td>
+    </tr>
+    <tr>
       <th>n</th>
       <td><p>Number of observations. Must have length of one.</p></td>
     </tr>
     <tr>
-      <th>dqrng</th>
-      <td><p>Logical; if <code>FALSE</code> (default), <code><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></code> will be
-used to generate random numbers instead of <code>dqrunif</code> from the
-<code>dqrng</code> package.</p></td>
+      <th>t</th>
+      <td><p>Vector of dummy variables.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>ctri</code> gives the characteristic function,
-<code>dtri</code> gives the density function,
+    <p><code>dtri</code> gives the density function,
 <code>estri</code> gives the expected shortfall,
 <code>mgtri</code> gives the moment generating function,
 <code>ptri</code> gives the distribution function,
 <code>qtri</code> gives the quantile function, and
 <code>rtri</code> gives the random variate generator.</p>
 <p>The numerical arguments other than <code>n</code> with values of size one are
-recycled to the length of <code>t</code> for <code>ctri</code> and <code>mgtri</code>, the
-length of <code>x</code> for <code>dtri</code>, the length of <code>p</code> for <code>estri</code>
-and <code>qtri</code>, the length of <code>q</code> for <code>ptri</code>, and <code>n</code> for
-<code>rtri</code>. This determines the length of the result.</p>
+recycled to the length of <code>t</code> for <code>mgtri</code>, the length of <code>x</code>
+for <code>dtri</code>, the length of <code>p</code> for <code>estri</code> and <code>qtri</code>,
+the length of <code>q</code> for <code>ptri</code>, and <code>n</code> for <code>rtri</code>. This
+determines the length of the result.</p>
 <p>The logical arguments <code>log</code>, <code>lower_tail</code>, and <code>log_p</code> must
 be of length one each.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -277,15 +266,6 @@ generation algorithms.</p>
               mode <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.5</span>, <span class='fl'>0.5</span>, <span class='fl'>0.5</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>r</span>, <span class='va'>rec_r</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
-<span class='fu'>dqrng</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/dqrng/man/dqrng-functions.html'>dqset.seed</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
-<span class='va'>r</span> <span class='op'>&lt;-</span> <span class='fu'>rtri</span><span class='op'>(</span>
-  <span class='va'>n</span>,
-  min <span class='op'>=</span> <span class='fl'>0</span>,
-  max <span class='op'>=</span> <span class='fl'>1</span>,
-  mode <span class='op'>=</span> <span class='fl'>0.5</span>,
-  dqrng <span class='op'>=</span> <span class='cn'>TRUE</span>
-<span class='op'>)</span>
-
 <span class='co'># Log quantiles</span>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.5</span>, <span class='fl'>1</span><span class='op'>)</span>
 <span class='va'>log_d</span> <span class='op'>&lt;-</span> <span class='fu'>dtri</span><span class='op'>(</span><span class='va'>x</span>, log <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
@@ -309,8 +289,7 @@ generation algorithms.</p>
 <span class='va'>upper_q</span> <span class='op'>&lt;-</span> <span class='fu'>ptri</span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='va'>p</span>, lower_tail <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='va'>q</span> <span class='op'>&lt;-</span> <span class='fu'>ptri</span><span class='op'>(</span><span class='va'>p</span>, lower_tail <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>upper_q</span>, <span class='va'>q</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
-<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.5</span>, <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.5</span>, <span class='fl'>1</span><span class='op'>)</span>
 <span class='va'>log_q</span> <span class='op'>&lt;-</span> <span class='fu'>qtri</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span>, log_p <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='va'>q</span> <span class='op'>&lt;-</span> <span class='fu'>qtri</span><span class='op'>(</span><span class='va'>p</span>, log_p <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>log_q</span>, <span class='va'>q</span><span class='op'>)</span>
@@ -319,10 +298,6 @@ generation algorithms.</p>
 <span class='va'>t</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span>
 <span class='fu'>mgtri</span><span class='op'>(</span><span class='va'>t</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 1.683357 2.952492 5.387626</div><div class='input'>
-<span class='co'># Characteristic function</span>
-<span class='va'>t</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span>
-<span class='fu'>ctri</span><span class='op'>(</span><span class='va'>t</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.8594513+0.4695204i 0.4967514+0.7736445i 0.0584297+0.8239422i</div><div class='input'>
 <span class='co'># Expected Shortfall</span>
 <span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.1</span>, <span class='fl'>0.5</span>, <span class='fl'>1</span><span class='op'>)</span>
 <span class='fu'>estri</span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span>

@@ -1,6 +1,6 @@
 Package: triangulr
 Title: High-Performance Triangular Distribution Functions
-Version: 1.1.0.9000
+Version: 1.2.0
 Authors@R: person(given = "Alvin", family = "Nursalim", role = c("aut", "cre"),
                   email = "irkaalv@gmail.com")
 Description: A collection of high-performance functions for the triangular
