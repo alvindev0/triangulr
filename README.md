@@ -9,7 +9,8 @@
 [![Downloads](https://cranlogs.r-pkg.org/badges/triangulr)](https://cran.r-project.org/package=triangulr)
 [![Downloads
 Overall](https://cranlogs.r-pkg.org/badges/grand-total/triangulr)](https://cran.r-project.org/package=triangulr)
-[![Lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
+[![Lifecycle:
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 
 ## Introduction
 

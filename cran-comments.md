@@ -19,3 +19,8 @@ There was 1 NOTE:
   Alvin Nursalim <alvin.nursalim@outlook.com>
 
   The email update is intentional.
+
+## Resubmission
+
+- updated the invalid URL
+- updated latest version to 1.2.0 in NEWS.md

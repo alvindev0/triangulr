@@ -1,4 +1,4 @@
-# `triangulr` 1.1.0.9000
+# `triangulr` 1.2.0
 
 - Replaced Rcpp dependency in favor of cpp11.
 - Removed dqrng dependency.
