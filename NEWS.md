@@ -1,3 +1,7 @@
+# `triangulr` 1.2.1
+
+- Fixed ambiguous reference error.
+
 # `triangulr` 1.2.0
 
 - Replaced Rcpp dependency in favor of cpp11.

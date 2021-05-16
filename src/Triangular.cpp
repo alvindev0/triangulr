@@ -1,8 +1,9 @@
 #include "cpp11.hpp"
 #include "Rmath.h"
 
-using namespace cpp11;
 namespace writable = cpp11::writable;
+using cpp11::doubles;
+using cpp11::warning;
 
 double dtri_cpp_internal(
     double x, double min, double max, double mode, bool is_log)
