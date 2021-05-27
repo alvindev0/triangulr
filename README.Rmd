@@ -27,8 +27,8 @@ knitr::opts_chunk$set(
 
 The `triangulr` package provides high-performance triangular distribution
 functions which includes density function, distribution function, quantile
-function, random variate generator, moment generating function, characteristic 
-function, and expected shortfall function for the triangular distribution.
+function, random variate generator, moment generating function, and expected
+shortfall function for the triangular distribution.
 
 
 ## Installation

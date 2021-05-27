@@ -17,8 +17,8 @@ stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://
 The `triangulr` package provides high-performance triangular
 distribution functions which includes density function, distribution
 function, quantile function, random variate generator, moment generating
-function, characteristic function, and expected shortfall function for
-the triangular distribution.
+function, and expected shortfall function for the triangular
+distribution.
 
 ## Installation
 
