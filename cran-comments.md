@@ -1,26 +1,12 @@
 ## Test environments
 
-- local R installation, R 4.1.0
-- ubuntu 16.04 (on travis-ci), R 4.0.3
-- win-builder (devel)
+- Windows 10 Local R Installation, R 4.1.0
+- Ubuntu Linux 20.04.1 LTS, R-release
+- Fedora Linux, R-devel
+- Debian Linux, R-devel
 
 ## R CMD check results
 
-There were no ERRORs or WARNINGs.
+0 errors | 0 warnings | 0 note
 
-There was 1 NOTE:
-
-- checking CRAN incoming feasibility ... NOTE
-  Maintainer: ‘Alvin Nursalim <irkaalv@gmail.com>’
-
-  New maintainer:
-  Alvin Nursalim <irkaalv@gmail.com>
-  Old maintainer(s):
-  Alvin Nursalim <alvin.nursalim@outlook.com>
-
-  The email update is intentional.
-
-## Resubmission
-
-- updated the invalid URL
-- updated latest version to 1.2.0 in NEWS.md
+- This is a new release to fix error on CRAN check (https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/triangulr-00check.html).
