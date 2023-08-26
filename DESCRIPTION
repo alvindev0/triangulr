@@ -20,6 +20,5 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Collate: 'check.R' 'cpp11.R' 'error.R' 'Triangular.R'
 LinkingTo: cpp11
-SystemRequirements: C++11
 Imports: rlang (>= 0.4.11), vctrs (>= 0.3.8)
 Suggests: testthat (>= 3.0.2)
